@@ -1,0 +1,60 @@
+{
+  "id": "05-grade-calculator",
+  "title": "Grade Calculator",
+  "description": "Calculate average grades and assign letter grades",
+  "difficulty": "beginner",
+  "estimatedTime": "25 minutes",
+  "concepts": ["lists", "for loops", "functions", "if/elif/else", "math"],
+  "requiredLessons": ["08-lists", "06-for-loops", "10-functions", "05-if-else"],
+
+  "steps": [
+    {
+      "number": 1,
+      "title": "Create a list of grades",
+      "instruction": "Start with a list of test scores (numbers from 0-100).",
+      "hint": "Use a list with several numbers: grades = [85, 92, 78, ...]",
+      "code": "# Create a list of grades\ngrades = [85, 92, 78, 95, 88]\nprint(f\"Grades: {grades}\")"
+    },
+    {
+      "number": 2,
+      "title": "Calculate the average",
+      "instruction": "Write a function that calculates the average of all grades.",
+      "hint": "Use sum(grades) / len(grades) to get the average.",
+      "code": "def calculate_average(grades):\n    \"\"\"Calculate the average of a list of grades.\"\"\"\n    if not grades:\n        return 0\n    return sum(grades) / len(grades)"
+    },
+    {
+      "number": 3,
+      "title": "Convert average to letter grade",
+      "instruction": "Write a function that converts a number grade to a letter (A, B, C, D, F).",
+      "hint": "Use if/elif/else: A >= 90, B >= 80, C >= 70, D >= 60, F < 60",
+      "code": "def get_letter_grade(average):\n    \"\"\"Convert numeric average to letter grade.\"\"\"\n    if average >= 90:\n        return 'A'\n    elif average >= 80:\n        return 'B'\n    elif average >= 70:\n        return 'C'\n    elif average >= 60:\n        return 'D'\n    else:\n        return 'F'"
+    },
+    {
+      "number": 4,
+      "title": "Find highest and lowest grades",
+      "instruction": "Use the built-in max() and min() functions to find the highest and lowest grades.",
+      "hint": "max(grades) gives the highest, min(grades) gives the lowest.",
+      "code": "def get_grade_stats(grades):\n    \"\"\"Get statistics about the grades.\"\"\"\n    return {\n        'average': calculate_average(grades),\n        'highest': max(grades),\n        'lowest': min(grades),\n        'total_tests': len(grades)\n    }"
+    },
+    {
+      "number": 5,
+      "title": "Display complete grade report",
+      "instruction": "Create a function that displays all the grade information in a nice format.",
+      "hint": "Use f-strings to format the output nicely.",
+      "code": "def display_grade_report(grades):\n    \"\"\"Display a complete grade report.\"\"\"\n    stats = get_grade_stats(grades)\n    average = stats['average']\n    letter = get_letter_grade(average)\n    \n    print(\"\\n=== GRADE REPORT ===\")\n    print(f\"Grades: {grades}\")\n    print(f\"\\nNumber of tests: {stats['total_tests']}\")\n    print(f\"Highest grade: {stats['highest']}\")\n    print(f\"Lowest grade: {stats['lowest']}\")\n    print(f\"\\nAverage: {average:.2f}\")\n    print(f\"Letter Grade: {letter}\")\n    print(\"===================\")"
+    }
+  ],
+
+  "starter": "# Grade Calculator Project\n\n# Step 1: Create list of grades\n\n\n# Step 2: Calculate average function\n\n\n# Step 3: Letter grade function\n\n\n# Step 4: Statistics function\n\n\n# Step 5: Display report\n\n",
+
+  "solution": "# Grade Calculator - Complete Solution\n\ndef calculate_average(grades):\n    \"\"\"Calculate the average of a list of grades.\"\"\"\n    if not grades:\n        return 0\n    return sum(grades) / len(grades)\n\ndef get_letter_grade(average):\n    \"\"\"Convert numeric average to letter grade.\"\"\"\n    if average >= 90:\n        return 'A'\n    elif average >= 80:\n        return 'B'\n    elif average >= 70:\n        return 'C'\n    elif average >= 60:\n        return 'D'\n    else:\n        return 'F'\n\ndef get_grade_stats(grades):\n    \"\"\"Get statistics about the grades.\"\"\"\n    return {\n        'average': calculate_average(grades),\n        'highest': max(grades),\n        'lowest': min(grades),\n        'total_tests': len(grades)\n    }\n\ndef display_grade_report(grades):\n    \"\"\"Display a complete grade report.\"\"\"\n    stats = get_grade_stats(grades)\n    average = stats['average']\n    letter = get_letter_grade(average)\n    \n    print(\"\\n\" + \"=\"*40)\n    print(\"  GRADE REPORT\".center(40))\n    print(\"=\"*40)\n    print(f\"\\nGrades: {grades}\")\n    print(f\"\\nStatistics:\")\n    print(f\"  Number of tests: {stats['total_tests']}\")\n    print(f\"  Highest grade:   {stats['highest']}\")\n    print(f\"  Lowest grade:    {stats['lowest']}\")\n    print(f\"\\nFinal Results:\")\n    print(f\"  Average:      {average:.2f}\")\n    print(f\"  Letter Grade: {letter}\")\n    print(\"=\"*40)\n    \n    # Show performance message\n    if letter == 'A':\n        print(\"🎉 Excellent work!\")\n    elif letter == 'B':\n        print(\"👍 Great job!\")\n    elif letter == 'C':\n        print(\"✅ Good effort!\")\n    elif letter == 'D':\n        print(\"📚 Keep studying!\")\n    else:\n        print(\"💪 Don't give up!\")\n\n# Test the calculator\nprint(\"Student 1:\")\ngrades1 = [85, 92, 78, 95, 88]\ndisplay_grade_report(grades1)\n\nprint(\"\\nStudent 2:\")\ngrades2 = [100, 98, 95, 100, 97]\ndisplay_grade_report(grades2)\n\nprint(\"\\nStudent 3:\")\ngrades3 = [65, 70, 68, 72, 69]\ndisplay_grade_report(grades3)",
+
+  "extensions": [
+    "Add weighted grades (tests worth more than homework)",
+    "Drop the lowest grade before calculating average",
+    "Add grade categories: Tests, Quizzes, Homework",
+    "Calculate GPA (4.0 scale)",
+    "Show improvement trend (are grades getting better?)",
+    "Add grade predictions: 'You need X on the final to get an A'"
+  ]
+}

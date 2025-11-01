@@ -1,0 +1,51 @@
+{
+  "id": "01-calculator",
+  "title": "Simple Calculator",
+  "description": "Build a calculator that can add, subtract, multiply, and divide",
+  "difficulty": "beginner",
+  "estimatedTime": "20 minutes",
+  "concepts": ["functions", "input", "operators", "if/else"],
+  "requiredLessons": ["10-functions", "05-if-else", "03-math"],
+
+  "steps": [
+    {
+      "number": 1,
+      "title": "Create the add function",
+      "instruction": "Create a function called add() that takes two numbers and returns their sum.",
+      "hint": "Use def to create a function, and return to send back the result.",
+      "code": "def add(a, b):\n    return a + b"
+    },
+    {
+      "number": 2,
+      "title": "Create subtract, multiply, and divide functions",
+      "instruction": "Following the same pattern as add(), create functions for subtract, multiply, and divide.",
+      "hint": "Use the operators -, *, and / respectively. Be careful with division!",
+      "code": "def subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n    return a * b\n\ndef divide(a, b):\n    if b == 0:\n        return \"Error: Cannot divide by zero!\"\n    return a / b"
+    },
+    {
+      "number": 3,
+      "title": "Test your calculator",
+      "instruction": "Call each function with different numbers and print the results to make sure they work.",
+      "hint": "Use print() to display the results of your calculations.",
+      "code": "# Test the calculator\nprint(\"Addition: 5 + 3 =\", add(5, 3))\nprint(\"Subtraction: 10 - 4 =\", subtract(10, 4))\nprint(\"Multiplication: 6 * 7 =\", multiply(6, 7))\nprint(\"Division: 20 / 4 =\", divide(20, 4))\nprint(\"Division by zero:\", divide(10, 0))"
+    },
+    {
+      "number": 4,
+      "title": "Bonus: Create a calculator menu",
+      "instruction": "Create a simple menu that lets users choose an operation. Use if/elif to handle different choices.",
+      "hint": "Simulate user choice with a variable. In real Python, you'd use input().",
+      "code": "# Bonus: Calculator menu\nchoice = \"*\"  # Simulate user choosing multiply\nnum1 = 12\nnum2 = 3\n\nif choice == \"+\":\n    result = add(num1, num2)\nelif choice == \"-\":\n    result = subtract(num1, num2)\nelif choice == \"*\":\n    result = multiply(num1, num2)\nelif choice == \"/\":\n    result = divide(num1, num2)\nelse:\n    result = \"Invalid operation\"\n\nprint(f\"{num1} {choice} {num2} = {result}\")"
+    }
+  ],
+
+  "starter": "# Simple Calculator Project\n# Build your calculator functions here\n\n# Step 1: Add function\n\n\n# Step 2: Other operations\n\n\n# Step 3: Test your calculator\n\n",
+
+  "solution": "# Simple Calculator - Complete Solution\n\ndef add(a, b):\n    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n    return a * b\n\ndef divide(a, b):\n    if b == 0:\n        return \"Error: Cannot divide by zero!\"\n    return a / b\n\n# Test the calculator\nprint(\"=== Testing Calculator ===\")\nprint(\"Addition: 5 + 3 =\", add(5, 3))\nprint(\"Subtraction: 10 - 4 =\", subtract(10, 4))\nprint(\"Multiplication: 6 * 7 =\", multiply(6, 7))\nprint(\"Division: 20 / 4 =\", divide(20, 4))\nprint(\"Division by zero:\", divide(10, 0))\n\n# Bonus: Calculator menu\nprint(\"\\n=== Calculator Menu ===\")\nchoice = \"*\"\nnum1 = 12\nnum2 = 3\n\nif choice == \"+\":\n    result = add(num1, num2)\nelif choice == \"-\":\n    result = subtract(num1, num2)\nelif choice == \"*\":\n    result = multiply(num1, num2)\nelif choice == \"/\":\n    result = divide(num1, num2)\nelse:\n    result = \"Invalid operation\"\n\nprint(f\"{num1} {choice} {num2} = {result}\")",
+
+  "extensions": [
+    "Add more operations: power (**), modulo (%), floor division (//)",
+    "Create a function that handles multiple operations at once",
+    "Add input validation to check if numbers are valid",
+    "Keep a history of calculations in a list"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "id": "04-todo-list",
+  "title": "To-Do List Manager",
+  "description": "Create a program to manage tasks with add, remove, and display features",
+  "difficulty": "beginner",
+  "estimatedTime": "30 minutes",
+  "concepts": ["lists", "functions", "for loops", "if/else"],
+  "requiredLessons": ["08-lists", "10-functions", "06-for-loops"],
+
+  "steps": [
+    {
+      "number": 1,
+      "title": "Create the task list",
+      "instruction": "Start with an empty list to store tasks.",
+      "hint": "Use an empty list: tasks = []",
+      "code": "# Create an empty list for tasks\ntasks = []\nprint(\"To-Do List Manager Started!\")"
+    },
+    {
+      "number": 2,
+      "title": "Create add_task function",
+      "instruction": "Write a function that adds a task to the list.",
+      "hint": "Use the .append() method to add items to a list.",
+      "code": "def add_task(tasks, task):\n    \"\"\"Add a new task to the list.\"\"\"\n    tasks.append(task)\n    print(f\"✅ Added: '{task}'\")"
+    },
+    {
+      "number": 3,
+      "title": "Create display_tasks function",
+      "instruction": "Write a function that shows all tasks with numbers.",
+      "hint": "Use enumerate() to get both the index and task. Start numbering at 1.",
+      "code": "def display_tasks(tasks):\n    \"\"\"Display all tasks with numbers.\"\"\"\n    if not tasks:\n        print(\"📋 No tasks yet!\")\n    else:\n        print(\"\\n📋 Your Tasks:\")\n        for index, task in enumerate(tasks, start=1):\n            print(f\"{index}. {task}\")\n        print()"
+    },
+    {
+      "number": 4,
+      "title": "Create remove_task function",
+      "instruction": "Write a function that removes a task by its position number.",
+      "hint": "Remember: list indexes start at 0, but users count from 1!",
+      "code": "def remove_task(tasks, position):\n    \"\"\"Remove a task by its position number (1-indexed).\"\"\"\n    if position < 1 or position > len(tasks):\n        print(\"❌ Invalid task number!\")\n    else:\n        removed = tasks.pop(position - 1)  # Convert to 0-indexed\n        print(f\"🗑️  Removed: '{removed}'\")"
+    },
+    {
+      "number": 5,
+      "title": "Test your to-do list",
+      "instruction": "Use all the functions to add, display, and remove tasks.",
+      "hint": "Create a workflow that simulates using the to-do list.",
+      "code": "# Test the to-do list\ntasks = []\n\n# Add some tasks\nadd_task(tasks, \"Buy groceries\")\nadd_task(tasks, \"Learn Python\")\nadd_task(tasks, \"Exercise\")\nadd_task(tasks, \"Read a book\")\n\n# Display all tasks\ndisplay_tasks(tasks)\n\n# Remove a task\nremove_task(tasks, 2)  # Remove \"Learn Python\"\n\n# Display again\ndisplay_tasks(tasks)"
+    }
+  ],
+
+  "starter": "# To-Do List Manager Project\n\n# Step 1: Create empty task list\n\n\n# Step 2: Add task function\n\n\n# Step 3: Display tasks function\n\n\n# Step 4: Remove task function\n\n\n# Step 5: Test your functions\n\n",
+
+  "solution": "# To-Do List Manager - Complete Solution\n\ndef add_task(tasks, task):\n    \"\"\"Add a new task to the list.\"\"\"\n    tasks.append(task)\n    print(f\"✅ Added: '{task}'\")\n\ndef display_tasks(tasks):\n    \"\"\"Display all tasks with numbers.\"\"\"\n    if not tasks:\n        print(\"📋 No tasks yet!\")\n    else:\n        print(\"\\n📋 Your Tasks:\")\n        for index, task in enumerate(tasks, start=1):\n            print(f\"{index}. {task}\")\n        print()\n\ndef remove_task(tasks, position):\n    \"\"\"Remove a task by its position number (1-indexed).\"\"\"\n    if position < 1 or position > len(tasks):\n        print(\"❌ Invalid task number!\")\n    else:\n        removed = tasks.pop(position - 1)\n        print(f\"🗑️  Removed: '{removed}'\")\n\ndef clear_all_tasks(tasks):\n    \"\"\"Clear all tasks from the list.\"\"\"\n    tasks.clear()\n    print(\"🧹 All tasks cleared!\")\n\n# Main program\ntasks = []\n\nprint(\"=== TO-DO LIST MANAGER ===\")\nprint()\n\n# Add tasks\nadd_task(tasks, \"Buy groceries\")\nadd_task(tasks, \"Learn Python\")\nadd_task(tasks, \"Exercise for 30 minutes\")\nadd_task(tasks, \"Read a book\")\nadd_task(tasks, \"Call mom\")\n\n# Display all tasks\ndisplay_tasks(tasks)\n\n# Remove some tasks\nremove_task(tasks, 2)  # Remove \"Learn Python\"\nremove_task(tasks, 4)  # Remove \"Call mom\"\n\n# Display updated list\ndisplay_tasks(tasks)\n\n# Add more tasks\nadd_task(tasks, \"Finish homework\")\n\n# Final display\ndisplay_tasks(tasks)\n\nprint(f\"Total tasks: {len(tasks)}\")",
+
+  "extensions": [
+    "Add a mark_complete() function to check off tasks without removing them",
+    "Add priority levels: High, Medium, Low",
+    "Sort tasks alphabetically or by priority",
+    "Add due dates to tasks",
+    "Save tasks to a file (for real Python)",
+    "Add categories or tags to organize tasks"
+  ]
+}

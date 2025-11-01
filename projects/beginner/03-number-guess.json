@@ -1,0 +1,52 @@
+{
+  "id": "03-number-guess",
+  "title": "Number Guessing Game",
+  "description": "Build a game where the computer picks a number and gives you hints",
+  "difficulty": "beginner",
+  "estimatedTime": "25 minutes",
+  "concepts": ["while loops", "if/else", "random", "variables"],
+  "requiredLessons": ["07-while-loops", "05-if-else", "01-variables"],
+
+  "steps": [
+    {
+      "number": 1,
+      "title": "Import random and pick a number",
+      "instruction": "Import the random module and use random.randint() to pick a number between 1 and 10.",
+      "hint": "random.randint(1, 10) gives you a random number from 1 to 10 (inclusive).",
+      "code": "import random\n\n# Computer picks a random number\nsecret_number = random.randint(1, 10)\nprint(\"I'm thinking of a number between 1 and 10...\")"
+    },
+    {
+      "number": 2,
+      "title": "Simulate guesses with a while loop",
+      "instruction": "Create a variable for the guess and a counter for attempts. Use a while loop to simulate multiple guesses.",
+      "hint": "Since we can't use input() in the browser, simulate guesses by trying different numbers.",
+      "code": "# Simulate guessing (in real Python, you'd use input())\nguess = 0\nattempts = 0\nmax_attempts = 5\n\nwhile guess != secret_number and attempts < max_attempts:\n    # Simulate a guess (try different numbers)\n    guess = 7  # In real game, this would be from input()\n    attempts += 1\n    \n    if guess < secret_number:\n        print(f\"Too low! Try again. (Attempt {attempts})\")\n    elif guess > secret_number:\n        print(f\"Too high! Try again. (Attempt {attempts})\")\n    else:\n        print(f\"Correct! You won in {attempts} attempts!\")\n    \n    break  # Remove this in real game"
+    },
+    {
+      "number": 3,
+      "title": "Add win/lose conditions",
+      "instruction": "Check if the player won or ran out of attempts after the loop ends.",
+      "hint": "Use an if statement after the loop to check if they guessed correctly.",
+      "code": "# Check final result\nif guess == secret_number:\n    print(f\"🎉 You won! The number was {secret_number}!\")\nelse:\n    print(f\"😞 Game over! The number was {secret_number}.\")"
+    },
+    {
+      "number": 4,
+      "title": "Complete game simulation",
+      "instruction": "Put it all together and simulate a complete game with multiple guesses.",
+      "hint": "Use a list to simulate multiple guesses instead of input().",
+      "code": "# Complete game simulation\nimport random\n\nsecret_number = random.randint(1, 10)\nguesses = [3, 7, 5]  # Simulating user guesses\nattempts = 0\nwon = False\n\nprint(f\"I'm thinking of a number between 1 and 10...\")\nprint(f\"Secret number is: {secret_number} (just for testing!)\\n\")\n\nfor guess in guesses:\n    attempts += 1\n    print(f\"Attempt {attempts}: You guessed {guess}\")\n    \n    if guess < secret_number:\n        print(\"Too low!\\n\")\n    elif guess > secret_number:\n        print(\"Too high!\\n\")\n    else:\n        print(f\"🎉 Correct! You won in {attempts} attempts!\")\n        won = True\n        break\n\nif not won:\n    print(f\"Game over! The number was {secret_number}.\")"
+    }
+  ],
+
+  "starter": "# Number Guessing Game Project\nimport random\n\n# Step 1: Pick a secret number\n\n\n# Step 2: Set up the game loop\n\n\n# Step 3: Check win/lose\n\n",
+
+  "solution": "# Number Guessing Game - Complete Solution\nimport random\n\n# Computer picks a secret number\nsecret_number = random.randint(1, 10)\n\n# Game simulation (using a list of guesses)\nguesses = [3, 7, 5, 8, 5]  # Simulating user input\nattempts = 0\nmax_attempts = 5\nwon = False\n\nprint(\"=== NUMBER GUESSING GAME ===\")\nprint(\"I'm thinking of a number between 1 and 10...\")\nprint(f\"(Secret: {secret_number}) <- Just for testing!\\n\")\n\nfor guess in guesses:\n    attempts += 1\n    print(f\"Attempt {attempts}/{max_attempts}: You guessed {guess}\")\n    \n    if guess < secret_number:\n        print(\"📉 Too low! Try a higher number.\\n\")\n    elif guess > secret_number:\n        print(\"📈 Too high! Try a lower number.\\n\")\n    else:\n        print(f\"\\n🎉 CORRECT! You won in {attempts} attempts!\")\n        print(f\"The number was {secret_number}!\")\n        won = True\n        break\n    \n    if attempts >= max_attempts:\n        break\n\nif not won:\n    print(f\"\\n😞 Game Over! You ran out of attempts.\")\n    print(f\"The secret number was {secret_number}.\")\n\nprint(f\"\\nTotal attempts: {attempts}/{max_attempts}\")",
+
+  "extensions": [
+    "Increase the range (1-100) and adjust max attempts",
+    "Add difficulty levels: Easy (1-10), Medium (1-50), Hard (1-100)",
+    "Track high scores (fewest attempts to win)",
+    "Give better hints: 'Very close!' or 'Way off!'",
+    "Let the user choose the range"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "id": "02-mad-libs",
+  "title": "Mad Libs Game",
+  "description": "Create a fill-in-the-blank story generator",
+  "difficulty": "beginner",
+  "estimatedTime": "15 minutes",
+  "concepts": ["variables", "strings", "f-strings", "input"],
+  "requiredLessons": ["01-variables", "02-print", "04-strings"],
+
+  "steps": [
+    {
+      "number": 1,
+      "title": "Collect story ingredients",
+      "instruction": "Create variables for different types of words: a noun, a verb, an adjective, and a place.",
+      "hint": "In real Python, you'd use input() to get these from the user. For now, just assign string values.",
+      "code": "# Collect words for the story\nnoun = \"dragon\"\nverb = \"dancing\"\nadjective = \"sparkly\"\nplace = \"library\""
+    },
+    {
+      "number": 2,
+      "title": "Create the story template",
+      "instruction": "Write a story using f-strings that inserts the variables you created.",
+      "hint": "Use f\"{variable}\" to insert variables into your story. Make it funny!",
+      "code": "# Create the story\nstory = f\"\"\"Once upon a time, there was a {adjective} {noun}.\nEvery day, it would go to the {place} for {verb}.\nEveryone thought this was very unusual!\"\"\"\n\nprint(story)"
+    },
+    {
+      "number": 3,
+      "title": "Make it interactive",
+      "instruction": "Add more words and make your story longer and sillier!",
+      "hint": "Try adding: an animal, a food, a number, a color, etc.",
+      "code": "# Extended Mad Libs\nanimal = \"penguin\"\nfood = \"pizza\"\nnumber = \"42\"\ncolor = \"purple\"\n\nstory = f\"\"\"The {color} {animal} loved {food}.\nOne day, it met a {adjective} {noun} at the {place}.\nThey spent {number} hours {verb} together.\nIt was the best day ever!\"\"\"\n\nprint(story)"
+    }
+  ],
+
+  "starter": "# Mad Libs Game Project\n# Create a silly story!\n\n# Step 1: Collect story ingredients\n\n\n# Step 2: Create the story with f-strings\n\n\n# Step 3: Print your story\n\n",
+
+  "solution": "# Mad Libs Game - Complete Solution\n\n# Collect words for the story\nnoun = \"dragon\"\nverb = \"dancing\"\nadjective = \"sparkly\"\nplace = \"library\"\nanimal = \"penguin\"\nfood = \"pizza\"\nnumber = \"42\"\ncolor = \"purple\"\n\n# Create the story\nstory = f\"\"\"=== THE AMAZING ADVENTURE ===\n\nOnce upon a time, there was a {adjective} {noun}.\nEvery day, it would go to the {place} for {verb}.\n\nOne day, it met a {color} {animal} who loved {food}.\nThey became best friends and spent {number} hours {verb} together!\n\nEveryone in the {place} thought this was very unusual,\nbut the {noun} and the {animal} didn't care.\nThey were having too much fun!\n\nTHE END\n\"\"\"\n\nprint(story)",
+
+  "extensions": [
+    "Create multiple story templates and let users choose one",
+    "Use lists to store different options for each word type",
+    "Create a funny news article instead of a story",
+    "Add more word types: adverbs, emotions, sounds, etc."
+  ]
+}
