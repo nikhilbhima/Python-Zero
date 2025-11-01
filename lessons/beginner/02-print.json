@@ -1,0 +1,88 @@
+{
+  "id": "02-print",
+  "title": "Print & Input",
+  "description": "Learn how to display output and get user input",
+  "track": "beginner",
+  "difficulty": "beginner",
+  "estimatedTime": "15 minutes",
+  "concepts": ["print function", "input function", "f-strings", "type conversion"],
+
+  "content": [
+    {
+      "type": "text",
+      "text": "The print() function is how you display information in Python. You've already used it, but let's explore what it can do!"
+    },
+    {
+      "type": "code",
+      "code": "print(\"Hello, World!\")\nprint(\"Python is awesome!\")",
+      "explanation": "Each print() statement displays text on a new line. Text must be in quotes to be a string."
+    },
+    {
+      "type": "text",
+      "text": "You can print multiple things at once by separating them with commas:"
+    },
+    {
+      "type": "code",
+      "code": "name = \"Alice\"\nage = 25\n\nprint(\"Name:\", name)\nprint(\"Age:\", age)\nprint(\"Name:\", name, \"Age:\", age)",
+      "explanation": "print() automatically adds spaces between items when you separate them with commas."
+    },
+    {
+      "type": "text",
+      "text": "F-strings (formatted strings) are a powerful way to insert variables into text:"
+    },
+    {
+      "type": "code",
+      "code": "name = \"Bob\"\nage = 30\ncity = \"New York\"\n\nprint(f\"My name is {name}\")\nprint(f\"I am {age} years old\")\nprint(f\"{name} lives in {city} and is {age} years old\")",
+      "explanation": "Put 'f' before the quote and use {variable_name} to insert variables. This is the modern, clean way to format strings in Python."
+    },
+    {
+      "type": "tip",
+      "text": "F-strings are better than using + to join strings because they're easier to read and work with any data type automatically!"
+    },
+    {
+      "type": "text",
+      "text": "You can do math inside f-strings:"
+    },
+    {
+      "type": "code",
+      "code": "price = 20\nquantity = 3\n\nprint(f\"Total: ${price * quantity}\")\nprint(f\"Price per item: ${price}\")",
+      "explanation": "Python calculates the expression inside {} before inserting it into the string."
+    },
+    {
+      "type": "text",
+      "text": "The input() function lets you get information from users:"
+    },
+    {
+      "type": "code",
+      "code": "# Note: input() works differently in the browser\n# In real Python, this would wait for user input\nname = \"Alice\"  # Simulating user input\nprint(f\"Hello, {name}!\")",
+      "explanation": "In real Python, input() pauses and waits for the user to type something. In the browser, we simulate it with variables."
+    },
+    {
+      "type": "tip",
+      "text": "input() always returns a string (text), even if the user types a number. You'll need to convert it if you want to do math!"
+    },
+    {
+      "type": "text",
+      "text": "Converting input to numbers:"
+    },
+    {
+      "type": "code",
+      "code": "# Simulating user input\nage_text = \"25\"\n\n# Convert string to integer\nage = int(age_text)\n\nprint(f\"Next year you'll be {age + 1}\")\nprint(f\"In 10 years you'll be {age + 10}\")",
+      "explanation": "int() converts a string to an integer. Without this conversion, you can't do math with the input!"
+    },
+    {
+      "type": "exercise",
+      "prompt": "Create variables for a person's first name, last name, and age. Use an f-string to print a sentence like: 'John Doe is 25 years old.'",
+      "starter": "# Create your variables\n\n# Print the sentence using an f-string\n",
+      "solution": "# Create your variables\nfirst_name = \"John\"\nlast_name = \"Doe\"\nage = 25\n\n# Print the sentence using an f-string\nprint(f\"{first_name} {last_name} is {age} years old.\")",
+      "hint": "Remember to put 'f' before the opening quote and use {variable} to insert variables into the string."
+    },
+    {
+      "type": "text",
+      "text": "Excellent! You now know how to display information with print() and format strings with f-strings. Next, we'll learn about math operations!"
+    }
+  ],
+
+  "nextLesson": "03-math",
+  "prevLesson": "01-variables"
+}

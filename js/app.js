@@ -66,13 +66,7 @@ function setupEventListeners() {
     // Keyboard shortcuts
     document.addEventListener('keydown', handleKeyboardShortcuts);
 
-    // Track navigation (placeholder for Phase 2)
-    const tracks = document.querySelectorAll('.track');
-    tracks.forEach(track => {
-        track.addEventListener('click', () => {
-            alert('Lesson navigation will be available in Phase 2!');
-        });
-    });
+    // Track navigation is now handled in lessons.js
 }
 
 /**

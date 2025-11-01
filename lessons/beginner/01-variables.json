@@ -1,0 +1,74 @@
+{
+  "id": "01-variables",
+  "title": "Variables & Data Types",
+  "description": "Learn how to store and use data in Python",
+  "track": "beginner",
+  "difficulty": "beginner",
+  "estimatedTime": "15 minutes",
+  "concepts": ["variables", "data types", "naming rules", "type function"],
+
+  "content": [
+    {
+      "type": "text",
+      "text": "Variables are containers that store data. Think of them like labeled boxes where you can put information and use it later."
+    },
+    {
+      "type": "text",
+      "text": "In Python, you create a variable by giving it a name and assigning it a value using the equals sign (=)."
+    },
+    {
+      "type": "code",
+      "code": "x = 5\nprint(x)",
+      "explanation": "This creates a variable called 'x' and stores the number 5 in it. Then we print its value."
+    },
+    {
+      "type": "text",
+      "text": "Python has several basic data types:"
+    },
+    {
+      "type": "code",
+      "code": "age = 25              # Integer (whole number)\nprice = 19.99         # Float (decimal number)\nname = \"Alice\"         # String (text)\nis_student = True     # Boolean (True or False)\n\nprint(age)\nprint(price)\nprint(name)\nprint(is_student)",
+      "explanation": "Here we create four variables with different data types. The # symbol starts a comment - Python ignores everything after it on that line."
+    },
+    {
+      "type": "tip",
+      "text": "Variable names should be descriptive. Use 'age' instead of 'a', 'username' instead of 'u'. This makes your code easier to read!"
+    },
+    {
+      "type": "text",
+      "text": "Variable naming rules in Python:"
+    },
+    {
+      "type": "code",
+      "code": "# Good variable names:\nuser_name = \"Bob\"\ntotal_price = 100\nis_valid = True\n\n# Bad variable names (will cause errors):\n# 1name = \"error\"        # Can't start with number\n# user-name = \"error\"    # Can't use hyphens\n# class = \"error\"        # Can't use Python keywords",
+      "explanation": "Variables must start with a letter or underscore, can contain letters, numbers, and underscores, and cannot be Python keywords like 'class', 'if', 'for', etc."
+    },
+    {
+      "type": "tip",
+      "text": "Python uses snake_case for variable names: use lowercase letters with underscores between words, like 'user_name' or 'total_count'."
+    },
+    {
+      "type": "text",
+      "text": "You can check what type a variable is using the type() function:"
+    },
+    {
+      "type": "code",
+      "code": "age = 25\nname = \"Alice\"\n\nprint(type(age))      # <class 'int'>\nprint(type(name))     # <class 'str'>",
+      "explanation": "The type() function tells you what kind of data is stored in a variable. 'int' means integer, 'str' means string."
+    },
+    {
+      "type": "exercise",
+      "prompt": "Create three variables: your name (as a string), your age (as an integer), and whether you like Python (as a boolean). Then print all three.",
+      "starter": "# Create your variables here\n\n# Print them here\n",
+      "solution": "# Create your variables here\nmy_name = \"Your Name\"\nmy_age = 25\nlikes_python = True\n\n# Print them here\nprint(my_name)\nprint(my_age)\nprint(likes_python)",
+      "hint": "Remember: strings need quotes, numbers don't, and booleans are True or False (capital T and F)."
+    },
+    {
+      "type": "text",
+      "text": "Great job! You now know how to create variables and understand different data types. In the next lesson, we'll learn how to display information using print()."
+    }
+  ],
+
+  "nextLesson": "02-print",
+  "prevLesson": null
+}

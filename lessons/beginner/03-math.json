@@ -1,0 +1,83 @@
+{
+  "id": "03-math",
+  "title": "Basic Math Operations",
+  "description": "Learn how to do calculations in Python",
+  "track": "beginner",
+  "difficulty": "beginner",
+  "estimatedTime": "15 minutes",
+  "concepts": ["arithmetic operators", "order of operations", "modulo", "exponents"],
+
+  "content": [
+    {
+      "type": "text",
+      "text": "Python can do all the math you learned in school, and it follows the same order of operations (PEMDAS)."
+    },
+    {
+      "type": "text",
+      "text": "Basic arithmetic operators:"
+    },
+    {
+      "type": "code",
+      "code": "# Addition\nprint(5 + 3)        # 8\n\n# Subtraction\nprint(10 - 4)       # 6\n\n# Multiplication\nprint(6 * 7)        # 42\n\n# Division\nprint(15 / 3)       # 5.0",
+      "explanation": "These are the four basic math operations. Notice that division always gives you a decimal number (float), even if the result is a whole number."
+    },
+    {
+      "type": "text",
+      "text": "More useful operators:"
+    },
+    {
+      "type": "code",
+      "code": "# Floor division (rounds down)\nprint(17 // 5)      # 3 (ignores the remainder)\n\n# Modulo (remainder)\nprint(17 % 5)       # 2 (the remainder after division)\n\n# Exponent (power)\nprint(2 ** 3)       # 8 (2 to the power of 3)\nprint(5 ** 2)       # 25 (5 squared)",
+      "explanation": "Floor division (//) gives you just the whole number part. Modulo (%) gives you the remainder. Exponent (**) raises a number to a power."
+    },
+    {
+      "type": "tip",
+      "text": "Modulo (%) is super useful! You can check if a number is even by seeing if (number % 2) equals 0."
+    },
+    {
+      "type": "text",
+      "text": "Order of operations (PEMDAS: Parentheses, Exponents, Multiplication/Division, Addition/Subtraction):"
+    },
+    {
+      "type": "code",
+      "code": "# Without parentheses\nresult1 = 5 + 3 * 2\nprint(result1)      # 11 (3*2=6, then 5+6=11)\n\n# With parentheses\nresult2 = (5 + 3) * 2\nprint(result2)      # 16 (5+3=8, then 8*2=16)",
+      "explanation": "Python follows PEMDAS. Multiplication happens before addition, unless you use parentheses to change the order."
+    },
+    {
+      "type": "text",
+      "text": "Using variables in calculations:"
+    },
+    {
+      "type": "code",
+      "code": "price = 20\nquantity = 3\ntax_rate = 0.08\n\nsubtotal = price * quantity\ntax = subtotal * tax_rate\ntotal = subtotal + tax\n\nprint(f\"Subtotal: ${subtotal}\")\nprint(f\"Tax: ${tax}\")\nprint(f\"Total: ${total}\")",
+      "explanation": "You can store calculations in variables and use those variables in more calculations. This makes your code easier to understand!"
+    },
+    {
+      "type": "tip",
+      "text": "Give your variables meaningful names like 'total_price' instead of 'tp'. Your future self will thank you!"
+    },
+    {
+      "type": "text",
+      "text": "Combining math with f-strings:"
+    },
+    {
+      "type": "code",
+      "code": "length = 10\nwidth = 5\n\narea = length * width\nperimeter = 2 * (length + width)\n\nprint(f\"Rectangle: {length} x {width}\")\nprint(f\"Area: {area} square units\")\nprint(f\"Perimeter: {perimeter} units\")",
+      "explanation": "You can calculate values and display them nicely using f-strings. This is how you build useful programs!"
+    },
+    {
+      "type": "exercise",
+      "prompt": "You're buying 4 books at $12.99 each. Calculate the subtotal, add 7% tax, and print the total. Use variables and an f-string to display the result.",
+      "starter": "# Your variables here\n\n# Calculate subtotal\n\n# Calculate tax\n\n# Calculate total\n\n# Print the result\n",
+      "solution": "# Your variables here\nbook_price = 12.99\nquantity = 4\ntax_rate = 0.07\n\n# Calculate subtotal\nsubtotal = book_price * quantity\n\n# Calculate tax\ntax = subtotal * tax_rate\n\n# Calculate total\ntotal = subtotal + tax\n\n# Print the result\nprint(f\"Total cost: ${total}\")",
+      "hint": "Remember: 7% as a decimal is 0.07. Multiply the subtotal by the tax rate to get the tax amount."
+    },
+    {
+      "type": "text",
+      "text": "Awesome! You can now do calculations in Python. Next, we'll learn about strings and how to work with text!"
+    }
+  ],
+
+  "nextLesson": "04-strings",
+  "prevLesson": "02-print"
+}
