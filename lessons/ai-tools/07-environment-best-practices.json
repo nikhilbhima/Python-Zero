@@ -1,0 +1,125 @@
+{
+  "id": "07-environment-best-practices",
+  "title": "Environment & Best Practices",
+  "description": "Learn to manage API keys, costs, and follow AI development best practices",
+  "track": "ai-tools",
+  "difficulty": "beginner",
+  "estimatedTime": "15 minutes",
+  "concepts": ["environment variables", "security", "cost management", "best practices"],
+
+  "content": [
+    {
+      "type": "text",
+      "text": "Building AI tools isn't just about writing code - it's about doing it SECURELY, EFFICIENTLY, and PROFESSIONALLY. Let's learn the best practices that separate hobbyists from professionals!"
+    },
+
+    {
+      "type": "text",
+      "text": "SECURITY RULE #1: NEVER HARDCODE API KEYS\n\nThis is THE most important rule in AI development:"
+    },
+
+    {
+      "type": "code",
+      "code": "# ❌ NEVER DO THIS:\nimport anthropic\n\nclient = anthropic.Anthropic(\n    api_key=\"sk-ant-api03-1234567890abcdef\"  # EXPOSED TO ANYONE WHO SEES CODE!\n)\n\n# ✅ ALWAYS DO THIS:\nimport anthropic\nimport os\n\nclient = anthropic.Anthropic(\n    api_key=os.environ.get(\"ANTHROPIC_API_KEY\")\n)\n\n# Why? Because:\n# 1. If you share code (GitHub, etc.), the key isn't in it\n# 2. If someone hacks your computer, they need more than just your code\n# 3. You can use different keys for different environments (dev, prod)",
+      "explanation": "Environment variables keep secrets OUT of your code. This is security 101 for professional developers!"
+    },
+
+    {
+      "type": "text",
+      "text": "USING .env FILES (THE PROFESSIONAL WAY):\n\n.env files store environment variables. They're NEVER committed to git!"
+    },
+
+    {
+      "type": "code",
+      "code": "# 📋 Creating a .env file:\n# \n# 1. Create a file named .env in your project root:\n# \n# ANTHROPIC_API_KEY=sk-ant-api03-your-key-here\n# OPENAI_API_KEY=sk-your-openai-key\n# MAX_TOKENS=1024\n# AI_MODEL=claude-3-5-sonnet-20241022\n# \n# 2. Install python-dotenv:\n# pip install python-dotenv\n# \n# 3. Load it in your code:\n\nfrom dotenv import load_dotenv\nimport os\n\n# Load .env file:\nload_dotenv()\n\n# Now environment variables are available:\napi_key = os.environ.get(\"ANTHROPIC_API_KEY\")\nmax_tokens = int(os.environ.get(\"MAX_TOKENS\", \"1024\"))\nmodel = os.environ.get(\"AI_MODEL\")\n\nprint(f\"API Key loaded: {'✓' if api_key else '✗'}\")\nprint(f\"Max tokens: {max_tokens}\")\nprint(f\"Model: {model}\")\n\n# 4. Add .env to .gitignore:\n# echo \".env\" >> .gitignore\n# \n# This prevents accidentally committing secrets!",
+      "explanation": ".env files are the industry standard for managing secrets. Load once at startup, use everywhere!"
+    },
+
+    {
+      "type": "tip",
+      "text": "CRITICAL: Always add .env to your .gitignore file! Create a .env.example file (with fake values) to show others what variables are needed."
+    },
+
+    {
+      "type": "text",
+      "text": "EXAMPLE .env.example FILE:"
+    },
+
+    {
+      "type": "code",
+      "code": "# 📋 .env.example (safe to commit to git)\n# Copy this to .env and add your real keys\n\n# AI API Keys (get from provider websites)\nANTHROPIC_API_KEY=sk-ant-api03-your-key-here\nOPENAI_API_KEY=sk-your-key-here\n\n# AI Settings\nAI_MODEL=claude-3-5-sonnet-20241022\nMAX_TOKENS=1024\nTEMPERATURE=0.7\n\n# Cost Limits\nMAX_DAILY_COST=5.00\nMAX_TOKENS_PER_REQUEST=2000\n\n# Logging\nLOG_LEVEL=INFO\nLOG_FILE=ai_tool.log",
+      "explanation": "This shows other developers what environment variables they need without exposing your real keys!"
+    },
+
+    {
+      "type": "text",
+      "text": "COST MANAGEMENT - DON'T BURN MONEY:\n\nAI API calls cost money. Track and limit costs in your code!"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Cost tracking and limiting:\n\nclass CostTracker:\n    \"\"\"Track AI API costs.\"\"\"\n    \n    def __init__(self, max_daily_cost=5.00):\n        \"\"\"Initialize with cost limit.\"\"\"\n        self.total_cost = 0.0\n        self.max_daily_cost = max_daily_cost\n        self.requests = []\n    \n    def estimate_cost(self, input_tokens, output_tokens, model=\"claude-sonnet\"):\n        \"\"\"Estimate cost for a request.\n        \n        Args:\n            input_tokens: Number of input tokens\n            output_tokens: Number of output tokens  \n            model: AI model name\n        \n        Returns:\n            Estimated cost in dollars\n        \"\"\"\n        # Pricing (check current rates!):\n        pricing = {\n            \"claude-sonnet\": {\"input\": 3.00, \"output\": 15.00},  # Per million tokens\n            \"gpt-4\": {\"input\": 30.00, \"output\": 60.00}\n        }\n        \n        rates = pricing.get(model, pricing[\"claude-sonnet\"])\n        \n        input_cost = (input_tokens / 1_000_000) * rates[\"input\"]\n        output_cost = (output_tokens / 1_000_000) * rates[\"output\"]\n        \n        return input_cost + output_cost\n    \n    def can_make_request(self, estimated_cost):\n        \"\"\"Check if request is within budget.\"\"\"\n        if self.total_cost + estimated_cost > self.max_daily_cost:\n            return False, f\"Would exceed daily limit (${self.max_daily_cost})\"\n        return True, \"OK\"\n    \n    def record_request(self, cost, description=\"\"):\n        \"\"\"Record a completed request.\"\"\"\n        self.total_cost += cost\n        self.requests.append({\n            \"cost\": cost,\n            \"description\": description,\n            \"total_so_far\": self.total_cost\n        })\n    \n    def get_summary(self):\n        \"\"\"Get cost summary.\"\"\"\n        return {\n            \"total_cost\": self.total_cost,\n            \"requests_made\": len(self.requests),\n            \"remaining_budget\": self.max_daily_cost - self.total_cost,\n            \"average_per_request\": self.total_cost / len(self.requests) if self.requests else 0\n        }\n\n# Example usage:\ntracker = CostTracker(max_daily_cost=5.00)\n\n# Before making a request:\ncost = tracker.estimate_cost(input_tokens=100, output_tokens=500)\ncan_proceed, message = tracker.can_make_request(cost)\n\nif can_proceed:\n    print(f\"✓ Request OK, estimated cost: ${cost:.6f}\")\n    tracker.record_request(cost, \"Code review\")\nelse:\n    print(f\"✗ {message}\")\n\nprint(\"\\nSummary:\", tracker.get_summary())",
+      "explanation": "Always track costs! Set limits to avoid surprise bills. This is what professional AI tools do."
+    },
+
+    {
+      "type": "text",
+      "text": "ERROR HANDLING BEST PRACTICES:"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Professional error handling:\n\nimport os\nimport sys\n\ndef safe_ai_call(prompt, max_retries=3):\n    \"\"\"Make AI call with retries and error handling.\n    \n    Args:\n        prompt: The prompt to send\n        max_retries: Number of retry attempts\n    \n    Returns:\n        AI response or None\n    \"\"\"\n    # Check API key exists:\n    api_key = os.environ.get(\"ANTHROPIC_API_KEY\")\n    if not api_key:\n        print(\"❌ Error: ANTHROPIC_API_KEY not found\", file=sys.stderr)\n        print(\"Set it with: export ANTHROPIC_API_KEY='your-key'\", file=sys.stderr)\n        return None\n    \n    # Try the request with retries:\n    for attempt in range(max_retries):\n        try:\n            # In real code:\n            # client = anthropic.Anthropic(api_key=api_key)\n            # response = client.messages.create(...)\n            # return response.content[0].text\n            \n            # Simulated:\n            if attempt < 2:  # Simulate failure\n                raise Exception(\"Rate limit exceeded\")\n            return \"AI response here\"\n        \n        except Exception as e:\n            error_type = str(e)\n            \n            # Handle specific errors:\n            if \"rate limit\" in error_type.lower():\n                print(f\"⚠️  Rate limited, retrying... ({attempt + 1}/{max_retries})\")\n                # time.sleep(2 ** attempt)  # Exponential backoff\n                continue\n            \n            elif \"invalid api key\" in error_type.lower():\n                print(\"❌ Invalid API key\", file=sys.stderr)\n                return None\n            \n            else:\n                print(f\"❌ Error: {error_type}\", file=sys.stderr)\n                if attempt == max_retries - 1:\n                    return None\n    \n    return None\n\n# Test it:\nresult = safe_ai_call(\"Test prompt\")\nif result:\n    print(f\"✓ Success: {result}\")\nelse:\n    print(\"✗ Failed after retries\")",
+      "explanation": "Robust error handling: check for API keys, retry on rate limits, handle specific errors, provide helpful messages."
+    },
+
+    {
+      "type": "text",
+      "text": "LOGGING FOR DEBUGGING:"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Professional logging:\n\nimport logging\nfrom datetime import datetime\n\n# Configure logging:\nlogging.basicConfig(\n    level=logging.INFO,\n    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',\n    handlers=[\n        logging.FileHandler('ai_tool.log'),\n        logging.StreamHandler()  # Also print to console\n    ]\n)\n\nlogger = logging.getLogger('AITool')\n\ndef logged_ai_call(prompt, user_id=None):\n    \"\"\"Make AI call with comprehensive logging.\"\"\"\n    request_id = datetime.now().strftime(\"%Y%m%d_%H%M%S\")\n    \n    logger.info(f\"Request {request_id} started\")\n    logger.debug(f\"Prompt length: {len(prompt)} chars\")\n    \n    if user_id:\n        logger.info(f\"User: {user_id}\")\n    \n    try:\n        # Make the AI call:\n        # response = ai_client.generate(prompt)\n        response = \"AI response\"  # Simulated\n        \n        logger.info(f\"Request {request_id} succeeded\")\n        logger.debug(f\"Response length: {len(response)} chars\")\n        \n        return response\n    \n    except Exception as e:\n        logger.error(f\"Request {request_id} failed: {str(e)}\")\n        logger.exception(\"Full traceback:\")  # Logs full error details\n        return None\n\n# Test it:\nprint(\"Making logged AI call...\\n\")\nresult = logged_ai_call(\"Test prompt\", user_id=\"user_123\")\nprint(f\"\\nResult: {result}\")\nprint(\"\\nCheck ai_tool.log for details\")",
+      "explanation": "Logging helps you debug issues, track usage, and understand user behavior. Essential for production tools!"
+    },
+
+    {
+      "type": "tip",
+      "text": "Log levels: DEBUG (detailed info), INFO (general info), WARNING (potential issues), ERROR (failures), CRITICAL (serious problems). Use appropriate levels!"
+    },
+
+    {
+      "type": "text",
+      "text": "RATE LIMITING (BE A GOOD API CITIZEN):"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Rate limiting to avoid overwhelming APIs:\n\nimport time\nfrom collections import deque\n\nclass RateLimiter:\n    \"\"\"Limit API calls per time window.\"\"\"\n    \n    def __init__(self, max_calls=10, time_window=60):\n        \"\"\"Initialize rate limiter.\n        \n        Args:\n            max_calls: Maximum calls allowed\n            time_window: Time window in seconds\n        \"\"\"\n        self.max_calls = max_calls\n        self.time_window = time_window\n        self.calls = deque()  # Track call timestamps\n    \n    def can_call(self):\n        \"\"\"Check if a call is allowed.\"\"\"\n        now = time.time()\n        \n        # Remove old calls outside the time window:\n        while self.calls and self.calls[0] < now - self.time_window:\n            self.calls.popleft()\n        \n        # Check if we're at the limit:\n        if len(self.calls) >= self.max_calls:\n            oldest_call = self.calls[0]\n            wait_time = (oldest_call + self.time_window) - now\n            return False, f\"Rate limit reached. Wait {wait_time:.1f}s\"\n        \n        return True, \"OK\"\n    \n    def record_call(self):\n        \"\"\"Record a call.\"\"\"\n        self.calls.append(time.time())\n    \n    def wait_if_needed(self):\n        \"\"\"Block until a call is allowed.\"\"\"\n        can_call, message = self.can_call()\n        \n        if not can_call:\n            # Extract wait time from message:\n            wait_time = float(message.split()[-1].replace('s', ''))\n            print(f\"⏳ {message}\")\n            time.sleep(wait_time)\n        \n        self.record_call()\n        return True\n\n# Example usage:\nlimiter = RateLimiter(max_calls=5, time_window=10)\n\nprint(\"Testing rate limiter (5 calls per 10 seconds):\")\nfor i in range(7):\n    can_call, msg = limiter.can_call()\n    \n    if can_call:\n        limiter.record_call()\n        print(f\"Call {i+1}: ✓ Allowed\")\n    else:\n        print(f\"Call {i+1}: ✗ {msg}\")\n        break",
+      "explanation": "Rate limiting prevents hitting API limits and getting temporarily banned. Professional tools implement this!"
+    },
+
+    {
+      "type": "text",
+      "text": "CONFIGURATION MANAGEMENT:"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Centralized configuration:\n\nimport os\nfrom dataclasses import dataclass\n\n@dataclass\nclass AIConfig:\n    \"\"\"Central configuration for AI tool.\"\"\"\n    \n    # API Settings:\n    api_key: str\n    model: str = \"claude-3-5-sonnet-20241022\"\n    max_tokens: int = 1024\n    temperature: float = 0.7\n    \n    # Cost Controls:\n    max_daily_cost: float = 5.00\n    max_tokens_per_request: int = 2000\n    \n    # Rate Limiting:\n    max_calls_per_minute: int = 10\n    \n    # Logging:\n    log_level: str = \"INFO\"\n    log_file: str = \"ai_tool.log\"\n    \n    @classmethod\n    def from_env(cls):\n        \"\"\"Load config from environment variables.\"\"\"\n        return cls(\n            api_key=os.environ.get(\"ANTHROPIC_API_KEY\", \"\"),\n            model=os.environ.get(\"AI_MODEL\", \"claude-3-5-sonnet-20241022\"),\n            max_tokens=int(os.environ.get(\"MAX_TOKENS\", \"1024\")),\n            temperature=float(os.environ.get(\"TEMPERATURE\", \"0.7\")),\n            max_daily_cost=float(os.environ.get(\"MAX_DAILY_COST\", \"5.00\")),\n            max_tokens_per_request=int(os.environ.get(\"MAX_TOKENS_PER_REQUEST\", \"2000\")),\n            max_calls_per_minute=int(os.environ.get(\"MAX_CALLS_PER_MINUTE\", \"10\")),\n            log_level=os.environ.get(\"LOG_LEVEL\", \"INFO\"),\n            log_file=os.environ.get(\"LOG_FILE\", \"ai_tool.log\")\n        )\n    \n    def validate(self):\n        \"\"\"Validate configuration.\"\"\"\n        errors = []\n        \n        if not self.api_key:\n            errors.append(\"API key is required\")\n        \n        if self.max_tokens < 1:\n            errors.append(\"max_tokens must be positive\")\n        \n        if not 0 <= self.temperature <= 1:\n            errors.append(\"temperature must be between 0 and 1\")\n        \n        return len(errors) == 0, errors\n\n# Usage:\nconfig = AIConfig.from_env()\nvalid, errors = config.validate()\n\nif valid:\n    print(\"✓ Configuration valid\")\n    print(f\"Model: {config.model}\")\n    print(f\"Max tokens: {config.max_tokens}\")\n    print(f\"Daily budget: ${config.max_daily_cost}\")\nelse:\n    print(\"✗ Configuration errors:\")\n    for error in errors:\n        print(f\"  - {error}\")",
+      "explanation": "Centralized config makes it easy to manage settings, load from environment, and validate before running."
+    },
+
+    {
+      "type": "exercise",
+      "prompt": "Create a function called setup_ai_environment() that checks for required environment variables, validates them, and returns a status report. It should check for: API key (not empty), max tokens (positive integer), and log level (one of: DEBUG, INFO, WARNING, ERROR). Return a dictionary with validation results.",
+      "starter": "import os\n\ndef setup_ai_environment():\n    \"\"\"Validate AI environment setup.\n    \n    Returns:\n        Dictionary with validation results:\n        {\n            'valid': bool,\n            'errors': list of error messages,\n            'warnings': list of warning messages,\n            'config': dict of loaded values\n        }\n    \"\"\"\n    # Check and validate:\n    # 1. ANTHROPIC_API_KEY exists and not empty\n    # 2. MAX_TOKENS is positive integer (default 1024)\n    # 3. LOG_LEVEL is valid (default INFO)\n    \n    pass\n\n# Test it (simulate env vars with os.environ):\nos.environ[\"ANTHROPIC_API_KEY\"] = \"test-key\"\nos.environ[\"MAX_TOKENS\"] = \"2048\"\nos.environ[\"LOG_LEVEL\"] = \"DEBUG\"\n\nresult = setup_ai_environment()\nprint(result)",
+      "solution": "import os\n\ndef setup_ai_environment():\n    \"\"\"Validate AI environment setup.\n    \n    Returns:\n        Dictionary with validation results:\n        {\n            'valid': bool,\n            'errors': list of error messages,\n            'warnings': list of warning messages,\n            'config': dict of loaded values\n        }\n    \"\"\"\n    errors = []\n    warnings = []\n    config = {}\n    \n    # 1. Check API key:\n    api_key = os.environ.get(\"ANTHROPIC_API_KEY\", \"\")\n    if not api_key:\n        errors.append(\"ANTHROPIC_API_KEY is required but not set\")\n    elif api_key == \"test-key\" or api_key.startswith(\"sk-ant-test\"):\n        warnings.append(\"Using a test API key\")\n    config[\"api_key\"] = \"***\" + api_key[-4:] if api_key else None\n    \n    # 2. Check MAX_TOKENS:\n    max_tokens_str = os.environ.get(\"MAX_TOKENS\", \"1024\")\n    try:\n        max_tokens = int(max_tokens_str)\n        if max_tokens < 1:\n            errors.append(\"MAX_TOKENS must be positive\")\n        elif max_tokens > 4096:\n            warnings.append(f\"MAX_TOKENS is very high ({max_tokens})\")\n        config[\"max_tokens\"] = max_tokens\n    except ValueError:\n        errors.append(f\"MAX_TOKENS must be an integer, got: {max_tokens_str}\")\n        config[\"max_tokens\"] = None\n    \n    # 3. Check LOG_LEVEL:\n    valid_levels = [\"DEBUG\", \"INFO\", \"WARNING\", \"ERROR\", \"CRITICAL\"]\n    log_level = os.environ.get(\"LOG_LEVEL\", \"INFO\").upper()\n    \n    if log_level not in valid_levels:\n        errors.append(f\"LOG_LEVEL must be one of {valid_levels}, got: {log_level}\")\n        config[\"log_level\"] = \"INFO\"  # Default\n    else:\n        config[\"log_level\"] = log_level\n    \n    # Build result:\n    result = {\n        \"valid\": len(errors) == 0,\n        \"errors\": errors,\n        \"warnings\": warnings,\n        \"config\": config\n    }\n    \n    return result\n\n# Test cases:\nprint(\"Test 1: Valid configuration\")\nprint(\"=\"*50)\nos.environ[\"ANTHROPIC_API_KEY\"] = \"sk-ant-real-key-1234\"\nos.environ[\"MAX_TOKENS\"] = \"2048\"\nos.environ[\"LOG_LEVEL\"] = \"DEBUG\"\nresult1 = setup_ai_environment()\nprint(f\"Valid: {result1['valid']}\")\nprint(f\"Config: {result1['config']}\")\nprint(f\"Warnings: {result1['warnings']}\")\nprint()\n\nprint(\"Test 2: Missing API key\")\nprint(\"=\"*50)\ndel os.environ[\"ANTHROPIC_API_KEY\"]\nresult2 = setup_ai_environment()\nprint(f\"Valid: {result2['valid']}\")\nprint(f\"Errors: {result2['errors']}\")\nprint()\n\nprint(\"Test 3: Invalid MAX_TOKENS\")\nprint(\"=\"*50)\nos.environ[\"ANTHROPIC_API_KEY\"] = \"sk-ant-key\"\nos.environ[\"MAX_TOKENS\"] = \"not-a-number\"\nresult3 = setup_ai_environment()\nprint(f\"Valid: {result3['valid']}\")\nprint(f\"Errors: {result3['errors']}\")\nprint()\n\nprint(\"Test 4: Invalid LOG_LEVEL\")\nprint(\"=\"*50)\nos.environ[\"MAX_TOKENS\"] = \"1024\"\nos.environ[\"LOG_LEVEL\"] = \"SUPER_DEBUG\"\nresult4 = setup_ai_environment()\nprint(f\"Valid: {result4['valid']}\")\nprint(f\"Errors: {result4['errors']}\")\nprint(f\"Config: {result4['config']}\")",
+      "hint": "For each environment variable: 1) Get it with os.environ.get(), 2) Check if it exists/valid, 3) Add error if invalid, 4) Store in config dict. Return a dict with valid (bool), errors (list), warnings (list), and config (dict)."
+    }
+  ],
+
+  "nextLesson": "08-common-ai-patterns",
+  "prevLesson": "06-building-cli-tools"
+}

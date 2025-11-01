@@ -1,0 +1,90 @@
+{
+  "id": "01-why-python-ai",
+  "title": "Why Python for AI?",
+  "description": "Discover why Python is the #1 choice for AI development and what you can build",
+  "track": "ai-tools",
+  "difficulty": "beginner",
+  "estimatedTime": "10 minutes",
+  "concepts": ["AI ecosystem", "Python strengths", "AI applications"],
+
+  "content": [
+    {
+      "type": "text",
+      "text": "Welcome to the AI-Tools track! You've learned Python basics - now let's explore why Python is THE language for AI development and how you can use it to build amazing AI-powered tools."
+    },
+
+    {
+      "type": "text",
+      "text": "Python dominates AI development for three main reasons:"
+    },
+
+    {
+      "type": "text",
+      "text": "1. SIMPLE SYNTAX = FASTER EXPERIMENTS\nAI development involves lots of experimentation. Python's clean syntax lets you test ideas quickly without fighting the language. Compare writing a data processing pipeline in Python vs Java - Python wins every time for speed of development."
+    },
+
+    {
+      "type": "text",
+      "text": "2. MASSIVE AI ECOSYSTEM\nEvery major AI company builds Python libraries: OpenAI (GPT), Anthropic (Claude), Google (Gemini), Meta (Llama). Want to use AI? The tools are in Python."
+    },
+
+    {
+      "type": "code",
+      "code": "# This is how simple AI code looks in Python:\n# (We'll learn the details soon!)\n\n# Example of what you'll be able to write:\ndef ask_ai(question):\n    \"\"\"Send a question to an AI and get an answer.\"\"\"\n    # This is pseudocode showing the concept\n    prompt = f\"Question: {question}\"\n    # response = call_ai_api(prompt)\n    # return response\n    return \"AI would answer here!\"\n\n# Using it is just as simple:\nresult = ask_ai(\"What is Python?\")\nprint(result)",
+      "explanation": "AI code in Python is just functions and API calls - you already know enough Python to start!"
+    },
+
+    {
+      "type": "text",
+      "text": "3. REAL-WORLD AI JOBS USE PYTHON\n95% of AI/ML job postings require Python. Learning Python + AI = career opportunities."
+    },
+
+    {
+      "type": "tip",
+      "text": "You DON'T need to understand complex math or neural networks to build useful AI tools. Modern AI is accessed through simple API calls!"
+    },
+
+    {
+      "type": "text",
+      "text": "WHAT CAN YOU BUILD WITH PYTHON + AI?"
+    },
+
+    {
+      "type": "code",
+      "code": "# 1. AI Code Reviewer\n# Automatically review your code and suggest improvements\n\ndef review_code(code):\n    \"\"\"Send code to AI for review.\"\"\"\n    prompt = f\"Review this Python code and suggest improvements:\\n{code}\"\n    # AI returns: suggestions for better variable names,\n    # performance tips, potential bugs, etc.\n    return \"AI code review here\"\n\n# 2. Smart Data Processor\n# Extract information from messy text\n\ndef extract_emails(text):\n    \"\"\"Use AI to find all emails in text.\"\"\"\n    prompt = f\"Extract all email addresses from this text:\\n{text}\"\n    # AI returns: list of emails found\n    return [\"emails@found.com\"]\n\n# 3. Content Generator\n# Generate blog posts, documentation, etc.\n\ndef generate_blog_post(topic):\n    \"\"\"Generate a blog post about a topic.\"\"\"\n    prompt = f\"Write a blog post about {topic}\"\n    # AI returns: complete blog post\n    return \"Blog post content here\"",
+      "explanation": "These are REAL tools people build and use. You'll learn to build these in this track!"
+    },
+
+    {
+      "type": "text",
+      "text": "THE MODERN AI WORKFLOW:\n1. You write Python code\n2. Your code sends a prompt to an AI API (like Claude or GPT)\n3. AI processes it and sends back a response\n4. Your Python code uses that response\n\nIt's that simple! No machine learning degrees needed."
+    },
+
+    {
+      "type": "code",
+      "code": "# The basic pattern you'll use everywhere:\n\ndef ai_workflow_example():\n    \"\"\"This is the pattern for 90% of AI tools.\"\"\"\n    \n    # Step 1: Prepare your data/question\n    user_input = \"Explain recursion simply\"\n    \n    # Step 2: Create a good prompt\n    prompt = f\"You are a helpful teacher. {user_input}\"\n    \n    # Step 3: Send to AI (we'll learn this!)\n    # response = send_to_ai(prompt)\n    \n    # Step 4: Process the response\n    # result = response['answer']\n    # return result\n    \n    print(\"You'll write code just like this!\")\n    return \"AI response\"\n\nai_workflow_example()",
+      "explanation": "This 4-step pattern is used in almost every AI application. Master this, and you can build anything!"
+    },
+
+    {
+      "type": "text",
+      "text": "IMPORTANT NOTE FOR THIS TRACK:\nSome code examples in this track show AI API calls that won't run in this browser environment (Skulpt doesn't support networking). But the code is REAL - copy it to your local Python environment and it will work! We'll mark examples clearly:\n\n✅ = Runs here in browser\n📋 = Copy to local Python to run"
+    },
+
+    {
+      "type": "tip",
+      "text": "By the end of this track, you'll be able to: call AI APIs, craft effective prompts, process AI responses, build CLI tools, and follow AI development best practices. Let's go!"
+    },
+
+    {
+      "type": "exercise",
+      "prompt": "Think about a repetitive task you do often. Write a function name and description for how AI could help automate it. Use proper Python function syntax with a docstring.",
+      "starter": "# Think of something you do repeatedly:\n# - Summarizing articles?\n# - Generating emails?\n# - Explaining code?\n# - Formatting data?\n\ndef my_ai_helper():\n    \"\"\"Describe what your AI tool would do.\"\"\"\n    pass\n\n# Call your function\nmy_ai_helper()",
+      "solution": "# Example: Email response generator\n\ndef generate_email_response(email_content, tone=\"professional\"):\n    \"\"\"Generate a professional email response.\n    \n    Args:\n        email_content: The email you received\n        tone: How to respond (professional, friendly, brief)\n    \n    Returns:\n        A drafted email response\n    \"\"\"\n    prompt = f\"Write a {tone} email response to:\\n{email_content}\"\n    # In real code: response = ai_api.generate(prompt)\n    print(f\"Would send to AI: {prompt}\")\n    return \"AI-generated email response\"\n\n# Test it\nresult = generate_email_response(\n    \"Can we meet next week about the project?\",\n    tone=\"friendly\"\n)\nprint(result)",
+      "hint": "Pick something YOU actually need! The best AI tools solve real problems you have."
+    }
+  ],
+
+  "nextLesson": "02-api-basics",
+  "prevLesson": null
+}

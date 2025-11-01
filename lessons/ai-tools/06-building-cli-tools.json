@@ -1,0 +1,109 @@
+{
+  "id": "06-building-cli-tools",
+  "title": "Building AI CLI Tools",
+  "description": "Create command-line tools powered by AI that you can actually use",
+  "track": "ai-tools",
+  "difficulty": "intermediate",
+  "estimatedTime": "25 minutes",
+  "concepts": ["CLI", "argparse", "input/output", "file handling"],
+
+  "content": [
+    {
+      "type": "text",
+      "text": "Let's build REAL AI-powered command-line tools you can use! CLI (Command Line Interface) tools are programs you run from the terminal. They're powerful, fast, and professional."
+    },
+
+    {
+      "type": "text",
+      "text": "WHAT ARE CLI TOOLS?\n\nCLI tools are programs you run with commands like:\n$ python my_tool.py --file code.py --action review\n\nExamples you've used:\n- git (version control)\n- pip (install packages)\n- python (run Python)\n\nNow YOU can build AI-powered CLI tools!"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Simplest CLI tool (runs in browser):\n\ndef simple_ai_tool():\n    \"\"\"A basic AI CLI tool simulation.\"\"\"\n    # In real Python, you'd use input()\n    # Here we simulate it:\n    user_query = \"Explain Python functions\"\n    \n    print(\"AI CLI Tool v1.0\")\n    print(\"=\" * 40)\n    print(f\"You asked: {user_query}\")\n    print(\"\\nAI would respond here...\")\n    print(\"(In real Python, this calls the AI API)\")\n\nsimple_ai_tool()",
+      "explanation": "The basic structure: get input, process it (call AI), show output. Let's make it more professional!"
+    },
+
+    {
+      "type": "text",
+      "text": "USING argparse FOR COMMAND-LINE ARGUMENTS:\n\nProfessional CLI tools use argparse to handle command-line arguments:"
+    },
+
+    {
+      "type": "code",
+      "code": "# 📋 Real CLI tool with argparse (copy to local Python):\n\nimport argparse\n\ndef create_parser():\n    \"\"\"Create command-line argument parser.\"\"\"\n    parser = argparse.ArgumentParser(\n        description=\"AI Code Assistant - Get help with Python code\",\n        epilog=\"Example: python ai_assistant.py --code 'def add(a,b): return a+b' --action explain\"\n    )\n    \n    # Add arguments:\n    parser.add_argument(\n        \"--code\",\n        type=str,\n        help=\"Python code to analyze\",\n        required=False\n    )\n    \n    parser.add_argument(\n        \"--file\",\n        type=str,\n        help=\"Path to Python file\",\n        required=False\n    )\n    \n    parser.add_argument(\n        \"--action\",\n        type=str,\n        choices=[\"explain\", \"review\", \"improve\", \"debug\"],\n        default=\"explain\",\n        help=\"What to do with the code\"\n    )\n    \n    parser.add_argument(\n        \"--output\",\n        type=str,\n        help=\"Save output to file (optional)\"\n    )\n    \n    return parser\n\n# Using it:\nif __name__ == \"__main__\":\n    parser = create_parser()\n    args = parser.parse_args()\n    \n    print(f\"Action: {args.action}\")\n    print(f\"Code: {args.code}\")\n    print(f\"File: {args.file}\")\n    print(f\"Output: {args.output}\")",
+      "explanation": "argparse makes CLI tools professional! Users can pass --code, --file, --action, etc. from the terminal."
+    },
+
+    {
+      "type": "text",
+      "text": "BUILDING A COMPLETE AI CLI TOOL:\n\nLet's build a real AI code explainer CLI tool!"
+    },
+
+    {
+      "type": "code",
+      "code": "# 📋 Complete AI CLI Tool (ai_explainer.py):\n# Copy this to a file and run: python ai_explainer.py --help\n\nimport argparse\nimport sys\nimport os\n\ndef explain_code(code, ai_client):\n    \"\"\"Explain code using AI.\"\"\"\n    prompt = f\"\"\"Explain this Python code clearly:\n\n{code}\n\nInclude:\n1. What it does\n2. How it works\n3. Key concepts used\"\"\"\n    \n    # In real version, call AI here:\n    # response = ai_client.messages.create(...)\n    # return response.content[0].text\n    \n    return f\"[AI would explain this code]\\n\\n{code}\"\n\ndef review_code(code, ai_client):\n    \"\"\"Review code for issues.\"\"\"\n    prompt = f\"\"\"Review this Python code:\n\n{code}\n\nCheck for:\n- Bugs\n- Best practices\n- Readability issues\n- Performance concerns\"\"\"\n    \n    return f\"[AI would review this code]\\n\\n{code}\"\n\ndef main():\n    \"\"\"Main CLI application.\"\"\"\n    parser = argparse.ArgumentParser(\n        description=\"AI Code Assistant\",\n        formatter_class=argparse.RawDescriptionHelpFormatter,\n        epilog=\"\"\"Examples:\n  python ai_explainer.py --code \"def add(a,b): return a+b\"\n  python ai_explainer.py --file script.py --action review\n  python ai_explainer.py --code \"x = [1,2,3]\" --output result.txt\n        \"\"\"\n    )\n    \n    parser.add_argument(\"--code\", help=\"Code to analyze\")\n    parser.add_argument(\"--file\", help=\"File path\")\n    parser.add_argument(\n        \"--action\",\n        choices=[\"explain\", \"review\"],\n        default=\"explain\"\n    )\n    parser.add_argument(\"--output\", help=\"Output file\")\n    \n    args = parser.parse_args()\n    \n    # Get code from --code or --file:\n    if args.code:\n        code = args.code\n    elif args.file:\n        with open(args.file, 'r') as f:\n            code = f.read()\n    else:\n        print(\"Error: Provide --code or --file\")\n        sys.exit(1)\n    \n    # Mock AI client (real version uses anthropic.Anthropic()):\n    ai_client = None\n    \n    # Perform action:\n    if args.action == \"explain\":\n        result = explain_code(code, ai_client)\n    elif args.action == \"review\":\n        result = review_code(code, ai_client)\n    \n    # Output result:\n    if args.output:\n        with open(args.output, 'w') as f:\n            f.write(result)\n        print(f\"Saved to {args.output}\")\n    else:\n        print(result)\n\nif __name__ == \"__main__\":\n    main()",
+      "explanation": "This is a production-ready CLI tool! It handles arguments, reads files, calls AI (when implemented), and saves output."
+    },
+
+    {
+      "type": "tip",
+      "text": "Save CLI tools as .py files and run them with: python tool_name.py --arg1 value1 --arg2 value2. Add them to your PATH to run from anywhere!"
+    },
+
+    {
+      "type": "text",
+      "text": "ADDING USER-FRIENDLY FEATURES:\n\nGreat CLI tools have loading indicators, colored output, and helpful messages:"
+    },
+
+    {
+      "type": "code",
+      "code": "# 📋 Enhanced CLI with user-friendly features:\n\nimport sys\nimport time\n\ndef print_with_color(text, color=\"white\"):\n    \"\"\"Print colored text (works in most terminals).\"\"\"\n    colors = {\n        \"red\": \"\\033[91m\",\n        \"green\": \"\\033[92m\",\n        \"yellow\": \"\\033[93m\",\n        \"blue\": \"\\033[94m\",\n        \"white\": \"\\033[0m\"\n    }\n    \n    color_code = colors.get(color, colors[\"white\"])\n    reset = \"\\033[0m\"\n    print(f\"{color_code}{text}{reset}\")\n\ndef show_loading(message=\"Processing\", duration=2):\n    \"\"\"Show loading animation.\"\"\"\n    for i in range(duration):\n        sys.stdout.write(f\"\\r{message}\" + \".\" * (i % 4) + \" \" * (3 - i % 4))\n        sys.stdout.flush()\n        time.sleep(0.5)\n    sys.stdout.write(\"\\r\" + \" \" * 50 + \"\\r\")  # Clear line\n    sys.stdout.flush()\n\ndef show_progress_bar(current, total, width=50):\n    \"\"\"Show progress bar.\"\"\"\n    percent = current / total\n    filled = int(width * percent)\n    bar = \"█\" * filled + \"-\" * (width - filled)\n    print(f\"\\rProgress: [{bar}] {int(percent * 100)}%\", end=\"\")\n    \n    if current == total:\n        print()  # New line when complete\n\n# Example usage:\nprint_with_color(\"Starting AI analysis...\", \"blue\")\nshow_loading(\"Calling AI\", duration=2)\nprint_with_color(\"✓ Analysis complete!\", \"green\")\n\nprint(\"\\nProcessing files:\")\nfor i in range(1, 11):\n    show_progress_bar(i, 10)\n    time.sleep(0.1)\n\nprint_with_color(\"\\nAll done!\", \"green\")",
+      "explanation": "Professional CLI tools give feedback! Loading animations show the program is working, colors make output readable."
+    },
+
+    {
+      "type": "text",
+      "text": "HANDLING ERRORS GRACEFULLY:"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Professional error handling in CLI tools:\n\nimport sys\n\ndef handle_cli_error(error_type, message, exit_code=1):\n    \"\"\"Handle CLI errors professionally.\"\"\"\n    error_messages = {\n        \"file_not_found\": f\"❌ Error: File '{message}' not found\",\n        \"invalid_code\": f\"❌ Error: Invalid code syntax: {message}\",\n        \"api_error\": f\"❌ Error: AI API failed: {message}\",\n        \"missing_arg\": f\"❌ Error: Missing required argument: {message}\"\n    }\n    \n    print(error_messages.get(error_type, f\"❌ Error: {message}\"), file=sys.stderr)\n    sys.exit(exit_code)\n\n# Example usage in CLI tool:\ndef safe_read_file(filepath):\n    \"\"\"Read file with error handling.\"\"\"\n    try:\n        with open(filepath, 'r') as f:\n            return f.read()\n    except FileNotFoundError:\n        handle_cli_error(\"file_not_found\", filepath)\n    except PermissionError:\n        handle_cli_error(\"permission\", f\"Cannot read {filepath}\")\n    except Exception as e:\n        handle_cli_error(\"unknown\", str(e))\n\n# Simulate usage:\nprint(\"Example of good error handling:\")\ntry:\n    content = safe_read_file(\"/nonexistent/file.py\")\nexcept SystemExit:\n    print(\"(Error was handled gracefully)\")",
+      "explanation": "Never let your CLI tool crash with ugly errors! Catch exceptions, show helpful messages, exit cleanly."
+    },
+
+    {
+      "type": "text",
+      "text": "REAL-WORLD CLI TOOL PATTERNS:"
+    },
+
+    {
+      "type": "code",
+      "code": "# 📋 Common CLI patterns you'll use:\n\n# Pattern 1: Interactive mode (when no args provided)\ndef interactive_mode():\n    \"\"\"Run in interactive mode.\"\"\"\n    print(\"AI Assistant - Interactive Mode\")\n    print(\"Type 'quit' to exit\\n\")\n    \n    while True:\n        # In real Python:\n        # user_input = input(\"> \")\n        user_input = \"help\"  # Simulated\n        \n        if user_input.lower() == \"quit\":\n            print(\"Goodbye!\")\n            break\n        \n        # Process input\n        print(f\"You asked: {user_input}\")\n        print(\"AI response would go here\\n\")\n        break  # Remove in real version\n\n# Pattern 2: Batch processing\ndef batch_process(file_list):\n    \"\"\"Process multiple files.\"\"\"\n    results = []\n    \n    for i, filepath in enumerate(file_list, 1):\n        print(f\"Processing {i}/{len(file_list)}: {filepath}\")\n        # Process file with AI\n        result = f\"Processed {filepath}\"\n        results.append(result)\n    \n    return results\n\n# Pattern 3: Piped input (read from stdin)\ndef read_from_pipe():\n    \"\"\"Read code from pipe (e.g., cat code.py | python tool.py).\"\"\"\n    import sys\n    \n    if not sys.stdin.isatty():\n        # Data is being piped in\n        code = sys.stdin.read()\n        return code\n    else:\n        return None\n\nprint(\"CLI Pattern Examples:\")\nprint(\"\\n1. Interactive mode:\")\ninteractive_mode()\n\nprint(\"\\n2. Batch processing:\")\nfiles = [\"file1.py\", \"file2.py\", \"file3.py\"]\nresults = batch_process(files)\nprint(f\"Processed {len(results)} files\")",
+      "explanation": "Professional CLI tools support multiple usage modes: arguments, interactive, batch processing, and piped input!"
+    },
+
+    {
+      "type": "text",
+      "text": "COMPLETE EXAMPLE: AI CODE REVIEWER CLI"
+    },
+
+    {
+      "type": "code",
+      "code": "# 📋 Production-ready AI Code Reviewer CLI\n# Save as: ai_reviewer.py\n# Usage: python ai_reviewer.py --file code.py\n\nimport argparse\nimport sys\nimport os\n\nclass AICodeReviewer:\n    \"\"\"AI-powered code reviewer CLI tool.\"\"\"\n    \n    def __init__(self, api_key=None):\n        \"\"\"Initialize with API key.\"\"\"\n        self.api_key = api_key or os.environ.get(\"ANTHROPIC_API_KEY\")\n        if not self.api_key:\n            print(\"⚠️  Warning: No API key found\", file=sys.stderr)\n    \n    def review_code(self, code, focus=None):\n        \"\"\"Review code with AI.\"\"\"\n        focus_areas = focus or [\"bugs\", \"readability\", \"performance\"]\n        \n        prompt = f\"\"\"Review this Python code for:\n{', '.join(focus_areas)}\n\nCode:\n{code}\n\nProvide specific, actionable feedback.\"\"\"\n        \n        # In real version: call AI API\n        return f\"Code review for {len(code)} characters of code\"\n    \n    def run_cli(self):\n        \"\"\"Run the CLI interface.\"\"\"\n        parser = argparse.ArgumentParser(\n            description=\"AI Code Reviewer\",\n            epilog=\"Set ANTHROPIC_API_KEY environment variable\"\n        )\n        \n        parser.add_argument(\"--file\", help=\"Python file to review\")\n        parser.add_argument(\"--code\", help=\"Code string to review\")\n        parser.add_argument(\n            \"--focus\",\n            nargs=\"+\",\n            help=\"Focus areas: bugs readability performance\"\n        )\n        parser.add_argument(\"--output\", help=\"Save to file\")\n        \n        args = parser.parse_args()\n        \n        # Get code:\n        if args.file:\n            try:\n                with open(args.file, 'r') as f:\n                    code = f.read()\n            except FileNotFoundError:\n                print(f\"❌ File not found: {args.file}\", file=sys.stderr)\n                sys.exit(1)\n        elif args.code:\n            code = args.code\n        else:\n            print(\"❌ Provide --file or --code\", file=sys.stderr)\n            sys.exit(1)\n        \n        # Review:\n        print(\"🔍 Reviewing code...\")\n        review = self.review_code(code, args.focus)\n        \n        # Output:\n        if args.output:\n            with open(args.output, 'w') as f:\n                f.write(review)\n            print(f\"✓ Saved to {args.output}\")\n        else:\n            print(\"\\n\" + review)\n\nif __name__ == \"__main__\":\n    reviewer = AICodeReviewer()\n    reviewer.run_cli()",
+      "explanation": "This is a real, usable CLI tool! It has all the professional features: argument parsing, file handling, error handling, and AI integration."
+    },
+
+    {
+      "type": "exercise",
+      "prompt": "Create a simple CLI tool simulator called ai_summarizer() that takes text and a max_words parameter. It should validate inputs, show a processing message, and return a summary. Since we can't use argparse in the browser, simulate it with function parameters.",
+      "starter": "def ai_summarizer(text=None, max_words=50):\n    \"\"\"Simulate an AI text summarizer CLI tool.\n    \n    Args:\n        text: Text to summarize (required)\n        max_words: Maximum words in summary (default: 50)\n    \n    Returns:\n        Summary or error message\n    \"\"\"\n    # 1. Validate inputs\n    \n    # 2. Show processing message\n    \n    # 3. Create prompt for AI\n    \n    # 4. Return simulated summary\n    \n    pass\n\n# Test cases:\nprint(\"Test 1: Valid input\")\nresult1 = ai_summarizer(\n    text=\"Python is a high-level programming language known for its readability and versatility.\",\n    max_words=10\n)\nprint(result1)\n\nprint(\"\\nTest 2: Missing text\")\nresult2 = ai_summarizer()\nprint(result2)",
+      "solution": "def ai_summarizer(text=None, max_words=50):\n    \"\"\"Simulate an AI text summarizer CLI tool.\n    \n    Args:\n        text: Text to summarize (required)\n        max_words: Maximum words in summary (default: 50)\n    \n    Returns:\n        Summary or error message\n    \"\"\"\n    # 1. Validate inputs:\n    if not text:\n        return \"❌ Error: --text is required\\n\\nUsage: ai_summarizer --text 'your text' --max_words 50\"\n    \n    if not isinstance(max_words, int) or max_words < 1:\n        return f\"❌ Error: max_words must be positive integer, got: {max_words}\"\n    \n    if len(text.split()) < max_words:\n        return f\"⚠️  Text is already shorter than {max_words} words\\n\\nOriginal: {text}\"\n    \n    # 2. Show processing message:\n    word_count = len(text.split())\n    print(f\"📝 Summarizing {word_count} words to {max_words} words...\")\n    print(\"🤖 Calling AI...\\n\")\n    \n    # 3. Create prompt for AI:\n    prompt = f\"\"\"Summarize this text in {max_words} words or less:\n\n{text}\n\nProvide only the summary, no other text.\"\"\"\n    \n    print(f\"Prompt created: {len(prompt)} characters\")\n    \n    # 4. Simulate AI response:\n    # In real version: response = ai_client.generate(prompt)\n    summary = f\"[AI would summarize to {max_words} words]\\n\\nOriginal: {text[:50]}...\"\n    \n    return f\"\\n✅ Summary:\\n{summary}\"\n\n# Test cases:\nprint(\"=\"*60)\nprint(\"Test 1: Valid input\")\nprint(\"=\"*60)\nresult1 = ai_summarizer(\n    text=\"Python is a high-level, interpreted programming language known for its readability, versatility, and extensive library support. It's used in web development, data science, automation, and artificial intelligence.\",\n    max_words=15\n)\nprint(result1)\n\nprint(\"\\n\" + \"=\"*60)\nprint(\"Test 2: Missing text\")\nprint(\"=\"*60)\nresult2 = ai_summarizer()\nprint(result2)\n\nprint(\"\\n\" + \"=\"*60)\nprint(\"Test 3: Text already short\")\nprint(\"=\"*60)\nresult3 = ai_summarizer(text=\"Python is great\", max_words=50)\nprint(result3)\n\nprint(\"\\n\" + \"=\"*60)\nprint(\"Test 4: Invalid max_words\")\nprint(\"=\"*60)\nresult4 = ai_summarizer(text=\"Some text here\", max_words=-5)\nprint(result4)",
+      "hint": "Validate inputs first! Check if text exists and max_words is valid. Use print() to show processing messages. Build a prompt string. Return a formatted result with the summary."
+    }
+  ],
+
+  "nextLesson": "07-environment-best-practices",
+  "prevLesson": "05-processing-responses"
+}

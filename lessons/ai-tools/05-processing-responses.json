@@ -1,0 +1,125 @@
+{
+  "id": "05-processing-responses",
+  "title": "Processing AI Responses",
+  "description": "Learn to extract, parse, and use AI responses in your code",
+  "track": "ai-tools",
+  "difficulty": "beginner",
+  "estimatedTime": "20 minutes",
+  "concepts": ["string processing", "JSON parsing", "regex", "data extraction"],
+
+  "content": [
+    {
+      "type": "text",
+      "text": "Getting a response from AI is just the first step. The real power comes from PROCESSING that response - extracting data, formatting it, and using it in your program. Let's learn how!"
+    },
+
+    {
+      "type": "text",
+      "text": "AI RESPONSES ARE JUST STRINGS:\n\nWhen AI responds, you get plain text. Your job is to turn that text into useful data your program can use."
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Simulating an AI response:\n\nai_response = \"\"\"The function calculates the sum of two numbers.\nTime complexity: O(1)\nSpace complexity: O(1)\nBest use case: Adding numeric values\"\"\"\n\nprint(\"Raw AI response:\")\nprint(ai_response)\nprint(\"\\nType:\", type(ai_response))  # It's just a string!\n\n# Your job: extract useful information from this string",
+      "explanation": "AI gives you text. You need to parse it to extract the information you need. Let's learn how!"
+    },
+
+    {
+      "type": "text",
+      "text": "METHOD 1: SIMPLE STRING PROCESSING\n\nFor simple responses, use Python's built-in string methods:"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Extracting information with string methods:\n\nai_response = \"\"\"The function calculates the sum of two numbers.\nTime complexity: O(1)\nSpace complexity: O(1)\nBest use case: Adding numeric values\"\"\"\n\ndef extract_complexity(response):\n    \"\"\"Extract time and space complexity from response.\"\"\"\n    lines = response.split('\\n')\n    \n    complexities = {}\n    for line in lines:\n        if 'Time complexity:' in line:\n            complexities['time'] = line.split(':')[1].strip()\n        elif 'Space complexity:' in line:\n            complexities['space'] = line.split(':')[1].strip()\n    \n    return complexities\n\nresult = extract_complexity(ai_response)\nprint(\"Extracted data:\", result)\nprint(f\"Time: {result['time']}\")\nprint(f\"Space: {result['space']}\")",
+      "explanation": "Split by newlines, look for keywords, extract the part after the colon. Simple but effective!"
+    },
+
+    {
+      "type": "text",
+      "text": "METHOD 2: ASKING AI FOR STRUCTURED OUTPUT\n\nThe BEST approach: ask the AI to return data in a structured format like JSON!"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ AI response in JSON format:\n\nimport json\n\n# Simulating AI response when you ask for JSON:\nai_json_response = '''{\n  \"purpose\": \"Calculate sum of two numbers\",\n  \"time_complexity\": \"O(1)\",\n  \"space_complexity\": \"O(1)\",\n  \"parameters\": [\"a\", \"b\"],\n  \"return_type\": \"number\",\n  \"use_cases\": [\"Adding values\", \"Math operations\"]\n}'''\n\nprint(\"AI returned JSON:\")\nprint(ai_json_response)\nprint()\n\n# Parse it into a Python dictionary:\ndata = json.loads(ai_json_response)\n\nprint(\"Parsed data:\")\nprint(f\"Purpose: {data['purpose']}\")\nprint(f\"Complexity: {data['time_complexity']}\")\nprint(f\"Parameters: {', '.join(data['parameters'])}\")\nprint(f\"Use cases: {data['use_cases']}\")",
+      "explanation": "JSON is PERFECT for AI responses! Easy to parse, structured, and you can access data like a dictionary."
+    },
+
+    {
+      "type": "tip",
+      "text": "BEST PRACTICE: Always ask AI to respond in JSON format when you need structured data. Include this in your prompt: 'Respond with valid JSON only, no other text.'"
+    },
+
+    {
+      "type": "text",
+      "text": "CREATING A STRUCTURED RESPONSE PARSER:"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Professional response parser:\n\nimport json\n\ndef parse_ai_response(response, expected_format=\"json\"):\n    \"\"\"Parse AI response safely.\n    \n    Args:\n        response: Raw AI response text\n        expected_format: 'json' or 'text'\n    \n    Returns:\n        Parsed data or error message\n    \"\"\"\n    try:\n        if expected_format == \"json\":\n            # Try to parse as JSON:\n            data = json.loads(response)\n            return {\"success\": True, \"data\": data}\n        else:\n            # Return as text:\n            return {\"success\": True, \"data\": response}\n    \n    except json.JSONDecodeError as e:\n        # JSON parsing failed:\n        return {\n            \"success\": False,\n            \"error\": f\"Invalid JSON: {str(e)}\",\n            \"raw_response\": response\n        }\n    except Exception as e:\n        # Other error:\n        return {\n            \"success\": False,\n            \"error\": str(e),\n            \"raw_response\": response\n        }\n\n# Test with valid JSON:\ngood_json = '{\"name\": \"Alice\", \"age\": 25}'\nresult1 = parse_ai_response(good_json, \"json\")\nprint(\"Good JSON:\", result1)\n\n# Test with invalid JSON:\nbad_json = '{name: Alice}'  # Missing quotes\nresult2 = parse_ai_response(bad_json, \"json\")\nprint(\"\\nBad JSON:\", result2)",
+      "explanation": "Always use try/except when parsing AI responses! AI sometimes returns invalid JSON, so handle errors gracefully."
+    },
+
+    {
+      "type": "text",
+      "text": "EXTRACTING CODE FROM AI RESPONSES:\n\nAI often returns code wrapped in markdown code blocks. Here's how to extract it:"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Extracting code from markdown:\n\nimport re\n\ndef extract_code_blocks(response):\n    \"\"\"Extract code from markdown code blocks.\n    \n    Args:\n        response: AI response with ```language...``` blocks\n    \n    Returns:\n        List of (language, code) tuples\n    \"\"\"\n    # Pattern to match code blocks:\n    # ```python\n    # code here\n    # ```\n    pattern = r'```(\\w+)?\\n(.*?)```'\n    \n    matches = re.findall(pattern, response, re.DOTALL)\n    \n    code_blocks = []\n    for language, code in matches:\n        code_blocks.append({\n            \"language\": language or \"unknown\",\n            \"code\": code.strip()\n        })\n    \n    return code_blocks\n\n# Simulating AI response with code:\nai_with_code = \"\"\"Here's a solution:\n\n```python\ndef greet(name):\n    return f\"Hello, {name}!\"\n```\n\nAnd here's how to use it:\n\n```python\nprint(greet(\"Alice\"))\n```\n\"\"\"\n\ncode_blocks = extract_code_blocks(ai_with_code)\n\nfor i, block in enumerate(code_blocks, 1):\n    print(f\"Code block {i} ({block['language']}):\")\n    print(block['code'])\n    print()",
+      "explanation": "Regular expressions (regex) are perfect for extracting code blocks. This pattern finds all ```language...``` blocks."
+    },
+
+    {
+      "type": "text",
+      "text": "CLEANING AND FORMATTING AI RESPONSES:"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Cleaning AI responses:\n\ndef clean_ai_response(response):\n    \"\"\"Clean up common AI response issues.\n    \n    Args:\n        response: Raw AI response\n    \n    Returns:\n        Cleaned response text\n    \"\"\"\n    # Remove extra whitespace:\n    cleaned = response.strip()\n    \n    # Remove multiple blank lines:\n    cleaned = re.sub(r'\\n{3,}', '\\n\\n', cleaned)\n    \n    # Remove common AI prefixes:\n    prefixes_to_remove = [\n        \"Here's\", \"Here is\", \"Sure!\", \"Certainly!\",\n        \"Of course!\", \"I'll\", \"Let me\"\n    ]\n    \n    for prefix in prefixes_to_remove:\n        if cleaned.startswith(prefix):\n            # Find the first newline or colon:\n            first_break = min(\n                cleaned.find('\\n') if '\\n' in cleaned else len(cleaned),\n                cleaned.find(':') if ':' in cleaned else len(cleaned)\n            )\n            cleaned = cleaned[first_break:].strip()\n            break\n    \n    return cleaned\n\n# Test it:\nnoisy_response = \"\"\"Sure! Here's the answer:\n\n\n\nThe result is 42.\n\n\n\nHope this helps!\"\"\"\n\ncleaned = clean_ai_response(noisy_response)\nprint(\"Original:\")\nprint(repr(noisy_response))\nprint(\"\\nCleaned:\")\nprint(repr(cleaned))",
+      "explanation": "AI sometimes adds fluff like 'Sure!' or 'Here you go!'. Clean these for professional applications."
+    },
+
+    {
+      "type": "text",
+      "text": "HANDLING MULTI-PART RESPONSES:\n\nSometimes AI responses have multiple sections. Parse them systematically:"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Parsing structured multi-part responses:\n\ndef parse_multi_part_response(response):\n    \"\"\"Parse response with multiple labeled sections.\n    \n    Expects format like:\n    SECTION1: content\n    SECTION2: content\n    \"\"\"\n    sections = {}\n    current_section = None\n    current_content = []\n    \n    for line in response.split('\\n'):\n        # Check if line is a section header (ends with colon):\n        if ':' in line and line.strip().isupper():\n            # Save previous section:\n            if current_section:\n                sections[current_section] = '\\n'.join(current_content).strip()\n            \n            # Start new section:\n            parts = line.split(':', 1)\n            current_section = parts[0].strip()\n            current_content = [parts[1].strip()] if len(parts) > 1 else []\n        else:\n            # Add to current section:\n            if current_section:\n                current_content.append(line)\n    \n    # Save last section:\n    if current_section:\n        sections[current_section] = '\\n'.join(current_content).strip()\n    \n    return sections\n\n# Test it:\nstructured_response = \"\"\"SUMMARY: This function adds two numbers.\n\nPARAMETERS: a and b (both numbers)\n\nRETURNS: The sum of a and b\n\nEXAMPLE: add(2, 3) returns 5\"\"\"\n\nparsed = parse_multi_part_response(structured_response)\n\nfor section, content in parsed.items():\n    print(f\"{section}:\")\n    print(f\"  {content}\")\n    print()",
+      "explanation": "Ask AI to use labeled sections (SUMMARY:, PARAMETERS:, etc.), then parse them into a dictionary."
+    },
+
+    {
+      "type": "tip",
+      "text": "Control the AI's output format through your prompt! The clearer you are about format, the easier it is to parse the response."
+    },
+
+    {
+      "type": "text",
+      "text": "BUILDING A COMPLETE RESPONSE PROCESSOR:"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Professional-grade response processor:\n\nimport json\nimport re\n\nclass AIResponseProcessor:\n    \"\"\"Process and extract data from AI responses.\"\"\"\n    \n    def __init__(self, response):\n        \"\"\"Initialize with raw response.\"\"\"\n        self.raw_response = response\n        self.cleaned = self._clean(response)\n    \n    def _clean(self, text):\n        \"\"\"Clean the response.\"\"\"\n        # Remove extra whitespace:\n        cleaned = text.strip()\n        cleaned = re.sub(r'\\n{3,}', '\\n\\n', cleaned)\n        return cleaned\n    \n    def as_json(self):\n        \"\"\"Try to parse response as JSON.\"\"\"\n        try:\n            return json.loads(self.cleaned)\n        except:\n            return None\n    \n    def extract_code(self):\n        \"\"\"Extract code blocks.\"\"\"\n        pattern = r'```(\\w+)?\\n(.*?)```'\n        matches = re.findall(pattern, self.raw_response, re.DOTALL)\n        return [(lang or \"unknown\", code.strip()) for lang, code in matches]\n    \n    def extract_section(self, section_name):\n        \"\"\"Extract a specific section by name.\"\"\"\n        pattern = f\"{section_name}:\\s*(.+?)(?:\\n\\n|$)\"\n        match = re.search(pattern, self.cleaned, re.IGNORECASE | re.DOTALL)\n        return match.group(1).strip() if match else None\n    \n    def to_dict(self):\n        \"\"\"Convert to dictionary with all extractions.\"\"\"\n        return {\n            \"raw\": self.raw_response,\n            \"cleaned\": self.cleaned,\n            \"json\": self.as_json(),\n            \"code_blocks\": self.extract_code()\n        }\n\n# Example usage:\nresponse = \"\"\"Here's the solution:\n\n```python\ndef add(a, b):\n    return a + b\n```\n\nSUMMARY: Adds two numbers\"\"\"\n\nprocessor = AIResponseProcessor(response)\n\nprint(\"Code blocks:\", processor.extract_code())\nprint(\"Summary:\", processor.extract_section(\"SUMMARY\"))\nprint(\"\\nFull dict:\", processor.to_dict())",
+      "explanation": "This class handles all common response processing tasks. Use it as a foundation for your AI tools!"
+    },
+
+    {
+      "type": "exercise",
+      "prompt": "Create a function called extract_function_info() that takes an AI response about a Python function and extracts: the function name, parameters, return type, and a brief description. Handle cases where some information might be missing. Test it with a simulated AI response.",
+      "starter": "def extract_function_info(ai_response):\n    \"\"\"Extract structured information about a function.\n    \n    Args:\n        ai_response: AI response describing a function\n    \n    Returns:\n        Dictionary with function details\n    \"\"\"\n    # Parse the response and extract:\n    # - name\n    # - parameters (list)\n    # - return_type\n    # - description\n    \n    pass\n\n# Test with this simulated response:\ntest_response = \"\"\"Function name: calculate_total\nParameters: items (list), tax_rate (float)\nReturn type: float\nDescription: Calculates total price with tax\"\"\"\n\ninfo = extract_function_info(test_response)\nprint(info)",
+      "solution": "def extract_function_info(ai_response):\n    \"\"\"Extract structured information about a function.\n    \n    Args:\n        ai_response: AI response describing a function\n    \n    Returns:\n        Dictionary with function details\n    \"\"\"\n    # Initialize result with default values:\n    info = {\n        \"name\": None,\n        \"parameters\": [],\n        \"return_type\": None,\n        \"description\": None\n    }\n    \n    # Parse line by line:\n    for line in ai_response.split('\\n'):\n        line = line.strip()\n        \n        if line.lower().startswith('function name:'):\n            info['name'] = line.split(':', 1)[1].strip()\n        \n        elif line.lower().startswith('parameters:'):\n            # Extract parameters\n            params_str = line.split(':', 1)[1].strip()\n            # Parse \"items (list), tax_rate (float)\"\n            if params_str and params_str.lower() != 'none':\n                params = [p.strip() for p in params_str.split(',')]\n                info['parameters'] = params\n        \n        elif line.lower().startswith('return type:'):\n            info['return_type'] = line.split(':', 1)[1].strip()\n        \n        elif line.lower().startswith('description:'):\n            info['description'] = line.split(':', 1)[1].strip()\n    \n    return info\n\n# Test cases:\ntest_response1 = \"\"\"Function name: calculate_total\nParameters: items (list), tax_rate (float)\nReturn type: float\nDescription: Calculates total price with tax\"\"\"\n\ntest_response2 = \"\"\"Function name: greet\nParameters: name (str)\nReturn type: str\nDescription: Returns a greeting message\"\"\"\n\ntest_response3 = \"\"\"Function name: generate_id\nParameters: None\nReturn type: int\nDescription: Generates a unique ID\"\"\"\n\nprint(\"Test 1:\")\nprint(extract_function_info(test_response1))\n\nprint(\"\\nTest 2:\")\nprint(extract_function_info(test_response2))\n\nprint(\"\\nTest 3:\")\nprint(extract_function_info(test_response3))",
+      "hint": "Split by newlines, look for lines starting with 'Function name:', 'Parameters:', etc. Use .split(':') to separate the label from the value. Handle missing values with default None or empty list."
+    }
+  ],
+
+  "nextLesson": "06-building-cli-tools",
+  "prevLesson": "04-prompt-engineering"
+}

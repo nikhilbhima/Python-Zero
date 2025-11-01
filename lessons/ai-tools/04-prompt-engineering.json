@@ -1,0 +1,114 @@
+{
+  "id": "04-prompt-engineering",
+  "title": "Prompt Engineering in Code",
+  "description": "Learn to craft effective prompts that get better AI responses",
+  "track": "ai-tools",
+  "difficulty": "beginner",
+  "estimatedTime": "20 minutes",
+  "concepts": ["prompt engineering", "f-strings", "templates", "AI optimization"],
+
+  "content": [
+    {
+      "type": "text",
+      "text": "The #1 skill for working with AI: writing good prompts. A better prompt = better results. Let's learn how to engineer prompts in Python code!"
+    },
+
+    {
+      "type": "text",
+      "text": "WHAT IS PROMPT ENGINEERING?\n\nPrompt Engineering = Crafting input text to get the best AI output\n\nThink of it like asking questions:\n❌ Bad: \"code\"\n✅ Good: \"Write a Python function that validates email addresses, includes error handling, and has clear docstrings\"\n\nMore specific = better results!"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Let's see the difference:\n\n# Bad prompt - too vague:\nbad_prompt = \"explain python\"\nprint(\"Bad prompt:\", bad_prompt)\nprint(\"AI will give generic, unfocused answer\\n\")\n\n# Good prompt - specific and clear:\ngood_prompt = \"\"\"Explain Python to a beginner who knows JavaScript.\nFocus on:\n1. Key syntax differences\n2. Indentation instead of braces\n3. Dynamic typing\nUse code examples. Keep it under 150 words.\"\"\"\n\nprint(\"Good prompt:\", good_prompt)\nprint(\"AI will give focused, useful answer!\")",
+      "explanation": "Specificity wins! Tell the AI: who the audience is, what to focus on, how to format it, and length limits."
+    },
+
+    {
+      "type": "text",
+      "text": "THE ANATOMY OF A GREAT PROMPT:\n\n1. ROLE: Who should the AI be?\n2. TASK: What should it do?\n3. CONTEXT: What background info does it need?\n4. FORMAT: How should the output look?\n5. CONSTRAINTS: What limits apply?"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Building prompts with structure:\n\ndef create_prompt(role, task, context=\"\", format_spec=\"\", constraints=\"\"):\n    \"\"\"Build a structured prompt.\"\"\"\n    prompt_parts = []\n    \n    if role:\n        prompt_parts.append(f\"You are {role}.\")\n    \n    if task:\n        prompt_parts.append(f\"\\nTask: {task}\")\n    \n    if context:\n        prompt_parts.append(f\"\\nContext: {context}\")\n    \n    if format_spec:\n        prompt_parts.append(f\"\\nFormat: {format_spec}\")\n    \n    if constraints:\n        prompt_parts.append(f\"\\nConstraints: {constraints}\")\n    \n    return \"\\n\".join(prompt_parts)\n\n# Example usage:\nprompt = create_prompt(\n    role=\"a helpful Python tutor\",\n    task=\"Explain list comprehensions\",\n    context=\"Student knows for loops but not comprehensions\",\n    format_spec=\"Start with a simple example, then a complex one\",\n    constraints=\"Under 100 words, use simple language\"\n)\n\nprint(prompt)",
+      "explanation": "This template ensures you include all important parts. Reusable for any AI task!"
+    },
+
+    {
+      "type": "text",
+      "text": "USING F-STRINGS FOR DYNAMIC PROMPTS:\n\nThe real power comes from building prompts dynamically based on user input:"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Dynamic prompt engineering:\n\ndef generate_code_review_prompt(code, language=\"Python\", focus_areas=None):\n    \"\"\"Generate a code review prompt.\"\"\"\n    if focus_areas is None:\n        focus_areas = [\"bugs\", \"readability\", \"performance\"]\n    \n    # Build focus list:\n    focus_list = \"\\n\".join([f\"- {area}\" for area in focus_areas])\n    \n    prompt = f\"\"\"You are an expert {language} code reviewer.\n\nReview this code and focus on:\n{focus_list}\n\nCode to review:\n```{language.lower()}\n{code}\n```\n\nProvide:\n1. Issues found (if any)\n2. Specific suggestions\n3. Revised code (if needed)\n\nBe constructive and educational.\"\"\"\n    \n    return prompt\n\n# Test it:\nuser_code = \"\"\"def calc(x,y):\n    return x+y\"\"\"\n\nreview_prompt = generate_code_review_prompt(\n    code=user_code,\n    focus_areas=[\"naming\", \"documentation\", \"type hints\"]\n)\n\nprint(review_prompt)",
+      "explanation": "This function builds custom prompts based on what you need reviewed. Professional AI tools work exactly like this!"
+    },
+
+    {
+      "type": "tip",
+      "text": "Pro tip: Use triple quotes (\"\"\"...\"\"\") for multi-line prompts. They're easier to read and maintain. You can use f-strings with them too!"
+    },
+
+    {
+      "type": "text",
+      "text": "PROMPT TEMPLATES FOR COMMON TASKS:\n\nCreate reusable templates for tasks you do often:"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Prompt template library:\n\nclass PromptTemplates:\n    \"\"\"Collection of proven prompt templates.\"\"\"\n    \n    @staticmethod\n    def code_explainer(code, detail_level=\"beginner\"):\n        \"\"\"Explain code at different detail levels.\"\"\"\n        if detail_level == \"beginner\":\n            style = \"simple terms with analogies\"\n        elif detail_level == \"intermediate\":\n            style = \"technical terms with examples\"\n        else:  # advanced\n            style = \"deep technical analysis\"\n        \n        return f\"\"\"Explain this code in {style}:\n\n{code}\n\nInclude: what it does, how it works, and when to use it.\"\"\"\n    \n    @staticmethod\n    def bug_finder(code, error_message=\"\"):\n        \"\"\"Find and fix bugs.\"\"\"\n        error_section = f\"\\nError message: {error_message}\" if error_message else \"\"\n        \n        return f\"\"\"Debug this code:{error_section}\n\n{code}\n\nProvide:\n1. What's wrong\n2. Why it's wrong\n3. How to fix it\n4. Corrected code\"\"\"\n    \n    @staticmethod\n    def refactorer(code, goals):\n        \"\"\"Refactor code to meet goals.\"\"\"\n        goals_list = \"\\n\".join([f\"- {goal}\" for goal in goals])\n        \n        return f\"\"\"Refactor this code to achieve:\n{goals_list}\n\nOriginal code:\n{code}\n\nProvide refactored code with explanations of changes.\"\"\"\n\n# Using the templates:\nmy_code = \"for i in range(len(my_list)): print(my_list[i])\"\n\nprint(\"EXPLAIN:\")\nprint(PromptTemplates.code_explainer(my_code, \"beginner\"))\n\nprint(\"\\n\" + \"=\"*50 + \"\\n\")\n\nprint(\"REFACTOR:\")\nprint(PromptTemplates.refactorer(my_code, [\"more Pythonic\", \"clearer\"]))",
+      "explanation": "Build a library of templates you can reuse. This saves time and ensures consistent quality!"
+    },
+
+    {
+      "type": "text",
+      "text": "EXAMPLES AND FEW-SHOT PROMPTING:\n\nShowing the AI examples of what you want dramatically improves results:"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Few-shot prompting pattern:\n\ndef create_few_shot_prompt(task, examples, new_input):\n    \"\"\"Create a prompt with examples (few-shot learning).\"\"\"\n    prompt = f\"Task: {task}\\n\\n\"\n    \n    # Add examples:\n    prompt += \"Examples:\\n\"\n    for i, (input_ex, output_ex) in enumerate(examples, 1):\n        prompt += f\"\\nExample {i}:\\n\"\n        prompt += f\"Input: {input_ex}\\n\"\n        prompt += f\"Output: {output_ex}\\n\"\n    \n    # Add the actual task:\n    prompt += f\"\\nNow do the same for:\\n\"\n    prompt += f\"Input: {new_input}\\n\"\n    prompt += f\"Output:\"\n    \n    return prompt\n\n# Example: Teaching AI to write docstrings:\nexamples = [\n    (\n        \"def add(a, b): return a + b\",\n        'def add(a, b):\\n    \"\"\"Add two numbers and return the sum.\"\"\"\\n    return a + b'\n    ),\n    (\n        \"def greet(name): return f'Hello {name}'\",\n        'def greet(name):\\n    \"\"\"Greet a person by name.\"\"\"\\n    return f\\'Hello {name}\\''\n    )\n]\n\nprompt = create_few_shot_prompt(\n    task=\"Add docstrings to Python functions\",\n    examples=examples,\n    new_input=\"def multiply(x, y): return x * y\"\n)\n\nprint(prompt)",
+      "explanation": "AI learns from examples! Show 2-3 examples of input→output, then give the real task. Much better results!"
+    },
+
+    {
+      "type": "text",
+      "text": "ADVANCED: SYSTEM PROMPTS VS USER PROMPTS:\n\nMost AI APIs let you set a 'system' prompt that defines behavior, separate from the 'user' prompt:"
+    },
+
+    {
+      "type": "code",
+      "code": "# 📋 System vs User prompts (for real API calls):\n\ndef create_ai_request_with_system(system_role, user_query):\n    \"\"\"Create request with system and user prompts.\"\"\"\n    # System prompt: Sets AI's behavior/role\n    # User prompt: The actual question/task\n    \n    request = {\n        \"model\": \"claude-3-5-sonnet-20241022\",\n        \"max_tokens\": 1024,\n        \"system\": system_role,  # Persistent behavior\n        \"messages\": [\n            {\"role\": \"user\", \"content\": user_query}  # Specific task\n        ]\n    }\n    \n    return request\n\n# Example 1: Code reviewer\nrequest1 = create_ai_request_with_system(\n    system_role=\"You are a senior Python developer who reviews code for clarity, correctness, and best practices. Be specific and educational.\",\n    user_query=\"Review this: def calc(x,y): return x+y\"\n)\n\nprint(\"Code Reviewer Request:\")\nprint(request1)\nprint()\n\n# Example 2: Beginner tutor\nrequest2 = create_ai_request_with_system(\n    system_role=\"You are a patient programming tutor for absolute beginners. Use simple language, analogies, and encourage learning.\",\n    user_query=\"What is a variable?\"\n)\n\nprint(\"Tutor Request:\")\nprint(request2)",
+      "explanation": "System prompts define WHO the AI is. User prompts define WHAT to do. Separate these for better control!"
+    },
+
+    {
+      "type": "tip",
+      "text": "Best practice: Put role/behavior in system prompt, put the specific task in user prompt. This gives you consistent AI personality across multiple queries!"
+    },
+
+    {
+      "type": "text",
+      "text": "PROMPT ENGINEERING CHECKLIST:\n\n✅ Be specific about the task\n✅ Define the audience/use case\n✅ Specify the output format\n✅ Include relevant context\n✅ Add constraints (length, style, etc.)\n✅ Use examples when possible\n✅ Test and iterate on prompts"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Putting it all together - Professional prompt builder:\n\ndef build_professional_prompt(\n    task_description,\n    input_data,\n    audience=\"general\",\n    output_format=\"plain text\",\n    examples=None,\n    max_words=None\n):\n    \"\"\"Build a complete, professional prompt.\n    \n    Args:\n        task_description: What the AI should do\n        input_data: The data to process\n        audience: Who the output is for\n        output_format: How to format the response\n        examples: List of (input, output) example pairs\n        max_words: Word limit for response\n    \n    Returns:\n        Complete prompt string\n    \"\"\"\n    parts = []\n    \n    # Task and audience:\n    parts.append(f\"Task: {task_description}\")\n    parts.append(f\"Audience: {audience}\")\n    parts.append(f\"Output format: {output_format}\")\n    \n    # Examples if provided:\n    if examples:\n        parts.append(\"\\nExamples:\")\n        for i, (inp, out) in enumerate(examples, 1):\n            parts.append(f\"{i}. Input: {inp}\\n   Output: {out}\")\n    \n    # The actual input:\n    parts.append(f\"\\nInput to process:\\n{input_data}\")\n    \n    # Constraints:\n    if max_words:\n        parts.append(f\"\\nConstraint: Maximum {max_words} words\")\n    \n    return \"\\n\".join(parts)\n\n# Real-world example:\nprompt = build_professional_prompt(\n    task_description=\"Explain this code snippet\",\n    input_data=\"lambda x: x ** 2\",\n    audience=\"beginner Python learners\",\n    output_format=\"3 bullet points\",\n    max_words=50\n)\n\nprint(prompt)",
+      "explanation": "This is production-level prompt engineering! Customize every aspect, include examples, set constraints. Professional AI tools use functions like this."
+    },
+
+    {
+      "type": "exercise",
+      "prompt": "Create a function called create_documentation_prompt() that takes a function's code and generates a prompt asking AI to write comprehensive documentation. Include: purpose, parameters, return value, example usage, and edge cases. Use the prompt engineering techniques you learned!",
+      "starter": "def create_documentation_prompt(function_code, style=\"detailed\"):\n    \"\"\"Create a prompt for generating function documentation.\n    \n    Args:\n        function_code: The Python function to document\n        style: 'brief' or 'detailed'\n    \n    Returns:\n        A well-engineered prompt\n    \"\"\"\n    # Build your prompt using the techniques learned:\n    # - Clear task description\n    # - Specify output format\n    # - Include what to cover\n    # - Add constraints based on style\n    \n    pass\n\n# Test it:\ntest_code = \"\"\"def find_max(numbers):\n    return max(numbers)\"\"\"\n\nprint(create_documentation_prompt(test_code, \"detailed\"))",
+      "solution": "def create_documentation_prompt(function_code, style=\"detailed\"):\n    \"\"\"Create a prompt for generating function documentation.\n    \n    Args:\n        function_code: The Python function to document\n        style: 'brief' or 'detailed'\n    \n    Returns:\n        A well-engineered prompt\n    \"\"\"\n    # Different requirements based on style:\n    if style == \"brief\":\n        sections = [\"one-line purpose\", \"parameters\", \"return value\"]\n        length_limit = \"50 words maximum\"\n    else:  # detailed\n        sections = [\n            \"detailed purpose and use cases\",\n            \"parameters with types and descriptions\",\n            \"return value with type and description\",\n            \"example usage\",\n            \"edge cases and error handling\"\n        ]\n        length_limit = \"200 words maximum\"\n    \n    # Build the structured prompt:\n    sections_list = \"\\n\".join([f\"  - {section}\" for section in sections])\n    \n    prompt = f\"\"\"You are a technical documentation expert.\n\nTask: Write comprehensive Python documentation for this function.\n\nFunction code:\n{function_code}\n\nDocumentation must include:\n{sections_list}\n\nFormat: Use Google-style docstring format\nConstraint: {length_limit}\n\nProvide only the documentation (the docstring), not the full function.\"\"\"\n    \n    return prompt\n\n# Test it:\ntest_code = \"\"\"def find_max(numbers):\n    return max(numbers)\"\"\"\n\nprint(\"BRIEF STYLE:\")\nprint(create_documentation_prompt(test_code, \"brief\"))\nprint(\"\\n\" + \"=\"*60 + \"\\n\")\nprint(\"DETAILED STYLE:\")\nprint(create_documentation_prompt(test_code, \"detailed\"))",
+      "hint": "Structure your prompt with: 1) Role for the AI, 2) Clear task, 3) The input code, 4) List of required sections, 5) Format specification, 6) Length constraint. Use f-strings to make it dynamic!"
+    }
+  ],
+
+  "nextLesson": "05-processing-responses",
+  "prevLesson": "03-first-ai-call"
+}

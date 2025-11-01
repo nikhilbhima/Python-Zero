@@ -1,0 +1,114 @@
+{
+  "id": "03-first-ai-call",
+  "title": "Making Your First AI API Call",
+  "description": "Learn how to actually call real AI APIs like Claude and GPT",
+  "track": "ai-tools",
+  "difficulty": "beginner",
+  "estimatedTime": "20 minutes",
+  "concepts": ["HTTP requests", "API keys", "Anthropic API", "OpenAI API"],
+
+  "content": [
+    {
+      "type": "text",
+      "text": "Time to call REAL AI APIs! This lesson shows actual code for Claude (Anthropic) and GPT (OpenAI). The code won't run in this browser, but it's 100% real - copy it to your local Python and it works!"
+    },
+
+    {
+      "type": "tip",
+      "text": "📋 All code in this lesson is REAL production code. Copy it to local Python to run. You'll need: 1) pip install anthropic (for Claude) or pip install openai (for GPT), 2) An API key from Anthropic or OpenAI"
+    },
+
+    {
+      "type": "text",
+      "text": "METHOD 1: USING ANTHROPIC (CLAUDE) - RECOMMENDED\n\nClaude is beginner-friendly and has a great Python library. Here's how to use it:"
+    },
+
+    {
+      "type": "code",
+      "code": "# 📋 Copy to local Python - won't run in browser!\n\n# Step 1: Install the library (in terminal):\n# pip install anthropic\n\n# Step 2: Import and set up:\nimport anthropic\nimport os\n\n# Step 3: Create client with your API key:\nclient = anthropic.Anthropic(\n    api_key=\"your-api-key-here\"  # Get from console.anthropic.com\n)\n\n# Step 4: Make your first AI call!\nresponse = client.messages.create(\n    model=\"claude-3-5-sonnet-20241022\",\n    max_tokens=1024,\n    messages=[\n        {\"role\": \"user\", \"content\": \"Explain Python in one sentence\"}\n    ]\n)\n\n# Step 5: Get the response:\nprint(response.content[0].text)",
+      "explanation": "That's it! 5 steps to call Claude. The API key is like a password - keep it secret!"
+    },
+
+    {
+      "type": "text",
+      "text": "Let's break down what each part does:"
+    },
+
+    {
+      "type": "code",
+      "code": "# 📋 Understanding the API call structure:\n\n# anthropic.Anthropic() creates a connection to the API\n# api_key: Your unique identifier (get from console.anthropic.com)\n\n# client.messages.create() is the main function\n# Parameters:\n# - model: Which AI to use (claude-3-5-sonnet is recommended)\n# - max_tokens: Maximum length of response (1024 = ~750 words)\n# - messages: List of conversation messages\n\n# Message format:\n# {\"role\": \"user\", \"content\": \"your question\"}\n# Role is either \"user\" (you) or \"assistant\" (AI)\n\n# Example with more context:\nimport anthropic\n\nclient = anthropic.Anthropic(api_key=\"your-key\")\n\nresponse = client.messages.create(\n    model=\"claude-3-5-sonnet-20241022\",\n    max_tokens=1024,\n    messages=[\n        {\"role\": \"user\", \"content\": \"What is recursion?\"}\n    ]\n)\n\n# Response structure:\n# response.content[0].text = AI's answer\n# response.usage.input_tokens = tokens you sent\n# response.usage.output_tokens = tokens AI sent back\n\nanswer = response.content[0].text\nprint(f\"AI said: {answer}\")\nprint(f\"Tokens used: {response.usage.output_tokens}\")",
+      "explanation": "The messages parameter is a list because you can have multi-turn conversations!"
+    },
+
+    {
+      "type": "text",
+      "text": "MULTI-TURN CONVERSATIONS:\n\nYou can have back-and-forth conversations by including previous messages:"
+    },
+
+    {
+      "type": "code",
+      "code": "# 📋 Multi-turn conversation example:\n\nimport anthropic\n\nclient = anthropic.Anthropic(api_key=\"your-key\")\n\n# Conversation with history:\nresponse = client.messages.create(\n    model=\"claude-3-5-sonnet-20241022\",\n    max_tokens=1024,\n    messages=[\n        # First exchange:\n        {\"role\": \"user\", \"content\": \"What is Python?\"},\n        {\"role\": \"assistant\", \"content\": \"Python is a programming language...\"},\n        \n        # Second exchange:\n        {\"role\": \"user\", \"content\": \"What are its main uses?\"},\n        {\"role\": \"assistant\", \"content\": \"Python is used for web dev, AI...\"},\n        \n        # Current question:\n        {\"role\": \"user\", \"content\": \"Which should I learn first?\"}\n    ]\n)\n\nprint(response.content[0].text)\n\n# The AI remembers the context from previous messages!",
+      "explanation": "Include the full conversation history so the AI knows what you're talking about. This is how chatbots work!"
+    },
+
+    {
+      "type": "text",
+      "text": "METHOD 2: USING OPENAI (GPT)\n\nGPT is also popular. The pattern is similar but slightly different syntax:"
+    },
+
+    {
+      "type": "code",
+      "code": "# 📋 Copy to local Python - won't run in browser!\n\n# Step 1: Install (in terminal):\n# pip install openai\n\n# Step 2: Import and set up:\nfrom openai import OpenAI\n\nclient = OpenAI(\n    api_key=\"your-openai-key-here\"  # Get from platform.openai.com\n)\n\n# Step 3: Make the call:\nresponse = client.chat.completions.create(\n    model=\"gpt-4\",  # or \"gpt-3.5-turbo\" for cheaper\n    messages=[\n        {\"role\": \"user\", \"content\": \"Explain Python in one sentence\"}\n    ]\n)\n\n# Step 4: Get response:\nprint(response.choices[0].message.content)",
+      "explanation": "OpenAI API is similar but: 1) Different library name, 2) Different response structure, 3) Different models"
+    },
+
+    {
+      "type": "tip",
+      "text": "Recommendation: Start with Claude (Anthropic). It's more affordable, has better documentation for beginners, and the API is cleaner. Both work great though!"
+    },
+
+    {
+      "type": "text",
+      "text": "BUILDING A REUSABLE AI FUNCTION:\n\nLet's wrap the API call in a clean function you can reuse:"
+    },
+
+    {
+      "type": "code",
+      "code": "# 📋 Production-ready AI function:\n\nimport anthropic\nimport os\n\ndef ask_claude(question, max_tokens=1024, model=\"claude-3-5-sonnet-20241022\"):\n    \"\"\"Ask Claude a question and get an answer.\n    \n    Args:\n        question: Your question or prompt\n        max_tokens: Maximum response length\n        model: Which Claude model to use\n    \n    Returns:\n        AI's response as string, or error message\n    \"\"\"\n    try:\n        # Get API key from environment variable (more secure!)\n        api_key = os.environ.get(\"ANTHROPIC_API_KEY\")\n        if not api_key:\n            return \"Error: ANTHROPIC_API_KEY not found in environment\"\n        \n        # Create client:\n        client = anthropic.Anthropic(api_key=api_key)\n        \n        # Make the call:\n        response = client.messages.create(\n            model=model,\n            max_tokens=max_tokens,\n            messages=[\n                {\"role\": \"user\", \"content\": question}\n            ]\n        )\n        \n        # Return the answer:\n        return response.content[0].text\n    \n    except Exception as e:\n        return f\"Error calling AI: {str(e)}\"\n\n# Now using AI is super simple:\nif __name__ == \"__main__\":\n    answer = ask_claude(\"What is a Python function?\")\n    print(answer)\n    \n    answer2 = ask_claude(\"Explain recursion simply\", max_tokens=500)\n    print(answer2)",
+      "explanation": "This function handles errors, uses environment variables for security, and is easy to use. This is production-quality code!"
+    },
+
+    {
+      "type": "text",
+      "text": "ENVIRONMENT VARIABLES (SECURITY BEST PRACTICE):\n\nNEVER put API keys directly in code! Use environment variables instead:"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ BAD - Don't do this:\nimport anthropic\nclient = anthropic.Anthropic(api_key=\"sk-ant-1234567890\")  # EXPOSED!\n\n# ✅ GOOD - Do this instead:\nimport anthropic\nimport os\n\napi_key = os.environ.get(\"ANTHROPIC_API_KEY\")\nclient = anthropic.Anthropic(api_key=api_key)\n\n# How to set environment variables:\n# \n# On Mac/Linux (in terminal):\n# export ANTHROPIC_API_KEY=\"your-key-here\"\n# \n# On Windows (in terminal):\n# set ANTHROPIC_API_KEY=your-key-here\n# \n# Or create a .env file (next lesson covers this!)",
+      "explanation": "Environment variables keep secrets out of your code. If you share your code, the API key isn't in it!"
+    },
+
+    {
+      "type": "text",
+      "text": "COST AWARENESS:\n\nAI API calls cost money (but less than you think!). Here's what you should know:"
+    },
+
+    {
+      "type": "code",
+      "code": "# 📋 Tracking costs in your code:\n\nimport anthropic\nimport os\n\ndef ask_claude_with_cost(question):\n    \"\"\"Ask Claude and show the cost.\"\"\"\n    client = anthropic.Anthropic(api_key=os.environ.get(\"ANTHROPIC_API_KEY\"))\n    \n    response = client.messages.create(\n        model=\"claude-3-5-sonnet-20241022\",\n        max_tokens=1024,\n        messages=[{\"role\": \"user\", \"content\": question}]\n    )\n    \n    # Get token usage:\n    input_tokens = response.usage.input_tokens\n    output_tokens = response.usage.output_tokens\n    \n    # Approximate cost (check current pricing!):\n    # Claude Sonnet: ~$3 per million input tokens, ~$15 per million output\n    input_cost = (input_tokens / 1_000_000) * 3\n    output_cost = (output_tokens / 1_000_000) * 15\n    total_cost = input_cost + output_cost\n    \n    print(f\"Tokens used: {input_tokens} in, {output_tokens} out\")\n    print(f\"Estimated cost: ${total_cost:.6f}\")\n    print(f\"\\nResponse: {response.content[0].text}\")\n\n# Typical costs:\n# - Simple question: $0.0001 - $0.001 (fraction of a penny!)\n# - Complex task: $0.01 - $0.10 (a few cents)\n# - $5 credit = thousands of requests",
+      "explanation": "AI is cheaper than coffee! But it's good practice to track usage. Most beginners spend < $1/month."
+    },
+
+    {
+      "type": "exercise",
+      "prompt": "Write a function called ai_tutor() that takes a topic and a difficulty level (beginner/advanced), creates an appropriate prompt, and would call Claude. Since it won't run here, just build the request structure and print what you would send.",
+      "starter": "# ✅ This version simulates the API call:\n\ndef ai_tutor(topic, difficulty=\"beginner\"):\n    \"\"\"Create an AI tutor request for a topic.\n    \n    Args:\n        topic: What to learn about\n        difficulty: 'beginner' or 'advanced'\n    \n    Returns:\n        The prompt that would be sent to AI\n    \"\"\"\n    # Build a good prompt based on difficulty\n    \n    # Show what would be sent to the API\n    \n    pass\n\n# Test it:\nprint(ai_tutor(\"recursion\", \"beginner\"))\nprint(\"\\n\" + \"=\"*50 + \"\\n\")\nprint(ai_tutor(\"async programming\", \"advanced\"))",
+      "solution": "# ✅ Complete AI tutor function:\n\ndef ai_tutor(topic, difficulty=\"beginner\"):\n    \"\"\"Create an AI tutor request for a topic.\n    \n    Args:\n        topic: What to learn about\n        difficulty: 'beginner' or 'advanced'\n    \n    Returns:\n        The prompt that would be sent to AI\n    \"\"\"\n    # Customize prompt based on difficulty:\n    if difficulty == \"beginner\":\n        prompt = f\"\"\"You are a patient programming tutor for beginners.\n        \nExplain {topic} in simple terms:\n- Use analogies and examples\n- Avoid jargon\n- Include a simple code example\n- Keep it under 200 words\"\"\"\n    else:  # advanced\n        prompt = f\"\"\"You are an expert programming instructor.\n        \nExplain {topic} at an advanced level:\n- Include edge cases and best practices\n- Show complex examples\n- Discuss performance implications\n- Compare different approaches\"\"\"\n    \n    # In real code, this would go to the API:\n    request_structure = {\n        \"model\": \"claude-3-5-sonnet-20241022\",\n        \"max_tokens\": 1024,\n        \"messages\": [\n            {\"role\": \"user\", \"content\": prompt}\n        ]\n    }\n    \n    print(f\"Topic: {topic}\")\n    print(f\"Difficulty: {difficulty}\")\n    print(f\"\\nPrompt to send:\\n{prompt}\")\n    print(f\"\\nRequest structure: {request_structure}\")\n    \n    return prompt\n\n# Test it:\nprint(\"=\" * 60)\nai_tutor(\"recursion\", \"beginner\")\nprint(\"\\n\" + \"=\"*60 + \"\\n\")\nai_tutor(\"async programming\", \"advanced\")",
+      "hint": "Create different prompts for beginner vs advanced. Beginners need simple language and examples, advanced users want depth and complexity."
+    }
+  ],
+
+  "nextLesson": "04-prompt-engineering",
+  "prevLesson": "02-api-basics"
+}

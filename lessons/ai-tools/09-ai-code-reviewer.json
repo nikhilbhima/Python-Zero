@@ -1,0 +1,125 @@
+{
+  "id": "09-ai-code-reviewer",
+  "title": "Real Project: AI Code Reviewer",
+  "description": "Build a complete AI-powered code review tool from scratch",
+  "track": "ai-tools",
+  "difficulty": "intermediate",
+  "estimatedTime": "30 minutes",
+  "concepts": ["project integration", "file handling", "real-world application"],
+
+  "content": [
+    {
+      "type": "text",
+      "text": "Time to build something REAL! We're creating a professional AI code reviewer that analyzes Python files and provides detailed feedback. This is the kind of tool companies actually use and pay for!"
+    },
+
+    {
+      "type": "text",
+      "text": "PROJECT OVERVIEW:\n\nOur AI Code Reviewer will:\n✓ Read Python files from disk\n✓ Analyze code for bugs, style, and performance\n✓ Generate detailed review reports\n✓ Save reviews to files\n✓ Support batch processing\n✓ Track costs and usage\n\nLet's build it step by step!"
+    },
+
+    {
+      "type": "text",
+      "text": "STEP 1: PROJECT STRUCTURE\n\nFirst, let's design our code reviewer's architecture:"
+    },
+
+    {
+      "type": "code",
+      "code": "# 📋 ai_code_reviewer.py - Project structure\n\n# Imports we'll need:\nimport os\nimport sys\nimport argparse\nimport json\nfrom datetime import datetime\nfrom typing import Dict, List, Optional\n\n# Main components:\n# 1. CodeReviewer - Core review logic\n# 2. FileHandler - Read/write files\n# 3. ReportGenerator - Format review reports\n# 4. CLI - Command-line interface\n# 5. Config - Settings management\n\nprint(\"Project structure planned!\")\nprint(\"Components: CodeReviewer, FileHandler, ReportGenerator, CLI, Config\")",
+      "explanation": "Good projects start with clear structure. We'll build each component separately, then combine them."
+    },
+
+    {
+      "type": "text",
+      "text": "STEP 2: CONFIGURATION SYSTEM\n\nManage settings in one place:"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Configuration class:\n\nimport os\nfrom dataclasses import dataclass\n\n@dataclass\nclass ReviewConfig:\n    \"\"\"Configuration for code reviewer.\"\"\"\n    \n    # AI Settings:\n    api_key: str\n    model: str = \"claude-3-5-sonnet-20241022\"\n    max_tokens: int = 2048\n    \n    # Review Focus Areas:\n    check_bugs: bool = True\n    check_style: bool = True\n    check_performance: bool = True\n    check_security: bool = True\n    check_documentation: bool = True\n    \n    # Output Settings:\n    output_format: str = \"markdown\"  # markdown or json\n    save_to_file: bool = True\n    verbose: bool = False\n    \n    @classmethod\n    def from_env(cls):\n        \"\"\"Load from environment variables.\"\"\"\n        return cls(\n            api_key=os.environ.get(\"ANTHROPIC_API_KEY\", \"\"),\n            model=os.environ.get(\"AI_MODEL\", \"claude-3-5-sonnet-20241022\"),\n            max_tokens=int(os.environ.get(\"MAX_TOKENS\", \"2048\"))\n        )\n    \n    def validate(self) -> tuple[bool, List[str]]:\n        \"\"\"Validate configuration.\"\"\"\n        errors = []\n        \n        if not self.api_key:\n            errors.append(\"API key is required\")\n        \n        if self.max_tokens < 100:\n            errors.append(\"max_tokens too low\")\n        \n        if self.output_format not in [\"markdown\", \"json\"]:\n            errors.append(\"Invalid output format\")\n        \n        return len(errors) == 0, errors\n\n# Example usage:\nconfig = ReviewConfig(\n    api_key=\"test-key\",\n    check_bugs=True,\n    check_style=True\n)\n\nvalid, errors = config.validate()\nprint(f\"Config valid: {valid}\")\nprint(f\"Settings: bugs={config.check_bugs}, style={config.check_style}\")",
+      "explanation": "Centralized config makes it easy to change settings without modifying code everywhere."
+    },
+
+    {
+      "type": "text",
+      "text": "STEP 3: FILE HANDLER\n\nRead code files safely and efficiently:"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ File handler class:\n\nimport os\nfrom pathlib import Path\n\nclass FileHandler:\n    \"\"\"Handle file operations for code review.\"\"\"\n    \n    @staticmethod\n    def read_python_file(filepath: str) -> Dict[str, any]:\n        \"\"\"Read a Python file and return metadata.\n        \n        Returns:\n            Dictionary with: code, filename, size, lines\n        \"\"\"\n        try:\n            path = Path(filepath)\n            \n            # Validate file:\n            if not path.exists():\n                return {\"error\": f\"File not found: {filepath}\"}\n            \n            if not path.suffix == \".py\":\n                return {\"error\": f\"Not a Python file: {filepath}\"}\n            \n            # Read file:\n            with open(path, 'r', encoding='utf-8') as f:\n                code = f.read()\n            \n            # Calculate metadata:\n            lines = code.split('\\n')\n            \n            return {\n                \"code\": code,\n                \"filename\": path.name,\n                \"filepath\": str(path),\n                \"size_bytes\": len(code),\n                \"total_lines\": len(lines),\n                \"non_empty_lines\": len([l for l in lines if l.strip()]),\n                \"error\": None\n            }\n        \n        except Exception as e:\n            return {\"error\": f\"Error reading file: {str(e)}\"}\n    \n    @staticmethod\n    def save_review(review: str, original_file: str, output_format: str = \"md\"):\n        \"\"\"Save review to file.\n        \n        Args:\n            review: Review content\n            original_file: Path to original Python file\n            output_format: File extension (md or json)\n        \"\"\"\n        # Create review filename:\n        path = Path(original_file)\n        review_filename = f\"{path.stem}_review.{output_format}\"\n        review_path = path.parent / review_filename\n        \n        # Save:\n        with open(review_path, 'w', encoding='utf-8') as f:\n            f.write(review)\n        \n        return str(review_path)\n\n# Example usage:\nhandler = FileHandler()\n\n# Simulate reading a file:\nfile_data = {\n    \"code\": \"def add(a, b):\\n    return a + b\",\n    \"filename\": \"calculator.py\",\n    \"total_lines\": 2,\n    \"size_bytes\": 28\n}\n\nprint(f\"File: {file_data['filename']}\")\nprint(f\"Lines: {file_data['total_lines']}\")\nprint(f\"Size: {file_data['size_bytes']} bytes\")",
+      "explanation": "FileHandler separates file I/O from review logic. Easier to test and maintain!"
+    },
+
+    {
+      "type": "text",
+      "text": "STEP 4: PROMPT BUILDER\n\nCraft effective review prompts:"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Prompt builder for code reviews:\n\nclass ReviewPromptBuilder:\n    \"\"\"Build effective code review prompts.\"\"\"\n    \n    @staticmethod\n    def build_review_prompt(\n        code: str,\n        filename: str,\n        focus_areas: List[str]\n    ) -> str:\n        \"\"\"Build comprehensive review prompt.\n        \n        Args:\n            code: Python code to review\n            filename: Name of the file\n            focus_areas: List of areas to check\n        \n        Returns:\n            Formatted prompt for AI\n        \"\"\"\n        focus_list = \"\\n\".join([f\"- {area}\" for area in focus_areas])\n        \n        prompt = f\"\"\"You are an expert Python code reviewer. Review this code thoroughly and professionally.\n\nFile: {filename}\n\nFocus areas:\n{focus_list}\n\nCode to review:\n```python\n{code}\n```\n\nProvide a detailed review with:\n\n1. SUMMARY\n   - Brief overview of what the code does\n   - Overall quality rating (1-10)\n\n2. ISSUES FOUND\n   - List each issue with severity (Critical/Major/Minor)\n   - Explain why it's an issue\n   - Show the problematic code\n\n3. RECOMMENDATIONS\n   - Specific, actionable improvements\n   - Best practices to follow\n\n4. IMPROVED CODE\n   - Provide a refactored version addressing the issues\n   - Comment the key improvements\n\nBe constructive, specific, and educational.\"\"\"\n        \n        return prompt\n    \n    @staticmethod\n    def build_quick_review_prompt(code: str) -> str:\n        \"\"\"Build a quick review prompt (faster, cheaper).\"\"\"\n        return f\"\"\"Quickly review this Python code:\n\n```python\n{code}\n```\n\nProvide:\n1. Main issues (if any)\n2. Quick fixes\n3. Overall rating (1-10)\n\nBe brief but helpful.\"\"\"\n\n# Example usage:\nbuilder = ReviewPromptBuilder()\n\ncode = \"def calc(x,y): return x+y\"\nfocus = [\"naming\", \"documentation\", \"type hints\"]\n\nprompt = builder.build_review_prompt(code, \"calc.py\", focus)\n\nprint(\"Generated prompt (first 100 chars):\")\nprint(prompt[:100] + \"...\")\nprint(f\"\\nPrompt length: {len(prompt)} characters\")",
+      "explanation": "Good prompts = good reviews! Clear structure, specific focus areas, and requested output format."
+    },
+
+    {
+      "type": "text",
+      "text": "STEP 5: CORE REVIEWER\n\nThe heart of our tool - the code reviewer:"
+    },
+
+    {
+      "type": "code",
+      "code": "# 📋 Core code reviewer (uses real AI API):\n\nimport anthropic\nfrom typing import Dict, List\n\nclass CodeReviewer:\n    \"\"\"AI-powered code reviewer.\"\"\"\n    \n    def __init__(self, config: ReviewConfig):\n        \"\"\"Initialize with configuration.\"\"\"\n        self.config = config\n        # In real code:\n        # self.client = anthropic.Anthropic(api_key=config.api_key)\n    \n    def review_code(self, code: str, filename: str) -> Dict[str, any]:\n        \"\"\"Review a code snippet.\n        \n        Returns:\n            Dictionary with review, metadata, and stats\n        \"\"\"\n        # Build focus areas from config:\n        focus_areas = []\n        if self.config.check_bugs:\n            focus_areas.append(\"Bugs and errors\")\n        if self.config.check_style:\n            focus_areas.append(\"Code style and readability\")\n        if self.config.check_performance:\n            focus_areas.append(\"Performance optimization\")\n        if self.config.check_security:\n            focus_areas.append(\"Security vulnerabilities\")\n        if self.config.check_documentation:\n            focus_areas.append(\"Documentation and comments\")\n        \n        # Build prompt:\n        builder = ReviewPromptBuilder()\n        prompt = builder.build_review_prompt(code, filename, focus_areas)\n        \n        # Call AI (in real code):\n        # response = self.client.messages.create(\n        #     model=self.config.model,\n        #     max_tokens=self.config.max_tokens,\n        #     messages=[{\"role\": \"user\", \"content\": prompt}]\n        # )\n        # review_text = response.content[0].text\n        \n        # Simulated review:\n        review_text = f\"\"\"SUMMARY:\nSimulated review for {filename}\n\nISSUES: None found in simulation\nRECOMMENDATIONS: Add type hints, docstrings\nRATING: 7/10\"\"\"\n        \n        return {\n            \"review\": review_text,\n            \"filename\": filename,\n            \"focus_areas\": focus_areas,\n            \"prompt_length\": len(prompt),\n            \"review_length\": len(review_text)\n        }\n\n# Example usage:\nconfig = ReviewConfig(api_key=\"test-key\")\nreviewer = CodeReviewer(config)\n\ncode = \"def add(a, b):\\n    return a + b\"\nresult = reviewer.review_code(code, \"example.py\")\n\nprint(f\"Reviewed: {result['filename']}\")\nprint(f\"Focus areas: {len(result['focus_areas'])}\")\nprint(f\"\\nReview:\\n{result['review']}\")",
+      "explanation": "CodeReviewer coordinates everything: builds prompts, calls AI, returns structured results. This is the core of our tool!"
+    },
+
+    {
+      "type": "text",
+      "text": "STEP 6: REPORT GENERATOR\n\nFormat reviews in readable formats:"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Report generator:\n\nfrom datetime import datetime\nimport json\n\nclass ReportGenerator:\n    \"\"\"Generate formatted code review reports.\"\"\"\n    \n    @staticmethod\n    def generate_markdown(review_data: Dict[str, any]) -> str:\n        \"\"\"Generate Markdown report.\"\"\"\n        timestamp = datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\")\n        \n        report = f\"\"\"# Code Review Report\n\n**File:** `{review_data['filename']}`  \n**Date:** {timestamp}  \n**Reviewed by:** AI Code Reviewer\n\n---\n\n## Focus Areas\n{chr(10).join([f'- {area}' for area in review_data['focus_areas']])}\n\n---\n\n## Review\n\n{review_data['review']}\n\n---\n\n## Metadata\n\n- Prompt length: {review_data['prompt_length']} characters\n- Review length: {review_data['review_length']} characters\n\n---\n\n*Generated by AI Code Reviewer*\n\"\"\"\n        return report\n    \n    @staticmethod\n    def generate_json(review_data: Dict[str, any]) -> str:\n        \"\"\"Generate JSON report.\"\"\"\n        report = {\n            \"file\": review_data['filename'],\n            \"timestamp\": datetime.now().isoformat(),\n            \"focus_areas\": review_data['focus_areas'],\n            \"review\": review_data['review'],\n            \"metadata\": {\n                \"prompt_length\": review_data['prompt_length'],\n                \"review_length\": review_data['review_length']\n            }\n        }\n        return json.dumps(report, indent=2)\n\n# Example usage:\nreview_data = {\n    \"filename\": \"calculator.py\",\n    \"focus_areas\": [\"Bugs\", \"Style\"],\n    \"review\": \"Code looks good. Add docstrings.\",\n    \"prompt_length\": 500,\n    \"review_length\": 150\n}\n\nmarkdown = ReportGenerator.generate_markdown(review_data)\nprint(\"Markdown Report (first 200 chars):\")\nprint(markdown[:200] + \"...\")\n\nprint(\"\\n\" + \"=\"*50 + \"\\n\")\n\njson_report = ReportGenerator.generate_json(review_data)\nprint(\"JSON Report:\")\nprint(json_report[:200] + \"...\")",
+      "explanation": "Multiple output formats make the tool flexible. Markdown for humans, JSON for automation/integration!"
+    },
+
+    {
+      "type": "text",
+      "text": "STEP 7: PUTTING IT ALL TOGETHER\n\nNow we combine everything into a complete tool:"
+    },
+
+    {
+      "type": "code",
+      "code": "# 📋 Complete AI Code Reviewer Tool:\n# Save as: ai_code_reviewer.py\n\nimport argparse\nimport sys\n\nclass AICodeReviewerApp:\n    \"\"\"Main application class.\"\"\"\n    \n    def __init__(self):\n        \"\"\"Initialize the application.\"\"\"\n        self.config = ReviewConfig.from_env()\n        self.reviewer = CodeReviewer(self.config)\n        self.file_handler = FileHandler()\n        self.report_gen = ReportGenerator()\n    \n    def review_file(self, filepath: str) -> bool:\n        \"\"\"Review a single file.\n        \n        Returns:\n            True if successful, False otherwise\n        \"\"\"\n        print(f\"Reviewing: {filepath}\")\n        \n        # Read file:\n        file_data = self.file_handler.read_python_file(filepath)\n        if file_data.get(\"error\"):\n            print(f\"Error: {file_data['error']}\")\n            return False\n        \n        # Review:\n        print(f\"Analyzing {file_data['total_lines']} lines...\")\n        review_result = self.reviewer.review_code(\n            file_data['code'],\n            file_data['filename']\n        )\n        \n        # Generate report:\n        if self.config.output_format == \"markdown\":\n            report = self.report_gen.generate_markdown(review_result)\n        else:\n            report = self.report_gen.generate_json(review_result)\n        \n        # Save or display:\n        if self.config.save_to_file:\n            output_path = self.file_handler.save_review(\n                report,\n                filepath,\n                \"md\" if self.config.output_format == \"markdown\" else \"json\"\n            )\n            print(f\"✓ Review saved to: {output_path}\")\n        else:\n            print(\"\\n\" + report)\n        \n        return True\n    \n    def run_cli(self):\n        \"\"\"Run command-line interface.\"\"\"\n        parser = argparse.ArgumentParser(\n            description=\"AI Code Reviewer - Intelligent Python code review\"\n        )\n        parser.add_argument(\"file\", help=\"Python file to review\")\n        parser.add_argument(\"--format\", choices=[\"markdown\", \"json\"], default=\"markdown\")\n        parser.add_argument(\"--no-save\", action=\"store_true\", help=\"Don't save to file\")\n        \n        args = parser.parse_args()\n        \n        # Update config from args:\n        self.config.output_format = args.format\n        self.config.save_to_file = not args.no_save\n        \n        # Validate config:\n        valid, errors = self.config.validate()\n        if not valid:\n            print(\"Configuration errors:\")\n            for error in errors:\n                print(f\"  - {error}\")\n            sys.exit(1)\n        \n        # Review the file:\n        success = self.review_file(args.file)\n        sys.exit(0 if success else 1)\n\n# Example usage (simulated):\nprint(\"AI Code Reviewer App Structure:\")\nprint(\"✓ Config system\")\nprint(\"✓ File handler\")\nprint(\"✓ Prompt builder\")\nprint(\"✓ Core reviewer\")\nprint(\"✓ Report generator\")\nprint(\"✓ CLI interface\")\nprint(\"\\nReady to review code!\")",
+      "explanation": "The complete application! Each component does one job well. Clean, modular, professional."
+    },
+
+    {
+      "type": "tip",
+      "text": "This is production-quality code! It has: configuration management, error handling, multiple output formats, clean separation of concerns. Study this structure - it's how real AI tools are built."
+    },
+
+    {
+      "type": "text",
+      "text": "HOW TO USE THE TOOL:\n\nOnce built and saved as ai_code_reviewer.py, use it like this:"
+    },
+
+    {
+      "type": "code",
+      "code": "# 📋 Usage examples (run in terminal):\n\n# Basic review:\n# python ai_code_reviewer.py my_script.py\n\n# JSON output:\n# python ai_code_reviewer.py my_script.py --format json\n\n# Display without saving:\n# python ai_code_reviewer.py my_script.py --no-save\n\n# With environment variables:\n# export ANTHROPIC_API_KEY=\"your-key\"\n# export AI_MODEL=\"claude-3-5-sonnet-20241022\"\n# python ai_code_reviewer.py my_script.py\n\nprint(\"The tool is ready to use in real Python!\")\nprint(\"Set ANTHROPIC_API_KEY and run: python ai_code_reviewer.py yourfile.py\")",
+      "explanation": "Professional CLI tools are simple to use but powerful under the hood. That's good design!"
+    },
+
+    {
+      "type": "exercise",
+      "prompt": "Extend the CodeReviewer with a simple scoring system. Create a function calculate_code_score() that takes a review text and extracts a numeric score (0-10) if present, or returns a default score of 5. Also count how many issues were mentioned (look for words like 'issue', 'bug', 'problem'). Return a dictionary with: score, issue_count, and quality_level (Poor/Fair/Good/Excellent based on score).",
+      "starter": "def calculate_code_score(review_text: str) -> Dict[str, any]:\n    \"\"\"Calculate code quality score from review.\n    \n    Args:\n        review_text: The AI's review text\n    \n    Returns:\n        Dictionary with:\n        - score (int): 0-10\n        - issue_count (int): Number of issues mentioned\n        - quality_level (str): Poor/Fair/Good/Excellent\n    \"\"\"\n    # 1. Extract score (look for \"X/10\" or \"Rating: X\")\n    \n    # 2. Count issues (search for keywords)\n    \n    # 3. Determine quality level based on score\n    \n    pass\n\n# Test cases:\nreview1 = \"Overall rating: 8/10. Two minor issues found.\"\nreview2 = \"Score: 4. Multiple bugs and problems detected.\"\nreview3 = \"Excellent code! Rating: 10/10. No issues.\"\n\nprint(calculate_code_score(review1))\nprint(calculate_code_score(review2))\nprint(calculate_code_score(review3))",
+      "solution": "import re\nfrom typing import Dict\n\ndef calculate_code_score(review_text: str) -> Dict[str, any]:\n    \"\"\"Calculate code quality score from review.\n    \n    Args:\n        review_text: The AI's review text\n    \n    Returns:\n        Dictionary with:\n        - score (int): 0-10\n        - issue_count (int): Number of issues mentioned\n        - quality_level (str): Poor/Fair/Good/Excellent\n    \"\"\"\n    # 1. Extract score (look for \"X/10\" or \"Rating: X\")\n    score = 5  # Default\n    \n    # Try to find \"X/10\" pattern:\n    match1 = re.search(r'(\\d+)/10', review_text)\n    if match1:\n        score = int(match1.group(1))\n    else:\n        # Try to find \"Rating: X\" or \"Score: X\":\n        match2 = re.search(r'(?:rating|score):\\s*(\\d+)', review_text, re.IGNORECASE)\n        if match2:\n            score = int(match2.group(1))\n    \n    # Clamp to 0-10:\n    score = max(0, min(10, score))\n    \n    # 2. Count issues:\n    issue_keywords = ['issue', 'bug', 'problem', 'error', 'warning', 'concern']\n    review_lower = review_text.lower()\n    \n    issue_count = 0\n    for keyword in issue_keywords:\n        # Count occurrences of each keyword:\n        issue_count += review_lower.count(keyword)\n    \n    # 3. Determine quality level:\n    if score >= 9:\n        quality_level = \"Excellent\"\n    elif score >= 7:\n        quality_level = \"Good\"\n    elif score >= 5:\n        quality_level = \"Fair\"\n    else:\n        quality_level = \"Poor\"\n    \n    return {\n        \"score\": score,\n        \"issue_count\": issue_count,\n        \"quality_level\": quality_level\n    }\n\n# Test cases:\nprint(\"Test 1: Good code with minor issues\")\nreview1 = \"Overall rating: 8/10. Two minor issues found.\"\nresult1 = calculate_code_score(review1)\nprint(f\"  Score: {result1['score']}/10\")\nprint(f\"  Issues: {result1['issue_count']}\")\nprint(f\"  Quality: {result1['quality_level']}\")\n\nprint(\"\\nTest 2: Poor code with problems\")\nreview2 = \"Score: 4. Multiple bugs and problems detected. Several issues need attention.\"\nresult2 = calculate_code_score(review2)\nprint(f\"  Score: {result2['score']}/10\")\nprint(f\"  Issues: {result2['issue_count']}\")\nprint(f\"  Quality: {result2['quality_level']}\")\n\nprint(\"\\nTest 3: Excellent code\")\nreview3 = \"Excellent code! Rating: 10/10. No issues found.\"\nresult3 = calculate_code_score(review3)\nprint(f\"  Score: {result3['score']}/10\")\nprint(f\"  Issues: {result3['issue_count']}\")\nprint(f\"  Quality: {result3['quality_level']}\")\n\nprint(\"\\nTest 4: No explicit score\")\nreview4 = \"Code has some issues and bugs that should be fixed.\"\nresult4 = calculate_code_score(review4)\nprint(f\"  Score: {result4['score']}/10 (default)\")\nprint(f\"  Issues: {result4['issue_count']}\")\nprint(f\"  Quality: {result4['quality_level']}\")",
+      "hint": "Use re.search() to find patterns like '8/10' or 'Rating: 8'. For issue counting, use .lower() and .count() on the text to find keywords. Use if/elif to assign quality levels based on score ranges."
+    }
+  ],
+
+  "nextLesson": "10-vibe-coding",
+  "prevLesson": "08-common-ai-patterns"
+}

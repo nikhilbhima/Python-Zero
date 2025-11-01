@@ -1,0 +1,103 @@
+{
+  "id": "02-api-basics",
+  "title": "Working with APIs Basics",
+  "description": "Learn what APIs are and how to work with them in Python",
+  "track": "ai-tools",
+  "difficulty": "beginner",
+  "estimatedTime": "15 minutes",
+  "concepts": ["APIs", "JSON", "HTTP requests", "dictionaries"],
+
+  "content": [
+    {
+      "type": "text",
+      "text": "Before we call AI APIs, you need to understand what APIs are and how they work. Don't worry - it's simpler than it sounds!"
+    },
+
+    {
+      "type": "text",
+      "text": "WHAT IS AN API?\n\nAPI = Application Programming Interface\n\nThink of it like a restaurant:\n- You (your code) are the customer\n- The kitchen (AI server) makes the food (processes requests)\n- The waiter (API) takes your order and brings back food\n\nYou don't need to know how the kitchen works. You just order from the menu, and food arrives!"
+    },
+
+    {
+      "type": "code",
+      "code": "# API calls are like function calls, but to remote servers:\n\n# Local function (runs on your computer):\ndef local_greeting(name):\n    return f\"Hello, {name}!\"\n\nresult1 = local_greeting(\"Alice\")\nprint(result1)  # Hello, Alice!\n\n# API call (runs on a remote server):\n# def api_greeting(name):\n#     # Sends request to server\n#     # Server processes it\n#     # Returns response\n#     return response\n\n# Same idea, different location!",
+      "explanation": "APIs are just functions that run somewhere else. You send input, get output back."
+    },
+
+    {
+      "type": "text",
+      "text": "HOW DO APIS COMMUNICATE?\n\nAPIs use JSON (JavaScript Object Notation) to send data. JSON looks almost exactly like Python dictionaries!"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Python dictionary:\nuser_data = {\n    \"name\": \"Alice\",\n    \"age\": 25,\n    \"skills\": [\"Python\", \"JavaScript\"],\n    \"is_student\": True\n}\n\nprint(user_data[\"name\"])  # Alice\nprint(user_data[\"skills\"])  # ['Python', 'JavaScript']\n\n# JSON sent to/from APIs looks identical:\n# {\n#   \"name\": \"Alice\",\n#   \"age\": 25,\n#   \"skills\": [\"Python\", \"JavaScript\"],\n#   \"is_student\": true\n# }\n\n# You already know how to work with this!",
+      "explanation": "If you can work with dictionaries, you can work with API data. It's the same structure!"
+    },
+
+    {
+      "type": "text",
+      "text": "THE REQUEST-RESPONSE PATTERN:\n\nEvery API interaction follows this pattern:\n1. You send a REQUEST (with data)\n2. Server processes it\n3. You receive a RESPONSE (with data)"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Let's simulate an API with a function:\n\ndef fake_ai_api(request):\n    \"\"\"Simulates how an AI API works.\"\"\"\n    # APIs receive dictionaries with your request\n    prompt = request[\"prompt\"]\n    model = request.get(\"model\", \"default-ai\")\n    \n    # Server \"processes\" the request\n    response_text = f\"AI response to: {prompt}\"\n    \n    # APIs return dictionaries with the response\n    return {\n        \"status\": \"success\",\n        \"model_used\": model,\n        \"response\": response_text,\n        \"tokens_used\": 42\n    }\n\n# Making an API \"call\":\nmy_request = {\n    \"prompt\": \"Explain APIs simply\",\n    \"model\": \"smart-ai-v1\"\n}\n\nresponse = fake_ai_api(my_request)\n\nprint(\"Status:\", response[\"status\"])\nprint(\"Response:\", response[\"response\"])\nprint(\"Tokens:\", response[\"tokens_used\"])",
+      "explanation": "This is EXACTLY how real AI APIs work! You send a dictionary, get a dictionary back."
+    },
+
+    {
+      "type": "tip",
+      "text": "Real AI APIs (Claude, GPT, etc.) work exactly like this fake_ai_api function. The only difference is they run on remote servers instead of your computer."
+    },
+
+    {
+      "type": "text",
+      "text": "COMMON API PATTERNS:\n\nMost APIs follow similar patterns. Learn these, and you can use ANY API!"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Pattern 1: Simple request-response\ndef simple_api_call():\n    request = {\"prompt\": \"Hello!\"}\n    response = fake_ai_api(request)\n    return response[\"response\"]\n\nprint(simple_api_call())\n\n# ✅ Pattern 2: Error handling\ndef safe_api_call(prompt):\n    request = {\"prompt\": prompt}\n    response = fake_ai_api(request)\n    \n    if response[\"status\"] == \"success\":\n        return response[\"response\"]\n    else:\n        return \"Error: API call failed\"\n\nprint(safe_api_call(\"Tell me a joke\"))\n\n# ✅ Pattern 3: Processing responses\ndef process_api_response(prompt):\n    response = fake_ai_api({\"prompt\": prompt})\n    \n    # Extract what you need:\n    answer = response[\"response\"]\n    tokens = response[\"tokens_used\"]\n    \n    # Format it nicely:\n    return f\"Answer: {answer}\\nCost: {tokens} tokens\"\n\nprint(process_api_response(\"What is Python?\"))",
+      "explanation": "These three patterns cover 90% of API usage: call it, handle errors, process the response."
+    },
+
+    {
+      "type": "text",
+      "text": "WORKING WITH NESTED DATA:\n\nAPI responses often have nested dictionaries. You already know how to handle this!"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Nested API response example:\ncomplex_response = {\n    \"status\": \"success\",\n    \"data\": {\n        \"user\": {\n            \"name\": \"Alice\",\n            \"id\": 12345\n        },\n        \"ai_response\": {\n            \"text\": \"Hello! How can I help?\",\n            \"confidence\": 0.95,\n            \"suggestions\": [\"Ask a question\", \"Get help\", \"Start tutorial\"]\n        }\n    },\n    \"metadata\": {\n        \"timestamp\": \"2024-01-15\",\n        \"tokens\": 15\n    }\n}\n\n# Accessing nested data:\nuser_name = complex_response[\"data\"][\"user\"][\"name\"]\nai_text = complex_response[\"data\"][\"ai_response\"][\"text\"]\nfirst_suggestion = complex_response[\"data\"][\"ai_response\"][\"suggestions\"][0]\n\nprint(f\"User: {user_name}\")\nprint(f\"AI said: {ai_text}\")\nprint(f\"Suggestion: {first_suggestion}\")",
+      "explanation": "Chain dictionary access with [key][key][key] to get nested data. Just like accessing nested lists!"
+    },
+
+    {
+      "type": "tip",
+      "text": "Pro tip: Use .get() instead of [] when accessing API data. It prevents crashes if a key is missing: response.get('data', {}) returns empty dict instead of error."
+    },
+
+    {
+      "type": "text",
+      "text": "BUILDING API REQUEST FUNCTIONS:\n\nLet's build reusable functions for API calls - this is how real AI tools are built!"
+    },
+
+    {
+      "type": "code",
+      "code": "# ✅ Professional API wrapper function:\n\ndef call_ai(prompt, temperature=0.7, max_tokens=100):\n    \"\"\"Call AI API with customizable parameters.\n    \n    Args:\n        prompt: What to ask the AI\n        temperature: Creativity level (0-1)\n        max_tokens: Maximum response length\n    \n    Returns:\n        AI response text or error message\n    \"\"\"\n    # Build request:\n    request = {\n        \"prompt\": prompt,\n        \"temperature\": temperature,\n        \"max_tokens\": max_tokens\n    }\n    \n    # Call API:\n    response = fake_ai_api(request)\n    \n    # Handle response:\n    if response.get(\"status\") == \"success\":\n        return response[\"response\"]\n    else:\n        return f\"Error: {response.get('error', 'Unknown error')}\"\n\n# Now it's easy to use:\nprint(call_ai(\"Explain Python in one sentence\"))\nprint(call_ai(\"Be creative!\", temperature=0.9))\nprint(call_ai(\"Brief answer\", max_tokens=50))",
+      "explanation": "This is the foundation! All AI tools start with a function like this. You build features on top of it."
+    },
+
+    {
+      "type": "exercise",
+      "prompt": "Create a function called translate_text() that takes text and a target language, builds an API request dictionary, and returns a formatted response. Use the fake_ai_api() function from earlier examples.",
+      "starter": "def fake_ai_api(request):\n    \"\"\"Simulates API - don't modify this.\"\"\"\n    return {\n        \"status\": \"success\",\n        \"response\": f\"Translated: {request['prompt']}\",\n        \"language\": request.get('language', 'unknown')\n    }\n\n# Your task: create this function\ndef translate_text(text, target_language):\n    \"\"\"Translate text to target language.\n    \n    Args:\n        text: Text to translate\n        target_language: Target language (e.g., 'Spanish')\n    \n    Returns:\n        Translated text\n    \"\"\"\n    # Build request dictionary\n    \n    # Call the API\n    \n    # Return the response\n    pass\n\n# Test it:\nprint(translate_text(\"Hello world\", \"Spanish\"))",
+      "solution": "def fake_ai_api(request):\n    \"\"\"Simulates API - don't modify this.\"\"\"\n    return {\n        \"status\": \"success\",\n        \"response\": f\"Translated '{request['prompt']}' to {request.get('language', 'unknown')}\",\n        \"language\": request.get('language', 'unknown')\n    }\n\ndef translate_text(text, target_language):\n    \"\"\"Translate text to target language.\n    \n    Args:\n        text: Text to translate\n        target_language: Target language (e.g., 'Spanish')\n    \n    Returns:\n        Translated text\n    \"\"\"\n    # Build request dictionary:\n    request = {\n        \"prompt\": f\"Translate to {target_language}: {text}\",\n        \"language\": target_language\n    }\n    \n    # Call the API:\n    response = fake_ai_api(request)\n    \n    # Return formatted response:\n    if response[\"status\"] == \"success\":\n        return f\"{response['response']} (Language: {response['language']})\"\n    else:\n        return \"Translation failed\"\n\n# Test it:\nprint(translate_text(\"Hello world\", \"Spanish\"))\nprint(translate_text(\"Good morning\", \"French\"))\nprint(translate_text(\"Thank you\", \"Japanese\"))",
+      "hint": "Build a dictionary with 'prompt' and 'language' keys, call fake_ai_api(), and return the 'response' from the result."
+    }
+  ],
+
+  "nextLesson": "03-first-ai-call",
+  "prevLesson": "01-why-python-ai"
+}

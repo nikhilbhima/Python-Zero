@@ -23,7 +23,18 @@ const lessonRegistry = {
     ],
     intermediate: [],
     advanced: [],
-    'ai-tools': []
+    'ai-tools': [
+        { id: '01-why-python-ai', title: 'Why Python for AI?' },
+        { id: '02-api-basics', title: 'Working with APIs Basics' },
+        { id: '03-first-ai-call', title: 'Making Your First AI API Call' },
+        { id: '04-prompt-engineering', title: 'Prompt Engineering in Code' },
+        { id: '05-processing-responses', title: 'Processing AI Responses' },
+        { id: '06-building-cli-tools', title: 'Building AI CLI Tools' },
+        { id: '07-environment-best-practices', title: 'Environment & Best Practices' },
+        { id: '08-common-ai-patterns', title: 'Common AI Patterns' },
+        { id: '09-ai-code-reviewer', title: 'Real Project: AI Code Reviewer' },
+        { id: '10-vibe-coding', title: 'Vibe Coding Philosophy' }
+    ]
 };
 
 /**
