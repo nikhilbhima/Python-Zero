@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <rect width="512" height="512" fill="#000000"/>
+
+  <!-- Python Zero Logo -->
+  <g transform="translate(256, 256)">
+    <!-- Terminal prompt > -->
+    <text x="-180" y="-60" font-family="'JetBrains Mono', monospace" font-size="120" font-weight="bold" fill="#0aff0a">&gt;</text>
+
+    <!-- Python text -->
+    <text x="-60" y="-60" font-family="'JetBrains Mono', monospace" font-size="80" font-weight="bold" fill="#0aff0a">Py</text>
+
+    <!-- Zero -->
+    <text x="-120" y="80" font-family="'JetBrains Mono', monospace" font-size="140" font-weight="bold" fill="#0aff0a">0</text>
+
+    <!-- Cursor blink -->
+    <rect x="120" y="20" width="20" height="90" fill="#0aff0a"/>
+  </g>
+</svg>
