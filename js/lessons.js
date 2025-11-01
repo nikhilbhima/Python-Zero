@@ -88,7 +88,7 @@ function toggleTrackLessons(trackName) {
 
         lessonItem.innerHTML = `
             <span class="lesson-number">${String(index + 1).padStart(2, '0')}</span>
-            <span class="lesson-title">${lesson.title}</span>
+            <span class="lesson-title">${escapeHtml(lesson.title)}</span>
         `;
 
         lessonItem.addEventListener('click', () => {
@@ -156,11 +156,11 @@ function renderLesson(lesson) {
         <div class="lesson-header">
             <button id="close-lesson" class="btn btn-small">✕ Close Lesson</button>
             <div class="lesson-meta">
-                <h2 class="lesson-title">${lesson.title}</h2>
-                <p class="lesson-description">${lesson.description}</p>
+                <h2 class="lesson-title">${escapeHtml(lesson.title)}</h2>
+                <p class="lesson-description">${escapeHtml(lesson.description)}</p>
                 <div class="lesson-info">
-                    <span class="lesson-difficulty">${lesson.difficulty}</span>
-                    <span class="lesson-time">⏱ ${lesson.estimatedTime}</span>
+                    <span class="lesson-difficulty">${escapeHtml(lesson.difficulty)}</span>
+                    <span class="lesson-time">⏱ ${escapeHtml(lesson.estimatedTime)}</span>
                 </div>
             </div>
         </div>
@@ -200,13 +200,13 @@ function renderLesson(lesson) {
 function renderContentBlock(block, index) {
     switch (block.type) {
         case 'text':
-            return `<p class="content-text">${block.text}</p>`;
+            return `<p class="content-text">${escapeHtml(block.text)}</p>`;
 
         case 'code':
             return `
                 <div class="content-code">
                     <pre><code>${escapeHtml(block.code)}</code></pre>
-                    ${block.explanation ? `<p class="code-explanation">${block.explanation}</p>` : ''}
+                    ${block.explanation ? `<p class="code-explanation">${escapeHtml(block.explanation)}</p>` : ''}
                     <button class="btn btn-small try-it-btn" data-code="${escapeHtml(block.code)}">Try It</button>
                 </div>
             `;
@@ -214,7 +214,7 @@ function renderContentBlock(block, index) {
         case 'tip':
             return `
                 <div class="content-tip">
-                    <strong>💡 TIP:</strong> ${block.text}
+                    <strong>💡 TIP:</strong> ${escapeHtml(block.text)}
                 </div>
             `;
 
@@ -222,7 +222,7 @@ function renderContentBlock(block, index) {
             return `
                 <div class="content-exercise">
                     <h4>✏️ Exercise:</h4>
-                    <p>${block.prompt}</p>
+                    <p>${escapeHtml(block.prompt)}</p>
                     <button class="btn btn-primary try-it-btn" data-code="${escapeHtml(block.starter)}">Try It</button>
                     <button class="btn btn-secondary show-solution-btn" data-solution="${escapeHtml(block.solution)}" data-hint="${escapeHtml(block.hint || '')}">Show Solution</button>
                 </div>
