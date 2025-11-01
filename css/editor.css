@@ -1,0 +1,119 @@
+/* ============================================
+   PYTHON ZERO - CODE EDITOR STYLES
+   CodeMirror Customization
+   ============================================ */
+
+/* ============================================
+   CODEMIRROR CONTAINER
+   ============================================ */
+.CodeMirror {
+    height: 100% !important;
+    font-family: var(--font-main);
+    font-size: var(--font-size-base);
+    background-color: var(--color-panel-bg) !important;
+    color: var(--color-primary) !important;
+    border: none;
+}
+
+/* ============================================
+   CODEMIRROR GUTTERS
+   ============================================ */
+.CodeMirror-gutters {
+    background-color: var(--color-bg) !important;
+    border-right: 1px solid var(--color-primary-dim) !important;
+}
+
+.CodeMirror-linenumber {
+    color: var(--color-primary-dim) !important;
+    padding: 0 8px !important;
+}
+
+/* ============================================
+   CODEMIRROR CURSOR
+   ============================================ */
+.CodeMirror-cursor {
+    border-left: 2px solid var(--color-primary) !important;
+}
+
+.CodeMirror-cursors {
+    /* Cursor blink */
+}
+
+/* ============================================
+   CODEMIRROR SELECTION
+   ============================================ */
+.CodeMirror-selected {
+    background-color: rgba(10, 255, 10, 0.2) !important;
+}
+
+.CodeMirror-focused .CodeMirror-selected {
+    background-color: rgba(10, 255, 10, 0.3) !important;
+}
+
+/* ============================================
+   CODEMIRROR ACTIVE LINE
+   ============================================ */
+.CodeMirror-activeline-background {
+    background-color: rgba(10, 255, 10, 0.05) !important;
+}
+
+/* ============================================
+   CODEMIRROR MATCHING BRACKETS
+   ============================================ */
+.CodeMirror-matchingbracket {
+    color: var(--color-secondary) !important;
+    background-color: rgba(10, 255, 10, 0.2) !important;
+    font-weight: bold;
+}
+
+.CodeMirror-nonmatchingbracket {
+    color: var(--color-error) !important;
+    font-weight: bold;
+}
+
+/* ============================================
+   CODEMIRROR SCROLLBARS
+   ============================================ */
+.CodeMirror-scrollbar-filler {
+    background-color: var(--color-bg) !important;
+}
+
+.CodeMirror-gutter-filler {
+    background-color: var(--color-bg) !important;
+}
+
+/* ============================================
+   SYNTAX HIGHLIGHTING OVERRIDES
+   ============================================ */
+/* Keep Monokai theme but ensure compatibility */
+.cm-s-monokai .CodeMirror-linenumber {
+    color: var(--color-primary-dim) !important;
+}
+
+.cm-s-monokai .CodeMirror-gutters {
+    background-color: var(--color-bg) !important;
+}
+
+.cm-s-monokai.CodeMirror {
+    background-color: var(--color-panel-bg) !important;
+}
+
+/* ============================================
+   AUTOCOMPLETE
+   ============================================ */
+.CodeMirror-hints {
+    background-color: var(--color-bg) !important;
+    border: var(--border-width) solid var(--color-border) !important;
+    font-family: var(--font-main);
+    color: var(--color-primary);
+}
+
+.CodeMirror-hint {
+    color: var(--color-primary) !important;
+    padding: 4px 8px;
+}
+
+.CodeMirror-hint-active {
+    background-color: var(--color-primary) !important;
+    color: var(--color-bg) !important;
+}

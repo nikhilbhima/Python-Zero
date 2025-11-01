@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0aff0a">
+    <meta name="description" content="PythonZero - Learn Python from zero to hero. Browser-based Python IDE for absolute beginners.">
+    <meta name="keywords" content="Python, learn Python, Python tutorial, Python IDE, coding for beginners">
+    <meta name="author" content="Nikhil Bhima">
+
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="PythonZero">
+
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/icons/icon-512.png">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+    <link rel="shortcut icon" href="/assets/icons/favicon.ico">
+
+    <title>PYTHON ZERO | Learn Python from Zero to Hero</title>
+
+    <!-- Google Fonts - JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- CodeMirror CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/monokai.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/editor.css">
+    <link rel="stylesheet" href="/css/mobile.css">
+</head>
+<body>
+    <!-- Main Container -->
+    <div id="app">
+        <!-- Header -->
+        <header id="header">
+            <div class="header-content">
+                <h1 class="logo">PYTHON ZERO v1.0 | [ZERO TO HERO]</h1>
+                <button id="menu-toggle" class="menu-toggle" aria-label="Toggle Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main id="main-content">
+            <!-- Navigation Panel (Left) -->
+            <aside id="navigation" class="panel panel-nav">
+                <div class="panel-header">
+                    <span class="panel-title">[NAVIGATION]</span>
+                    <button class="panel-close" aria-label="Close Navigation">&times;</button>
+                </div>
+                <div class="panel-content">
+                    <div class="terminal-text">
+                        <p class="command-prompt">&gt; ls tracks/</p>
+                        <div id="tracks-list">
+                            <div class="track" data-track="beginner">
+                                <span class="track-name">beginner/</span>
+                                <span class="track-count">[10 modules]</span>
+                            </div>
+                            <div class="track" data-track="intermediate">
+                                <span class="track-name">intermediate/</span>
+                                <span class="track-count">[8 modules]</span>
+                            </div>
+                            <div class="track" data-track="advanced">
+                                <span class="track-name">advanced/</span>
+                                <span class="track-count">[6 modules]</span>
+                            </div>
+                            <div class="track" data-track="ai-tools">
+                                <span class="track-name">ai-tools/</span>
+                                <span class="track-count">[10 modules]</span>
+                            </div>
+                        </div>
+                        <div id="lessons-list" style="display: none;">
+                            <!-- Lessons will be dynamically loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Editor Panel (Center) -->
+            <section id="editor-section" class="panel panel-editor">
+                <div class="panel-header">
+                    <span class="panel-title">[CODE EDITOR]</span>
+                    <div class="editor-controls">
+                        <button id="run-code" class="btn btn-primary" title="Run Code (Ctrl+Enter)">▶ RUN</button>
+                        <button id="clear-editor" class="btn btn-secondary" title="Clear Editor">CLEAR</button>
+                    </div>
+                </div>
+                <div class="panel-content">
+                    <!-- CodeMirror Editor -->
+                    <textarea id="code-editor"># Welcome to PythonZero!
+# Write your Python code here and press RUN
+
+print('Hello, PythonZero!')
+print('Start from zero. Code like a pro.')
+
+# Try some basic Python:
+x = 5
+y = 10
+print(f'Sum: {x + y}')
+</textarea>
+                </div>
+
+                <!-- Output Section -->
+                <div class="output-section">
+                    <div class="output-header">
+                        <span class="panel-title">[OUTPUT]</span>
+                        <div class="status-bar">
+                            <span id="status">STATUS: IDLE</span>
+                            <span id="error-count">ERRORS: 0</span>
+                        </div>
+                        <button id="clear-output" class="btn btn-small">CLEAR</button>
+                    </div>
+                    <div id="output" class="output-content"></div>
+                </div>
+            </section>
+
+            <!-- Help Panel (Right) -->
+            <aside id="help-panel" class="panel panel-help">
+                <div class="panel-header">
+                    <span class="panel-title">[HELP]</span>
+                    <button class="panel-close" aria-label="Close Help">&times;</button>
+                </div>
+                <div class="panel-content">
+                    <div id="help-content" class="help-content">
+                        <h3>Welcome to PythonZero!</h3>
+                        <p>Your browser-based Python learning platform.</p>
+
+                        <h4>Quick Start:</h4>
+                        <ul>
+                            <li>Write Python code in the editor</li>
+                            <li>Press <strong>RUN</strong> or <strong>Ctrl+Enter</strong> to execute</li>
+                            <li>See output and errors below</li>
+                            <li>Choose lessons from the navigation panel</li>
+                        </ul>
+
+                        <h4>Keyboard Shortcuts:</h4>
+                        <ul>
+                            <li><strong>Ctrl+Enter</strong> - Run code</li>
+                            <li><strong>Ctrl+Space</strong> - Autocomplete</li>
+                            <li><strong>Tab</strong> - Indent</li>
+                        </ul>
+
+                        <div class="tip">
+                            <strong>TIP:</strong> Python uses indentation (4 spaces) to define code blocks. Be careful with your spacing!
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- Footer -->
+        <footer id="footer">
+            <div class="footer-content">
+                <span>Built with ❤️ by Nikhil Bhima | </span>
+                <a href="https://github.com/nikhilbhima/Python-Zero" target="_blank" rel="noopener">GitHub</a>
+                <span class="separator">|</span>
+                <span>Press <kbd>Ctrl+?</kbd> for help</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- CodeMirror JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
+
+    <!-- Skulpt JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/skulpt/1.2.0/skulpt.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/skulpt/1.2.0/skulpt-stdlib.js"></script>
+
+    <!-- Custom JS -->
+    <script src="/js/editor.js"></script>
+    <script src="/js/runner.js"></script>
+    <script src="/js/errors.js"></script>
+    <script src="/js/lessons.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>

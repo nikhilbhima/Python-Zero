@@ -1,0 +1,327 @@
+/* ============================================
+   PYTHON ZERO - MOBILE RESPONSIVE STYLES
+   Mobile-First Approach
+   ============================================ */
+
+/* ============================================
+   TABLET AND BELOW (< 1024px)
+   ============================================ */
+@media screen and (max-width: 1024px) {
+    :root {
+        --header-height: 55px;
+        --footer-height: 35px;
+    }
+
+    .logo {
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
+
+    #main-content {
+        grid-template-columns: 250px 1fr 300px;
+    }
+
+    .panel-content {
+        padding: var(--spacing-sm);
+    }
+}
+
+/* ============================================
+   TABLET PORTRAIT AND BELOW (< 768px)
+   ============================================ */
+@media screen and (max-width: 768px) {
+    :root {
+        --header-height: 50px;
+        --footer-height: auto;
+        --panel-header-height: 45px;
+        --font-size-base: 13px;
+    }
+
+    /* Show hamburger menu */
+    .menu-toggle {
+        display: flex;
+    }
+
+    /* Stack panels vertically */
+    #main-content {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+    }
+
+    /* Navigation Panel */
+    .panel-nav {
+        position: fixed;
+        top: var(--header-height);
+        left: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: calc(100vh - var(--header-height));
+        z-index: 200;
+        transition: left var(--transition-speed);
+        border-right: var(--border-width) solid var(--color-border);
+    }
+
+    .panel-nav.active {
+        left: 0;
+    }
+
+    .panel-nav .panel-close {
+        display: flex;
+    }
+
+    /* Help Panel */
+    .panel-help {
+        position: fixed;
+        top: var(--header-height);
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: calc(100vh - var(--header-height));
+        z-index: 200;
+        transition: right var(--transition-speed);
+        border-left: var(--border-width) solid var(--color-border);
+    }
+
+    .panel-help.active {
+        right: 0;
+    }
+
+    .panel-help .panel-close {
+        display: flex;
+    }
+
+    /* Editor Panel - Full Width */
+    .panel-editor {
+        grid-row: 2;
+        border-right: none;
+    }
+
+    /* Output Section - Smaller on Mobile */
+    .output-section {
+        height: 150px;
+    }
+
+    /* Footer */
+    #footer {
+        padding: var(--spacing-sm);
+        height: auto;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-xs);
+    }
+
+    .separator {
+        display: none;
+    }
+
+    /* Touch-Friendly Buttons */
+    .btn {
+        padding: 12px var(--spacing-md);
+        min-height: 44px;
+        font-size: var(--font-size-base);
+    }
+
+    .btn-small {
+        padding: 8px 12px;
+        min-height: 36px;
+    }
+
+    /* Track Items - Larger Touch Targets */
+    .track {
+        padding: 12px var(--spacing-md);
+        min-height: 44px;
+    }
+
+    /* Panel Headers - Touch Friendly */
+    .panel-header {
+        height: var(--panel-header-height);
+    }
+
+    /* Help Content - Better Mobile Spacing */
+    .help-content h3 {
+        font-size: 16px;
+    }
+
+    .help-content h4 {
+        font-size: 14px;
+    }
+}
+
+/* ============================================
+   MOBILE (< 480px)
+   ============================================ */
+@media screen and (max-width: 480px) {
+    :root {
+        --font-size-base: 12px;
+        --font-size-small: 11px;
+        --spacing-md: 12px;
+    }
+
+    .logo {
+        font-size: 12px;
+        letter-spacing: 0.5px;
+    }
+
+    /* Simplify logo on very small screens */
+    .logo::after {
+        content: none;
+    }
+
+    /* Navigation Panel - Full Width */
+    .panel-nav {
+        width: 90%;
+        max-width: none;
+    }
+
+    /* Help Panel - Full Width */
+    .panel-help {
+        width: 90%;
+        max-width: none;
+    }
+
+    /* Editor Controls - Stack Vertically */
+    .editor-controls {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .editor-controls .btn {
+        width: 100%;
+    }
+
+    /* Output Header - Stack on Small Screens */
+    .output-header {
+        flex-wrap: wrap;
+        height: auto;
+        min-height: var(--panel-header-height);
+    }
+
+    .status-bar {
+        width: 100%;
+        justify-content: space-between;
+        margin-left: 0;
+        margin-top: var(--spacing-xs);
+    }
+
+    /* Footer - Minimal on Small Screens */
+    .footer-content {
+        font-size: 10px;
+    }
+}
+
+/* ============================================
+   VERY SMALL SCREENS (< 320px)
+   iPhone SE and similar
+   ============================================ */
+@media screen and (max-width: 320px) {
+    :root {
+        --font-size-base: 11px;
+        --font-size-small: 10px;
+        --spacing-sm: 6px;
+        --spacing-md: 10px;
+    }
+
+    .logo {
+        font-size: 10px;
+    }
+
+    /* Hide less critical footer info */
+    #footer kbd {
+        display: none;
+    }
+}
+
+/* ============================================
+   LANDSCAPE MOBILE (max-height: 500px)
+   ============================================ */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .output-section {
+        height: 120px;
+    }
+
+    .panel-content {
+        padding: var(--spacing-sm);
+    }
+
+    .help-content h3,
+    .help-content h4 {
+        margin-top: var(--spacing-sm);
+        margin-bottom: var(--spacing-xs);
+    }
+}
+
+/* ============================================
+   TOUCH IMPROVEMENTS
+   ============================================ */
+@media (hover: none) and (pointer: coarse) {
+    /* Enhance touch targets */
+    .track,
+    .btn,
+    .panel-close {
+        min-height: 44px;
+    }
+
+    /* Remove hover effects on touch devices */
+    .btn:hover {
+        background-color: var(--color-primary-dim);
+        color: var(--color-primary);
+    }
+
+    .track:hover {
+        border-color: transparent;
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    /* Better touch scrolling */
+    .panel-content,
+    .output-content {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* ============================================
+   OVERLAY FOR MOBILE PANELS
+   ============================================ */
+@media screen and (max-width: 768px) {
+    /* Overlay background when panels are open */
+    body::before {
+        content: '';
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 199;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--transition-speed);
+    }
+
+    body.panel-open::before {
+        opacity: 1;
+        pointer-events: all;
+    }
+}
+
+/* ============================================
+   PRINT STYLES (Bonus)
+   ============================================ */
+@media print {
+    .panel-nav,
+    .panel-help,
+    #header,
+    #footer,
+    .panel-header,
+    .output-section {
+        display: none;
+    }
+
+    .CodeMirror {
+        border: 1px solid #000;
+    }
+}
