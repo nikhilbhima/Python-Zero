@@ -1,0 +1,132 @@
+{
+  "id": "10-functions",
+  "title": "Functions",
+  "description": "Create reusable code blocks with functions",
+  "track": "beginner",
+  "difficulty": "beginner",
+  "estimatedTime": "25 minutes",
+  "concepts": ["functions", "parameters", "return values", "scope", "docstrings"],
+
+  "content": [
+    {
+      "type": "text",
+      "text": "Functions are reusable blocks of code that perform a specific task. They help you avoid repeating yourself and make code more organized!"
+    },
+    {
+      "type": "text",
+      "text": "Creating and calling a basic function:"
+    },
+    {
+      "type": "code",
+      "code": "# Define a function\ndef greet():\n    print(\"Hello!\")\n    print(\"Welcome to Python!\")\n\n# Call the function\ngreet()\ngreet()  # Can call it multiple times!",
+      "explanation": "Use 'def' to define a function. The code inside runs when you call the function by using its name with parentheses ()."
+    },
+    {
+      "type": "tip",
+      "text": "Function names should be descriptive and use snake_case. Think of them as verbs: calculate_total, send_email, check_password."
+    },
+    {
+      "type": "text",
+      "text": "Functions with parameters (inputs):"
+    },
+    {
+      "type": "code",
+      "code": "def greet(name):\n    print(f\"Hello, {name}!\")\n    print(f\"Nice to meet you, {name}\")\n\n# Call with different arguments\ngreet(\"Alice\")\ngreet(\"Bob\")",
+      "explanation": "Parameters are variables in the function definition. Arguments are the actual values you pass when calling."
+    },
+    {
+      "type": "text",
+      "text": "Multiple parameters:"
+    },
+    {
+      "type": "code",
+      "code": "def introduce(name, age, city):\n    print(f\"I'm {name}\")\n    print(f\"I'm {age} years old\")\n    print(f\"I live in {city}\")\n\nintroduce(\"Alice\", 25, \"New York\")\nintroduce(\"Bob\", 30, \"Boston\")",
+      "explanation": "Functions can have multiple parameters separated by commas. Pass arguments in the same order!"
+    },
+    {
+      "type": "text",
+      "text": "Return values - sending data back:"
+    },
+    {
+      "type": "code",
+      "code": "def add(a, b):\n    result = a + b\n    return result\n\n# Use the returned value\nsum1 = add(5, 3)\nprint(sum1)  # 8\n\nsum2 = add(10, 20)\nprint(sum2)  # 30\n\n# Can use directly\nprint(add(7, 8))  # 15",
+      "explanation": "'return' sends a value back to the caller. You can store it in a variable or use it directly."
+    },
+    {
+      "type": "tip",
+      "text": "Functions without 'return' automatically return None. Use return to send data back from your function!"
+    },
+    {
+      "type": "text",
+      "text": "Default parameter values:"
+    },
+    {
+      "type": "code",
+      "code": "def greet(name, greeting=\"Hello\"):\n    print(f\"{greeting}, {name}!\")\n\ngreet(\"Alice\")              # Hello, Alice!\ngreet(\"Bob\", \"Hi\")          # Hi, Bob!\ngreet(\"Carol\", \"Hey there\") # Hey there, Carol!",
+      "explanation": "Default values are used when no argument is provided. Parameters with defaults must come after regular parameters."
+    },
+    {
+      "type": "text",
+      "text": "Multiple return values:"
+    },
+    {
+      "type": "code",
+      "code": "def get_user_info():\n    name = \"Alice\"\n    age = 25\n    city = \"NYC\"\n    return name, age, city\n\n# Unpack the returned values\nuser_name, user_age, user_city = get_user_info()\nprint(user_name)  # Alice\nprint(user_age)   # 25\nprint(user_city)  # NYC",
+      "explanation": "Return multiple values separated by commas. Python packages them into a tuple. You can unpack them into separate variables."
+    },
+    {
+      "type": "text",
+      "text": "Scope - where variables exist:"
+    },
+    {
+      "type": "code",
+      "code": "# Global variable\noutside = \"I'm outside\"\n\ndef my_function():\n    # Local variable\n    inside = \"I'm inside\"\n    print(outside)  # Can access global\n    print(inside)\n\nmy_function()\n# print(inside)  # Error! inside doesn't exist here",
+      "explanation": "Variables inside functions are local - they only exist inside that function. Functions can read global variables but can't modify them (unless using 'global')."
+    },
+    {
+      "type": "tip",
+      "text": "Avoid using global variables in functions when possible. Pass values as parameters and return results instead!"
+    },
+    {
+      "type": "text",
+      "text": "Docstrings - documenting your functions:"
+    },
+    {
+      "type": "code",
+      "code": "def calculate_area(length, width):\n    \"\"\"\n    Calculate the area of a rectangle.\n    \n    Args:\n        length: The length of the rectangle\n        width: The width of the rectangle\n    \n    Returns:\n        The area (length * width)\n    \"\"\"\n    return length * width\n\narea = calculate_area(5, 10)\nprint(area)  # 50",
+      "explanation": "Docstrings (triple quotes) document what your function does. They appear first inside the function. Great for helping others (and future you) understand your code!"
+    },
+    {
+      "type": "text",
+      "text": "Functions calling other functions:"
+    },
+    {
+      "type": "code",
+      "code": "def double(x):\n    return x * 2\n\ndef quadruple(x):\n    return double(double(x))\n\nresult = quadruple(5)\nprint(result)  # 20 (5 * 2 * 2)",
+      "explanation": "Functions can call other functions. This helps break complex problems into smaller, manageable pieces!"
+    },
+    {
+      "type": "text",
+      "text": "Practical example - building a calculator:"
+    },
+    {
+      "type": "code",
+      "code": "def add(a, b):\n    return a + b\n\ndef subtract(a, b):\n    return a - b\n\ndef multiply(a, b):\n    return a * b\n\ndef divide(a, b):\n    if b == 0:\n        return \"Cannot divide by zero!\"\n    return a / b\n\n# Use the calculator\nprint(add(10, 5))       # 15\nprint(subtract(10, 5))  # 5\nprint(multiply(10, 5))  # 50\nprint(divide(10, 5))    # 2.0\nprint(divide(10, 0))    # Cannot divide by zero!",
+      "explanation": "Breaking code into functions makes it organized and reusable. Each function does one thing well!"
+    },
+    {
+      "type": "exercise",
+      "prompt": "Write a function called is_even that takes a number and returns True if it's even, False if it's odd. Test it with a few numbers.",
+      "starter": "# Define the function\n\n# Test it\n",
+      "solution": "# Define the function\ndef is_even(number):\n    return number % 2 == 0\n\n# Test it\nprint(is_even(4))   # True\nprint(is_even(7))   # False\nprint(is_even(10))  # True\nprint(is_even(15))  # False",
+      "hint": "Use the modulo operator %. If number % 2 equals 0, it's even!"
+    },
+    {
+      "type": "text",
+      "text": "Congratulations! You've completed all 10 beginner lessons! You now know: variables, printing, math, strings, conditions, loops, lists, dictionaries, and functions. You have a solid Python foundation!"
+    }
+  ],
+
+  "nextLesson": null,
+  "prevLesson": "09-dictionaries"
+}

@@ -1,0 +1,114 @@
+{
+  "id": "06-for-loops",
+  "title": "For Loops",
+  "description": "Repeat actions and iterate over sequences with for loops",
+  "track": "beginner",
+  "difficulty": "beginner",
+  "estimatedTime": "20 minutes",
+  "concepts": ["for loops", "range function", "iteration", "enumerate"],
+
+  "content": [
+    {
+      "type": "text",
+      "text": "For loops let you repeat code a specific number of times or go through each item in a collection. They're one of the most useful tools in programming!"
+    },
+    {
+      "type": "text",
+      "text": "The range() function creates a sequence of numbers:"
+    },
+    {
+      "type": "code",
+      "code": "# Print numbers 0 to 4\nfor i in range(5):\n    print(i)\n\n# Output:\n# 0\n# 1\n# 2\n# 3\n# 4",
+      "explanation": "range(5) creates numbers from 0 to 4 (not including 5!). The variable 'i' takes each value in turn."
+    },
+    {
+      "type": "tip",
+      "text": "range(n) starts at 0 and stops BEFORE n. So range(5) gives you 0, 1, 2, 3, 4 - that's 5 numbers total!"
+    },
+    {
+      "type": "text",
+      "text": "You can specify start and end values for range():"
+    },
+    {
+      "type": "code",
+      "code": "# Numbers from 1 to 5\nfor i in range(1, 6):\n    print(i)\n\nprint(\"---\")\n\n# Numbers from 10 to 20\nfor i in range(10, 21):\n    print(i)",
+      "explanation": "range(start, end) goes from start up to (but not including) end. Remember: the end number is not included!"
+    },
+    {
+      "type": "text",
+      "text": "Add a step value to count by different amounts:"
+    },
+    {
+      "type": "code",
+      "code": "# Count by 2s\nfor i in range(0, 11, 2):\n    print(i)  # 0, 2, 4, 6, 8, 10\n\nprint(\"---\")\n\n# Count backwards\nfor i in range(10, 0, -1):\n    print(i)  # 10, 9, 8, ..., 1",
+      "explanation": "range(start, end, step) lets you skip numbers. Use negative step to count backwards!"
+    },
+    {
+      "type": "text",
+      "text": "Loop through items in a list:"
+    },
+    {
+      "type": "code",
+      "code": "fruits = ['apple', 'banana', 'orange']\n\nfor fruit in fruits:\n    print(f\"I like {fruit}\")\n\n# Output:\n# I like apple\n# I like banana\n# I like orange",
+      "explanation": "The for loop goes through each item in the list. The variable 'fruit' holds one item at a time."
+    },
+    {
+      "type": "text",
+      "text": "Loop through characters in a string:"
+    },
+    {
+      "type": "code",
+      "code": "name = \"Python\"\n\nfor letter in name:\n    print(letter)\n\n# Output:\n# P\n# y\n# t\n# h\n# o\n# n",
+      "explanation": "Strings are sequences of characters, so you can loop through them character by character!"
+    },
+    {
+      "type": "text",
+      "text": "Use enumerate() when you need both the index and the value:"
+    },
+    {
+      "type": "code",
+      "code": "colors = ['red', 'green', 'blue']\n\nfor index, color in enumerate(colors):\n    print(f\"{index}: {color}\")\n\n# Output:\n# 0: red\n# 1: green\n# 2: blue",
+      "explanation": "enumerate() gives you both the position (index) and the item. Super useful when you need to know where you are in the list!"
+    },
+    {
+      "type": "tip",
+      "text": "Start enumerate at 1 instead of 0 with: enumerate(list, start=1). Great for numbering things for humans!"
+    },
+    {
+      "type": "text",
+      "text": "Build lists with loops:"
+    },
+    {
+      "type": "code",
+      "code": "# Create a list of squares\nsquares = []\nfor i in range(1, 6):\n    square = i ** 2\n    squares.append(square)\n\nprint(squares)  # [1, 4, 9, 16, 25]\n\n# Calculate a sum\ntotal = 0\nfor num in [1, 2, 3, 4, 5]:\n    total = total + num\n\nprint(f\"Sum: {total}\")  # Sum: 15",
+      "explanation": "You can use loops to build up lists or calculate totals. Start with an empty list or 0, then add to it in the loop."
+    },
+    {
+      "type": "text",
+      "text": "Nested loops (loops inside loops):"
+    },
+    {
+      "type": "code",
+      "code": "# Multiplication table\nfor i in range(1, 4):\n    for j in range(1, 4):\n        print(f\"{i} x {j} = {i * j}\")\n    print(\"---\")",
+      "explanation": "The inner loop runs completely for each iteration of the outer loop. This creates patterns and grids!"
+    },
+    {
+      "type": "tip",
+      "text": "Break out of a loop early with 'break', or skip to the next iteration with 'continue'. We'll use these with while loops!"
+    },
+    {
+      "type": "exercise",
+      "prompt": "Use a for loop to print the first 10 multiples of 7 (7, 14, 21, ..., 70). Use range() and calculate each multiple.",
+      "starter": "# Your code here\n",
+      "solution": "for i in range(1, 11):\n    multiple = i * 7\n    print(multiple)",
+      "hint": "Loop from 1 to 11 (remember, range end is not included). Multiply the loop variable by 7."
+    },
+    {
+      "type": "text",
+      "text": "Excellent work! For loops are essential for repeating tasks. Next, we'll learn while loops for when you don't know exactly how many times to repeat!"
+    }
+  ],
+
+  "nextLesson": "07-while-loops",
+  "prevLesson": "05-if-else"
+}

@@ -12,7 +12,14 @@ const lessonRegistry = {
     beginner: [
         { id: '01-variables', title: 'Variables & Data Types' },
         { id: '02-print', title: 'Print & Input' },
-        { id: '03-math', title: 'Basic Math Operations' }
+        { id: '03-math', title: 'Basic Math Operations' },
+        { id: '04-strings', title: 'Strings & String Methods' },
+        { id: '05-if-else', title: 'If/Else Statements' },
+        { id: '06-for-loops', title: 'For Loops' },
+        { id: '07-while-loops', title: 'While Loops' },
+        { id: '08-lists', title: 'Lists' },
+        { id: '09-dictionaries', title: 'Dictionaries' },
+        { id: '10-functions', title: 'Functions' }
     ],
     intermediate: [],
     advanced: [],

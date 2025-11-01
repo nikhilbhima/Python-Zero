@@ -1,0 +1,110 @@
+{
+  "id": "04-strings",
+  "title": "Strings & String Methods",
+  "description": "Master text manipulation with Python string methods",
+  "track": "beginner",
+  "difficulty": "beginner",
+  "estimatedTime": "20 minutes",
+  "concepts": ["strings", "string methods", "slicing", "concatenation"],
+
+  "content": [
+    {
+      "type": "text",
+      "text": "Strings are sequences of characters (letters, numbers, symbols). Python has powerful built-in methods to work with text."
+    },
+    {
+      "type": "text",
+      "text": "You can create strings with single or double quotes - they work the same:"
+    },
+    {
+      "type": "code",
+      "code": "name1 = 'Alice'\nname2 = \"Bob\"\nsentence = \"It's a nice day!\"  # Use double quotes when text has apostrophes\n\nprint(name1)\nprint(name2)\nprint(sentence)",
+      "explanation": "Single quotes and double quotes are interchangeable. Use double quotes when your text contains an apostrophe."
+    },
+    {
+      "type": "text",
+      "text": "String concatenation means joining strings together with the + operator:"
+    },
+    {
+      "type": "code",
+      "code": "first_name = \"John\"\nlast_name = \"Doe\"\n\nfull_name = first_name + \" \" + last_name\nprint(full_name)  # John Doe\n\n# You can also repeat strings\nprint(\"Ha\" * 3)  # HaHaHa",
+      "explanation": "The + operator joins strings. The * operator repeats them."
+    },
+    {
+      "type": "tip",
+      "text": "Remember: You can't add strings and numbers directly. Use str() to convert numbers to strings first, or use f-strings!"
+    },
+    {
+      "type": "text",
+      "text": "Common string methods that change the case:"
+    },
+    {
+      "type": "code",
+      "code": "text = \"Hello World\"\n\nprint(text.upper())      # HELLO WORLD\nprint(text.lower())      # hello world\nprint(text.title())      # Hello World\nprint(text.capitalize()) # Hello world\nprint(text.swapcase())   # hELLO wORLD",
+      "explanation": "These methods return a new string with the case changed. They don't modify the original string."
+    },
+    {
+      "type": "text",
+      "text": "Methods for cleaning up strings:"
+    },
+    {
+      "type": "code",
+      "code": "messy = \"   Hello World!   \"\n\nprint(messy.strip())       # \"Hello World!\" (removes spaces from both ends)\nprint(messy.lstrip())      # \"Hello World!   \" (removes from left)\nprint(messy.rstrip())      # \"   Hello World!\" (removes from right)\n\ntext = \"Hello World\"\nprint(text.replace(\"World\", \"Python\"))  # \"Hello Python\"",
+      "explanation": "strip() removes whitespace from the edges. replace() substitutes one substring for another."
+    },
+    {
+      "type": "text",
+      "text": "Checking what's in a string:"
+    },
+    {
+      "type": "code",
+      "code": "email = \"user@example.com\"\n\nprint(email.startswith(\"user\"))     # True\nprint(email.endswith(\".com\"))       # True\nprint(email.count(\"e\"))             # 3 (counts how many times)\nprint(\"@\" in email)                  # True (checks if @ exists)",
+      "explanation": "These methods help you check and search within strings. They're useful for validation!"
+    },
+    {
+      "type": "text",
+      "text": "Splitting and joining strings:"
+    },
+    {
+      "type": "code",
+      "code": "sentence = \"Python is awesome\"\nwords = sentence.split()  # Splits into a list\nprint(words)  # ['Python', 'is', 'awesome']\n\n# Join them back\njoined = \" \".join(words)\nprint(joined)  # \"Python is awesome\"\n\n# Split by a specific character\ndate = \"2024-11-01\"\nparts = date.split(\"-\")\nprint(parts)  # ['2024', '11', '01']",
+      "explanation": "split() breaks a string into a list. join() combines a list into a string."
+    },
+    {
+      "type": "text",
+      "text": "String slicing lets you extract parts of a string:"
+    },
+    {
+      "type": "code",
+      "code": "text = \"Python\"\n\nprint(text[0])      # P (first character, index 0)\nprint(text[5])      # n (last character)\nprint(text[-1])     # n (negative index counts from end)\nprint(text[0:3])    # Pyt (characters 0, 1, 2)\nprint(text[2:])     # thon (from index 2 to end)\nprint(text[:4])     # Pyth (from start to index 4)",
+      "explanation": "Use [start:end] to slice strings. Negative indexes count from the end. Remember: the end index is not included!"
+    },
+    {
+      "type": "tip",
+      "text": "Strings are immutable - you can't change them in place. Methods like upper() and replace() return NEW strings."
+    },
+    {
+      "type": "text",
+      "text": "The len() function tells you how many characters are in a string:"
+    },
+    {
+      "type": "code",
+      "code": "name = \"Alice\"\npassword = \"secret123\"\n\nprint(len(name))      # 5\nprint(len(password))  # 9\n\nif len(password) < 8:\n    print(\"Password too short!\")\nelse:\n    print(\"Password length OK\")",
+      "explanation": "len() counts all characters including spaces. This is useful for validation!"
+    },
+    {
+      "type": "exercise",
+      "prompt": "Take the string 'hello world' and: 1) Convert it to title case, 2) Replace 'world' with 'Python', 3) Print the result.",
+      "starter": "text = \"hello world\"\n\n# Your code here\n",
+      "solution": "text = \"hello world\"\n\n# Convert to title case and replace\nresult = text.title().replace(\"World\", \"Python\")\nprint(result)  # Hello Python",
+      "hint": "Use .title() first, then .replace(). You can chain methods together!"
+    },
+    {
+      "type": "text",
+      "text": "Excellent! You now know how to manipulate strings like a pro. Next, we'll learn about making decisions with if/else statements!"
+    }
+  ],
+
+  "nextLesson": "05-if-else",
+  "prevLesson": "03-math"
+}

@@ -1,0 +1,123 @@
+{
+  "id": "09-dictionaries",
+  "title": "Dictionaries",
+  "description": "Store data in key-value pairs with dictionaries",
+  "track": "beginner",
+  "difficulty": "beginner",
+  "estimatedTime": "25 minutes",
+  "concepts": ["dictionaries", "key-value pairs", "dict methods", "iteration"],
+
+  "content": [
+    {
+      "type": "text",
+      "text": "Dictionaries store data in key-value pairs. Think of them like a real dictionary: you look up a word (key) to get its definition (value)."
+    },
+    {
+      "type": "text",
+      "text": "Creating and accessing dictionaries:"
+    },
+    {
+      "type": "code",
+      "code": "# Create a dictionary\nperson = {\n    'name': 'Alice',\n    'age': 25,\n    'city': 'New York'\n}\n\n# Access values by key\nprint(person['name'])  # Alice\nprint(person['age'])   # 25\nprint(person['city'])  # New York",
+      "explanation": "Dictionaries use curly braces {}. Each entry is key: value. Access values using square brackets with the key."
+    },
+    {
+      "type": "tip",
+      "text": "Dictionary keys must be unique and immutable (strings, numbers, tuples). Values can be anything!"
+    },
+    {
+      "type": "text",
+      "text": "Adding and modifying items:"
+    },
+    {
+      "type": "code",
+      "code": "person = {'name': 'Bob', 'age': 30}\n\n# Add a new key-value pair\nperson['city'] = 'Boston'\nprint(person)  # {'name': 'Bob', 'age': 30, 'city': 'Boston'}\n\n# Modify existing value\nperson['age'] = 31\nprint(person)  # {'name': 'Bob', 'age': 31, 'city': 'Boston'}",
+      "explanation": "Just assign to a key to add or update it. If the key exists, it updates. If not, it adds a new entry."
+    },
+    {
+      "type": "text",
+      "text": "Safe way to access values with .get():"
+    },
+    {
+      "type": "code",
+      "code": "person = {'name': 'Alice', 'age': 25}\n\n# This crashes if key doesn't exist:\n# print(person['city'])  # KeyError!\n\n# Use .get() instead (returns None if not found)\nprint(person.get('city'))  # None\n\n# Provide a default value\nprint(person.get('city', 'Unknown'))  # Unknown\nprint(person.get('name', 'Unknown'))  # Alice",
+      "explanation": ".get(key) returns None if the key doesn't exist. .get(key, default) returns your default value instead."
+    },
+    {
+      "type": "tip",
+      "text": "Use .get() when you're not sure if a key exists. It's safer than using square brackets!"
+    },
+    {
+      "type": "text",
+      "text": "Removing items:"
+    },
+    {
+      "type": "code",
+      "code": "person = {'name': 'Alice', 'age': 25, 'city': 'NYC'}\n\n# Remove a key-value pair\ndel person['city']\nprint(person)  # {'name': 'Alice', 'age': 25}\n\n# Remove and get the value\nage = person.pop('age')\nprint(age)     # 25\nprint(person)  # {'name': 'Alice'}",
+      "explanation": "del removes an item. pop() removes and returns the value. Both will error if the key doesn't exist!"
+    },
+    {
+      "type": "text",
+      "text": "Checking if keys exist:"
+    },
+    {
+      "type": "code",
+      "code": "person = {'name': 'Bob', 'age': 30}\n\nif 'name' in person:\n    print(f\"Name is {person['name']}\")\n\nif 'email' not in person:\n    print(\"No email found\")\n\n# Check multiple keys\nrequired = ['name', 'age', 'city']\nmissing = [key for key in required if key not in person]\nprint(f\"Missing: {missing}\")  # Missing: ['city']",
+      "explanation": "Use 'in' to check if a key exists before accessing it. This prevents errors!"
+    },
+    {
+      "type": "text",
+      "text": "Useful dictionary methods:"
+    },
+    {
+      "type": "code",
+      "code": "person = {'name': 'Alice', 'age': 25, 'city': 'NYC'}\n\n# Get all keys\nprint(person.keys())    # dict_keys(['name', 'age', 'city'])\n\n# Get all values\nprint(person.values())  # dict_values(['Alice', 25, 'NYC'])\n\n# Get all key-value pairs\nprint(person.items())   # dict_items([('name', 'Alice'), ...])\n\n# Number of items\nprint(len(person))      # 3",
+      "explanation": ".keys() gets all keys, .values() gets all values, .items() gets both as tuples."
+    },
+    {
+      "type": "text",
+      "text": "Looping through dictionaries:"
+    },
+    {
+      "type": "code",
+      "code": "person = {'name': 'Bob', 'age': 30, 'city': 'Boston'}\n\n# Loop through keys\nfor key in person:\n    print(f\"{key}: {person[key]}\")\n\nprint(\"---\")\n\n# Loop through keys and values together (better!)\nfor key, value in person.items():\n    print(f\"{key}: {value}\")\n\nprint(\"---\")\n\n# Loop through just values\nfor value in person.values():\n    print(value)",
+      "explanation": "Looping over a dict gives you keys. Use .items() to get both key and value in each iteration."
+    },
+    {
+      "type": "tip",
+      "text": "When looping through dictionaries, .items() is usually what you want - it gives you both key and value!"
+    },
+    {
+      "type": "text",
+      "text": "Nested dictionaries (dictionaries inside dictionaries):"
+    },
+    {
+      "type": "code",
+      "code": "# Dictionary of students\nstudents = {\n    'alice': {'age': 20, 'grade': 'A'},\n    'bob': {'age': 21, 'grade': 'B'}\n}\n\n# Access nested values\nprint(students['alice']['age'])    # 20\nprint(students['bob']['grade'])    # B\n\n# Add to nested dict\nstudents['alice']['email'] = 'alice@example.com'\nprint(students['alice'])",
+      "explanation": "Dictionaries can contain other dictionaries! Access with multiple square brackets."
+    },
+    {
+      "type": "text",
+      "text": "Dictionary comprehensions (like list comprehensions!):"
+    },
+    {
+      "type": "code",
+      "code": "# Create a dictionary of squares\nsquares = {x: x**2 for x in range(1, 6)}\nprint(squares)  # {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}\n\n# Convert lists to dictionary\nkeys = ['name', 'age', 'city']\nvalues = ['Alice', 25, 'NYC']\nperson = {k: v for k, v in zip(keys, values)}\nprint(person)  # {'name': 'Alice', 'age': 25, 'city': 'NYC'}",
+      "explanation": "Dictionary comprehensions: {key: value for item in iterable}. They're concise but powerful!"
+    },
+    {
+      "type": "exercise",
+      "prompt": "Create a dictionary representing a book with keys: 'title', 'author', 'year'. Then add a 'pages' key with value 350. Print the dictionary.",
+      "starter": "# Create the book dictionary\n\n# Add pages\n\n# Print result\n",
+      "solution": "# Create the book dictionary\nbook = {\n    'title': 'Python Basics',\n    'author': 'John Doe',\n    'year': 2024\n}\n\n# Add pages\nbook['pages'] = 350\n\n# Print result\nprint(book)",
+      "hint": "Create the dict with {} and key: value pairs. Add new items by assigning: book['pages'] = 350"
+    },
+    {
+      "type": "text",
+      "text": "Perfect! Dictionaries are essential for organizing data. Next, we'll learn about functions - how to package code into reusable pieces!"
+    }
+  ],
+
+  "nextLesson": "10-functions",
+  "prevLesson": "08-lists"
+}

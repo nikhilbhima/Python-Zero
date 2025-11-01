@@ -1,0 +1,105 @@
+{
+  "id": "07-while-loops",
+  "title": "While Loops",
+  "description": "Repeat code as long as a condition is true",
+  "track": "beginner",
+  "difficulty": "beginner",
+  "estimatedTime": "20 minutes",
+  "concepts": ["while loops", "break", "continue", "infinite loops"],
+
+  "content": [
+    {
+      "type": "text",
+      "text": "While loops repeat code as long as a condition stays True. They're perfect when you don't know in advance how many times you need to loop."
+    },
+    {
+      "type": "text",
+      "text": "Basic while loop syntax:"
+    },
+    {
+      "type": "code",
+      "code": "count = 0\n\nwhile count < 5:\n    print(f\"Count is {count}\")\n    count = count + 1  # Don't forget this!\n\nprint(\"Done!\")",
+      "explanation": "The loop checks the condition before each iteration. When count reaches 5, the condition becomes False and the loop stops."
+    },
+    {
+      "type": "tip",
+      "text": "Always make sure your while loop condition will eventually become False, or you'll create an infinite loop that never stops!"
+    },
+    {
+      "type": "text",
+      "text": "Common pattern: countdown"
+    },
+    {
+      "type": "code",
+      "code": "countdown = 5\n\nwhile countdown > 0:\n    print(countdown)\n    countdown = countdown - 1\n\nprint(\"Blast off!\")",
+      "explanation": "We decrease countdown each time. When it hits 0, the condition (countdown > 0) becomes False and we exit the loop."
+    },
+    {
+      "type": "text",
+      "text": "The 'break' statement exits a loop immediately:"
+    },
+    {
+      "type": "code",
+      "code": "# Find the first number divisible by 7\nnum = 50\n\nwhile num < 100:\n    if num % 7 == 0:\n        print(f\"Found it: {num}\")\n        break  # Exit the loop\n    num = num + 1\n\nprint(f\"Final value: {num}\")",
+      "explanation": "When we find a number divisible by 7, break stops the loop immediately. This is useful when you're searching for something!"
+    },
+    {
+      "type": "text",
+      "text": "The 'continue' statement skips to the next iteration:"
+    },
+    {
+      "type": "code",
+      "code": "# Print odd numbers from 1 to 10\nnum = 0\n\nwhile num < 10:\n    num = num + 1\n    \n    if num % 2 == 0:  # If even\n        continue  # Skip the rest, go to next iteration\n    \n    print(num)  # Only prints odd numbers",
+      "explanation": "continue skips the rest of the loop body and goes back to check the condition. Use it to skip certain iterations."
+    },
+    {
+      "type": "tip",
+      "text": "Be careful with continue - make sure you update your counter BEFORE the continue, or you might create an infinite loop!"
+    },
+    {
+      "type": "text",
+      "text": "Simulating user input validation:"
+    },
+    {
+      "type": "code",
+      "code": "# Note: This simulates what would happen with real input\nattempts = 0\nmax_attempts = 3\n\nwhile attempts < max_attempts:\n    # In real Python, you'd use: password = input(\"Enter password: \")\n    password = \"wrong\"  # Simulating wrong password\n    attempts = attempts + 1\n    \n    if password == \"secret\":\n        print(\"Access granted!\")\n        break\n    else:\n        remaining = max_attempts - attempts\n        print(f\"Wrong! {remaining} attempts left\")\n\nif attempts == max_attempts:\n    print(\"Locked out!\")",
+      "explanation": "This pattern is common for retry logic. We limit attempts and break when successful."
+    },
+    {
+      "type": "text",
+      "text": "While True with break (useful pattern):"
+    },
+    {
+      "type": "code",
+      "code": "# Keep doubling until > 100\nvalue = 1\n\nwhile True:  # Runs forever unless we break\n    print(value)\n    value = value * 2\n    \n    if value > 100:\n        break\n\nprint(f\"Final value: {value}\")",
+      "explanation": "'while True' creates an infinite loop. You MUST use break to exit it. This pattern is useful when your exit condition is in the middle of the loop."
+    },
+    {
+      "type": "tip",
+      "text": "Use for loops when you know how many times to loop. Use while loops when you're looping until a condition changes."
+    },
+    {
+      "type": "text",
+      "text": "Accumulating values in a while loop:"
+    },
+    {
+      "type": "code",
+      "code": "# Sum numbers from 1 to 10\ntotal = 0\nnum = 1\n\nwhile num <= 10:\n    total = total + num\n    num = num + 1\n\nprint(f\"Sum: {total}\")  # 55",
+      "explanation": "We build up the total by adding each number. This pattern works for sums, products, or building lists."
+    },
+    {
+      "type": "exercise",
+      "prompt": "Write a while loop that prints all numbers from 1 to 20, but only if they're NOT divisible by 3. Use continue to skip multiples of 3.",
+      "starter": "num = 0\n\n# Your code here\n",
+      "solution": "num = 0\n\nwhile num < 20:\n    num = num + 1\n    \n    if num % 3 == 0:\n        continue\n    \n    print(num)",
+      "hint": "Increment num first, then check if it's divisible by 3 (num % 3 == 0). Use continue to skip printing those numbers."
+    },
+    {
+      "type": "text",
+      "text": "Great job! You now understand both for and while loops. Next, we'll dive deep into lists - one of Python's most powerful data structures!"
+    }
+  ],
+
+  "nextLesson": "08-lists",
+  "prevLesson": "06-for-loops"
+}

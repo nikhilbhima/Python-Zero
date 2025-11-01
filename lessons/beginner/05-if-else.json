@@ -1,0 +1,105 @@
+{
+  "id": "05-if-else",
+  "title": "If/Else Statements",
+  "description": "Make decisions in your code with conditional logic",
+  "track": "beginner",
+  "difficulty": "beginner",
+  "estimatedTime": "20 minutes",
+  "concepts": ["conditionals", "if/elif/else", "comparison operators", "boolean logic"],
+
+  "content": [
+    {
+      "type": "text",
+      "text": "If/else statements let your program make decisions. They run different code based on whether a condition is True or False."
+    },
+    {
+      "type": "text",
+      "text": "The basic if statement:"
+    },
+    {
+      "type": "code",
+      "code": "age = 18\n\nif age >= 18:\n    print(\"You can vote!\")\n    print(\"You're an adult\")\n\nprint(\"This always runs\")",
+      "explanation": "If the condition (age >= 18) is True, the indented code runs. Notice the colon : at the end of the if line!"
+    },
+    {
+      "type": "tip",
+      "text": "Indentation matters in Python! Use 4 spaces (or Tab) to indent code inside if statements. All code at the same indentation level belongs together."
+    },
+    {
+      "type": "text",
+      "text": "The if/else statement handles both cases:"
+    },
+    {
+      "type": "code",
+      "code": "age = 15\n\nif age >= 18:\n    print(\"You can vote!\")\nelse:\n    print(\"You're too young to vote\")\n    print(f\"Wait {18 - age} more years\")",
+      "explanation": "If the condition is True, the if block runs. If it's False, the else block runs. Only one block will execute."
+    },
+    {
+      "type": "text",
+      "text": "Comparison operators let you compare values:"
+    },
+    {
+      "type": "code",
+      "code": "x = 10\n\nprint(x == 10)   # True (equal to)\nprint(x != 5)    # True (not equal to)\nprint(x > 5)     # True (greater than)\nprint(x < 20)    # True (less than)\nprint(x >= 10)   # True (greater than or equal)\nprint(x <= 15)   # True (less than or equal)",
+      "explanation": "These operators return True or False. Use == to check equality (not =, which is for assignment!)."
+    },
+    {
+      "type": "tip",
+      "text": "Common mistake: using = instead of ==. Remember: = assigns a value, == checks if values are equal!"
+    },
+    {
+      "type": "text",
+      "text": "The elif (else if) lets you check multiple conditions:"
+    },
+    {
+      "type": "code",
+      "code": "score = 85\n\nif score >= 90:\n    print(\"Grade: A\")\nelif score >= 80:\n    print(\"Grade: B\")\nelif score >= 70:\n    print(\"Grade: C\")\nelif score >= 60:\n    print(\"Grade: D\")\nelse:\n    print(\"Grade: F\")",
+      "explanation": "Python checks each condition in order. When it finds a True one, it runs that block and skips the rest."
+    },
+    {
+      "type": "text",
+      "text": "Boolean operators combine multiple conditions:"
+    },
+    {
+      "type": "code",
+      "code": "age = 25\nhas_license = True\n\n# AND: both must be True\nif age >= 18 and has_license:\n    print(\"You can drive!\")\n\n# OR: at least one must be True\nif age < 18 or age > 65:\n    print(\"Special rate applies\")\n\n# NOT: reverses the condition\nif not has_license:\n    print(\"You need a license!\")",
+      "explanation": "'and' requires both conditions to be True. 'or' requires at least one. 'not' flips True to False and vice versa."
+    },
+    {
+      "type": "text",
+      "text": "You can nest if statements inside each other:"
+    },
+    {
+      "type": "code",
+      "code": "age = 20\nmoney = 50\n\nif age >= 18:\n    print(\"You can enter the club\")\n    \n    if money >= 20:\n        print(\"And you can afford the cover charge!\")\n    else:\n        print(\"But you need $20 for entry\")\nelse:\n    print(\"Sorry, you're too young\")",
+      "explanation": "Each level of nesting adds 4 more spaces of indentation. Be careful not to nest too deeply - it gets hard to read!"
+    },
+    {
+      "type": "tip",
+      "text": "Try to keep conditions simple and readable. If you have complex logic, break it into smaller pieces or use variables with descriptive names."
+    },
+    {
+      "type": "text",
+      "text": "Truthy and falsy values in Python:"
+    },
+    {
+      "type": "code",
+      "code": "# These are considered False:\nif 0:\n    print(\"Won't print\")\nif \"\":\n    print(\"Won't print\")\nif []:\n    print(\"Won't print\")\n\n# These are considered True:\nif 1:\n    print(\"Will print!\")\nif \"hello\":\n    print(\"Will print!\")\nif [1, 2]:\n    print(\"Will print!\")",
+      "explanation": "Empty values (0, empty string, empty list) are falsy. Non-empty values are truthy. This is useful for checking if something exists!"
+    },
+    {
+      "type": "exercise",
+      "prompt": "Write a program that checks if a number is positive, negative, or zero. Use a variable called 'number' and print the appropriate message for each case.",
+      "starter": "number = 5  # Try changing this\n\n# Your code here\n",
+      "solution": "number = 5  # Try changing this\n\nif number > 0:\n    print(\"The number is positive\")\nelif number < 0:\n    print(\"The number is negative\")\nelse:\n    print(\"The number is zero\")",
+      "hint": "You need three cases: number > 0, number < 0, and the else case (which must be zero)."
+    },
+    {
+      "type": "text",
+      "text": "Perfect! You can now make your programs smart by adding decision-making logic. Next, we'll learn about loops to repeat actions!"
+    }
+  ],
+
+  "nextLesson": "06-for-loops",
+  "prevLesson": "04-strings"
+}
